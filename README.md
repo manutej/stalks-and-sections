@@ -61,9 +61,9 @@ src/components/sheaf/   # WebGL scene + DOM chrome
   chrome/               # dock, inspector, guide, hints
 ```
 
-Start at [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). The enhancement backlog lives in [`ROADMAP.md`](ROADMAP.md). How to add a graph: [`docs/DATASETS.md`](docs/DATASETS.md).
+Start at [`HANDOFF.md`](HANDOFF.md) if you are about to change the explorer. Architecture: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). Enhancement backlog: [`ROADMAP.md`](ROADMAP.md). How to add a graph: [`docs/DATASETS.md`](docs/DATASETS.md).
 
-Literature notes that seeded the lattice are in [`docs/sources/`](docs/sources/).
+Literature notes that seeded the lattice are in [`docs/sources/`](docs/sources/). Example JSON sheaves (discourse triangle, schema) live in [`docs/examples/`](docs/examples/).
 
 ## Mathematical notes
 

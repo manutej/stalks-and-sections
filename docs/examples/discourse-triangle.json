@@ -1,0 +1,100 @@
+{
+  "id": "discourse-triangle",
+  "title": "Discourse triangle",
+  "kicker": "Hansen–Ghrist · private R², said R¹",
+  "blurb": "Three agents. Each private stalk is R² (belief). The shared channel is R¹ (what can be said). Expression is projection onto the first coordinate. Alice and Bob say nearly the same number and still disagree on the hidden coordinate — residual is candor, not graph distance.",
+  "levels": [
+    {
+      "id": 0,
+      "code": "L0",
+      "label": "Private",
+      "kicker": "Belief",
+      "blurb": "Pinned opinions. Diffuse must not move these."
+    },
+    {
+      "id": 1,
+      "code": "L1",
+      "label": "Said",
+      "kicker": "Channel",
+      "blurb": "The discourse space. A global section here is public consensus."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "alice",
+      "title": "Alice",
+      "kind": "agent",
+      "level": 0,
+      "dim": 2,
+      "known": true,
+      "section": [0.9, 0.8],
+      "summary": "Believes the public claim (coord 0) and a strong private qualifier (coord 1).",
+      "sources": ["S5"]
+    },
+    {
+      "id": "bob",
+      "title": "Bob",
+      "kind": "agent",
+      "level": 0,
+      "dim": 2,
+      "known": true,
+      "section": [0.85, -0.7],
+      "summary": "Says almost the same as Alice. Private coordinate has the opposite sign.",
+      "sources": ["S5"]
+    },
+    {
+      "id": "cara",
+      "title": "Cara",
+      "kind": "agent",
+      "level": 0,
+      "dim": 2,
+      "known": true,
+      "section": [0.1, 0.0],
+      "summary": "Does not endorse the public claim. Private coordinate is quiet.",
+      "sources": ["S5"]
+    },
+    {
+      "id": "channel",
+      "title": "Public channel",
+      "kind": "channel",
+      "level": 1,
+      "dim": 1,
+      "known": false,
+      "section": [0.0],
+      "summary": "Unknown utterance. Harmonic extension should land near Alice/Bob's expressed coordinate if Cara is outnumbered — and the Alice–Bob seam stays loud on the hidden axis, which this channel cannot see.",
+      "sources": ["S5"]
+    }
+  ],
+  "edges": [
+    {
+      "source": "alice",
+      "target": "channel",
+      "relation": "expresses",
+      "restrictKind": "projection",
+      "edgeDim": 1,
+      "Fsrc": [[1, 0]],
+      "Ftgt": [[1]],
+      "note": "Alice says coord 0 only."
+    },
+    {
+      "source": "bob",
+      "target": "channel",
+      "relation": "expresses",
+      "restrictKind": "projection",
+      "edgeDim": 1,
+      "Fsrc": [[1, 0]],
+      "Ftgt": [[1]],
+      "note": "Bob says coord 0 only. Private disagreement with Alice is invisible here."
+    },
+    {
+      "source": "cara",
+      "target": "channel",
+      "relation": "expresses",
+      "restrictKind": "projection",
+      "edgeDim": 1,
+      "Fsrc": [[1, 0]],
+      "Ftgt": [[1]],
+      "note": "Cara's public dissent is visible; it pulls the channel down."
+    }
+  ]
+}

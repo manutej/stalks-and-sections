@@ -1,8 +1,8 @@
 # Roadmap
 
-Open GitHub issues are the live tracker. This file is the **intent** behind them — what to build next, in what order, and why.
+**Read [`HANDOFF.md`](HANDOFF.md) first.** It is the adversarial evaluation of v1, the view catalog, the example catalog, and the PR sequence. Open GitHub issues are the live tracker; this file is the short intent list.
 
-Status of v1 (this repo): a literature-grounded cellular-sheaf lattice with variable-dimension stalks, residual-coloured restrictions, Diffuse / Exact / Coarsen operators, sliceable layers, and a documented inspector.
+Status of v1 (this repo): a literature-grounded cellular-sheaf lattice with variable-dimension stalks, residual-coloured restrictions, Diffuse / Exact / Coarsen operators, sliceable layers, and a documented inspector. **Utility blocker:** no JSON import; literature sections are sampled, not measured; no 2D review views.
 
 ## Now — v1.1 visualization & UX
 
