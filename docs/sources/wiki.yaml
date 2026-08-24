@@ -1,0 +1,145 @@
+# wiki.yaml — manifest and FORM of this wiki instance.
+# This file is part of the conserved apparatus: change lens specs, ontology,
+# thresholds, or rubrics ONLY via a logged RE-BASELINE row.
+
+wiki:
+  name: Sheaf Coordination
+  id: sheaf-coordination
+  created: "2026-08-20"
+  tier: L2                  # EXTRACT starts at L2
+  parents: []
+  scope: >
+    The coordination-sheaf / cellular-sheaf literature as it bears on multi-agent
+    and LLM-agent coordination: spectral foundations, nonlinear and asynchronous
+    sheaf diffusion, discourse/opinion sheaves, consistency radius, learned
+    sheaves, operadic composition, software, and the verified open gaps.
+
+ontology:
+  types:
+    - paper
+    - concept
+    - theorem
+    - algorithm
+    - software
+    - person
+    - open-problem
+    - application
+  relations:
+    is_a: ["*", "*"]
+    part_of: ["*", "*"]
+    related_to: ["*", "*"]
+    extends: ["*", "*"]
+    generalizes: ["*", "*"]
+    specializes: ["*", "*"]
+    assumes: ["*", "*"]
+    proves: ["*", "theorem"]
+    proved_in: ["theorem", "paper"]
+    defines: ["*", "*"]
+    defined_in: ["*", "paper"]
+    uses: ["*", "*"]
+    implements: ["*", "*"]
+    implemented_in: ["*", "software"]
+    cites: ["*", "*"]
+    contradicts: ["*", "*"]
+    caveat_of: ["*", "*"]
+    applies_to: ["*", "*"]
+    open_problem_in: ["open-problem", "*"]
+    authored_by: ["*", "person"]
+    evaluated_on: ["*", "*"]
+    bounds: ["*", "*"]
+    motivates: ["*", "*"]
+    alternative_to: ["*", "*"]
+    depends_on: ["*", "*"]
+    computes: ["*", "*"]
+    formalizes: ["*", "*"]
+  hubs:
+    - home
+    - START-HERE
+
+templates:
+  paper: [Summary, Relations, Sources]
+  concept: [Definition, Relations, Sources]
+  theorem: [Statement, Relations, Sources]
+  algorithm: [Definition, Relations, Sources]
+  software: [Summary, Relations, Sources]
+  person: [Summary, Relations, Sources]
+  open-problem: [Statement, Relations, Sources]
+  application: [Summary, Relations, Sources]
+
+budgets:
+  k_repair: 3
+  epsilon_step: 2.0
+  b_task: 10.0
+  reserve_frac: 0.2
+
+lenses:
+  - id: link.integrity
+    family: structural
+    mode: exact
+    measure: wikictl
+    repair_hint: "create target page as typed stub, or retarget/remove link; never delete the linking claim to silence the lens"
+    integrity: true
+  - id: entity.unique
+    family: semantic
+    mode: exact
+    measure: wikictl
+    repair_hint: "merge duplicate pages (alias union) or disambiguate slugs; record which in the ledger"
+    integrity: true
+  - id: sync.index
+    family: structural
+    mode: exact
+    measure: wikictl
+    repair_hint: "regenerate the missing side from the authoritative one; pages are authoritative for prose, index for ids/types"
+    integrity: true
+  - id: type.valid
+    family: semantic
+    mode: exact
+    measure: wikictl
+    repair_hint: "fix the type/predicate to one in the ontology; if the ontology is wrong, that is a RE-BASELINE, not an edit"
+    integrity: true
+  - id: prov.coverage
+    family: provenance
+    mode: exact
+    measure: wikictl
+    threshold: 0.9
+    repair_hint: "add the citation or move the claim to a clearly-marked 'Unverified' block; never invent a source"
+    integrity: true
+  - id: graph.acyclic-taxonomy
+    family: semantic
+    mode: exact
+    measure: wikictl
+    repair_hint: "break the is_a/part_of cycle by retyping one edge to related_to or specializes"
+    integrity: true
+  - id: graph.orphans
+    family: structural
+    mode: soft
+    measure: wikictl
+    weight: 1.0
+    drift_unit: "orphan pages"
+    repair_hint: "link the orphan from the most relevant hub or related page"
+  - id: page.stub-ratio
+    family: resource
+    mode: soft
+    measure: wikictl
+    weight: 0.5
+    drift_unit: "pp of stub-share over ceiling"
+    ceiling: 0.4
+    stub_min_words: 40
+  - id: prov.faithful
+    family: provenance
+    mode: shadow
+    measure: judge
+    rubric: >
+      Sample 5 cited claims per session. For each: quote the exact source span,
+      then mark supported / partially-supported / unsupported. Any 'unsupported'
+      is logged to ESCAPES.md. In this wiki the proximate source of most claims is
+      the verified research digest [S41]; a claim traceable only to the digest and
+      not to the primary artifact must carry confidence <= medium.
+
+regression:
+  - q: "What does asynchronous nonlinear sheaf diffusion assume and what does it prove?"
+    must_mention: [partial-asynchrony, strong-convexity-and-smoothness, thm-async-linear-convergence]
+  - q: "Is there a Cheeger inequality for cellular sheaves?"
+    must_mention: [op-no-general-cheeger-inequality, spectral-theory-cellular-sheaves]
+  - q: "How would I implement sheaf coordination today?"
+    must_mention: [START-HERE, cellularsheaves-jl, sheaf-admm-code]

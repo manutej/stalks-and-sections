@@ -1,0 +1,39 @@
+name: Enhancement
+description: A concrete next step on the lattice, algebra, or datasets
+title: "[enh] "
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - visualization
+        - algebra
+        - dataset
+        - ux
+        - tests
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: What becomes understandable that is not today?
+    validations:
+      required: true
+  - type: textarea
+    id: files
+    attributes:
+      label: Files likely to change
+      description: See docs/ARCHITECTURE.md
+      placeholder: src/lib/sheaf/…, src/components/sheaf/…
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Definition of done
+      description: Screenshot-testable. Include Close-path, energy, and mobile if UI.
+    validations:
+      required: true
