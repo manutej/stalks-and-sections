@@ -53,40 +53,45 @@ export function SheafApp() {
 
   return (
     <main className="relative h-dvh w-full overflow-hidden bg-bg text-fg">
-      <div className="absolute inset-0 z-0">
+      <div
+        className={`absolute inset-0 z-0 ${introOpen ? "pointer-events-none" : ""}`}
+        aria-hidden={introOpen}
+      >
         <GraphCanvas />
       </div>
 
-      <TopBar />
-      <CueBar />
-
-      <div className="pointer-events-none absolute bottom-36 left-3 top-24 z-20 hidden w-52 md:block lg:w-56">
-        <div className="pointer-events-auto">
-          <Legend />
-        </div>
-      </div>
-      <div className="pointer-events-none absolute bottom-36 right-3 top-24 z-20 hidden w-72 md:block lg:w-80">
-        <Inspector className="pointer-events-auto h-full" />
-      </div>
-
-      {mobilePanel === "inspect" && selectedId ? (
-        <div className="absolute inset-0 z-30 md:hidden">
-          <button
-            type="button"
-            className="absolute inset-0 bg-ink/35"
-            aria-label="Return to lattice"
-            onClick={() => {
-              select(null);
-              setMobilePanel("none");
-            }}
-          />
-          <div className="absolute inset-x-3 bottom-28 max-h-[48dvh]">
-            <Inspector className="max-h-[48dvh]" />
+      {!introOpen ? (
+        <>
+          <TopBar />
+          <CueBar />
+          <div className="pointer-events-none absolute bottom-36 left-3 top-24 z-20 hidden w-52 md:block lg:w-56">
+            <div className="pointer-events-auto">
+              <Legend />
+            </div>
           </div>
-        </div>
+          <div className="pointer-events-none absolute bottom-36 right-3 top-24 z-20 hidden w-72 md:block lg:w-80">
+            <Inspector className="pointer-events-auto h-full" />
+          </div>
+          {mobilePanel === "inspect" && selectedId ? (
+            <div className="absolute inset-0 z-30 md:hidden">
+              <button
+                type="button"
+                className="absolute inset-0 bg-ink/35"
+                aria-label="Return to lattice"
+                onClick={() => {
+                  select(null);
+                  setMobilePanel("none");
+                }}
+              />
+              <div className="absolute inset-x-3 bottom-28 max-h-[48dvh]">
+                <Inspector className="max-h-[48dvh]" />
+              </div>
+            </div>
+          ) : null}
+          <Dock />
+        </>
       ) : null}
 
-      <Dock />
       <Intro />
       <PrimerModal />
       <GuideModal />
