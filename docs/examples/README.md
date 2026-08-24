@@ -1,10 +1,13 @@
 # Example sheaves
 
-Portable JSON graphs for the explorer. Schema: [`sheaf.schema.json`](sheaf.schema.json). Contract and catalog: [`../../HANDOFF.md`](../../HANDOFF.md) §6–§7.
+Portable JSON graphs for the explorer. Schema: [`sheaf.schema.json`](sheaf.schema.json). How to build a new one: [`../GENERATE.md`](../GENERATE.md).
 
-| File | Runnable in v1? | Residual means |
+| File | Origin | Residual means |
 | --- | --- | --- |
-| `discourse-triangle.json` | Not yet (needs JSON loader, issue #5) | Public agreement vs private disagreement |
-| *(literature / cobb)* | Yes, hardcoded | See `src/lib/sheaf/lattice.ts`, `cobb.ts` |
+| `discourse-triangle.json` | hand-authored | Public agreement vs private disagreement |
+| `toy-kg.json` | `npm run sheaf:examples` from `templates/kg/triples.json` | TransE triple violation |
+| `wiki-integrity.json` | `npm run sheaf:examples` from `docs/sources` | Typed wiki-relation mismatch |
 
-Rules for new files: every `section` coordinate has a domain meaning; no Gaussian padding; one-sentence blurb that a reviewer could quote.
+Drop a new `*.json` here (not `sheaf.schema.json`). Restart the app. It appears in the dataset switcher.
+
+Rules: every `section` coordinate has a domain meaning; no Gaussian padding; one-sentence `residualMeaning`.

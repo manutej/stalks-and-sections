@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import { hashSeed, mulberry32 } from "@/lib/sheaf/rng";
 import { orthonormalPair } from "@/lib/sheaf/linear";
-import { LEVEL_HEX } from "@/lib/sheaf/palette";
+import { levelHex } from "@/lib/sheaf/palette";
 import type { SheafNode } from "@/lib/sheaf/types";
 
 export function StalkPlot({ node }: { node: SheafNode }) {
@@ -59,13 +59,13 @@ export function StalkPlot({ node }: { node: SheafNode }) {
 
     const px = cx + x * scale;
     const py = cy - y * scale;
-    ctx.strokeStyle = LEVEL_HEX[node.level];
+    ctx.strokeStyle = levelHex(node.level);
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.lineTo(px, py);
     ctx.stroke();
-    ctx.fillStyle = LEVEL_HEX[node.level];
+    ctx.fillStyle = levelHex(node.level);
     ctx.beginPath();
     ctx.arc(px, py, 5, 0, Math.PI * 2);
     ctx.fill();

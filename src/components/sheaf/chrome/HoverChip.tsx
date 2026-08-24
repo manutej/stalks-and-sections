@@ -1,4 +1,4 @@
-import { KIND_LABEL, LEVELS } from "@/lib/sheaf/palette";
+import { kindLabel } from "@/lib/sheaf/palette";
 import { useSheaf } from "@/store/sheaf";
 
 export function HoverChip() {
@@ -13,7 +13,7 @@ export function HoverChip() {
       <div className="sheaf-panel rounded-lg px-3 py-1.5 text-center">
         <p className="text-sm">{node.title}</p>
         <p className="text-[11px] text-fg-muted">
-          {KIND_LABEL[node.kind]} · {LEVELS[node.level]?.code} · dim {node.dim}
+          {kindLabel(node.kind)} · L{node.level} · dim {node.dim}
         </p>
       </div>
     </div>

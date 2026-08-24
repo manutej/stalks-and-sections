@@ -2,7 +2,7 @@
   "id": "discourse-triangle",
   "title": "Discourse triangle",
   "kicker": "Hansen–Ghrist · private R², said R¹",
-  "blurb": "Three agents. Each private stalk is R² (belief). The shared channel is R¹ (what can be said). Expression is projection onto the first coordinate. Alice and Bob say nearly the same number and still disagree on the hidden coordinate — residual is candor, not graph distance.",
+  "residualMeaning": "Public agreement vs private disagreement: expression is projection onto coord 0. High residual on the hidden axis is candor, not graph distance.",
   "levels": [
     {
       "id": 0,

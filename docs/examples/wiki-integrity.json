@@ -1,0 +1,5228 @@
+{
+  "id": "wiki-integrity",
+  "title": "Wiki integrity sheaf",
+  "kicker": "docs/sources as a sheaf",
+  "blurb": "Each markdown page is a stalk. Typed wiki relations become restriction maps. Residual is disagreement between a page and the thing it claims to relate to.",
+  "residualMeaning": "Typed-relation mismatch: is_a projects, extends embeds; leftover energy is a claim the wiki does not support as a section.",
+  "levels": [
+    {
+      "id": 0,
+      "code": "L0",
+      "label": "Foundations",
+      "kicker": "Pinned / primitive",
+      "blurb": "Known stalks and primitive types."
+    },
+    {
+      "id": 1,
+      "code": "L1",
+      "label": "Structure",
+      "kicker": "Types & papers",
+      "blurb": "Declared structure that restrictions compare against."
+    },
+    {
+      "id": 2,
+      "code": "L2",
+      "label": "Operations",
+      "kicker": "Algorithms & models",
+      "blurb": "Things that move or embed the stalks."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "async-sheaf-diffusion",
+      "title": "Asynchronous Nonlinear Sheaf Diffusion for Multi-Agent Coordination",
+      "kind": "paper",
+      "level": 1,
+      "dim": 8,
+      "known": true,
+      "section": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "summary": "## Summary Zhao, Hanks, Riess, Cohen, Hale, Fairbanks (University of Florida and Georgia Tech), arXiv:2510.00270 — the frontier paper of the coordination-sheaf line and the central paper of this wiki . It drops the synchrony assumption of [",
+      "sources": [
+        "S1",
+        "S41",
+        "S42"
+      ]
+    },
+    {
+      "id": "best-response-sheaf",
+      "title": "Best-response sheaf",
+      "kind": "concept",
+      "level": 0,
+      "dim": 4,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "summary": "## Definition The assignment `B(I,v) = {sigma_v in Sigma(I,v) : sigma_v in BR_v(sigma_{-v})}` — at each vertex and time interval, the set of strategies that are best responses to the neighbours' strategies . Its global sections are Nash equ",
+      "sources": [
+        "S13",
+        "S41"
+      ]
+    },
+    {
+      "id": "cellular-sheaf",
+      "title": "Cellular sheaf",
+      "kind": "concept",
+      "level": 0,
+      "dim": 4,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "summary": "## Definition A **cellular sheaf** `F` on a graph `G` assigns a vector space — a ] — to every vertex and every edge, together with a linear ] `F_{v<|e} : F(v) -> F(e)` for each incident vertex-edge pair . It is the minimal data structure fo",
+      "sources": [
+        "S4",
+        "S2",
+        "S41"
+      ]
+    },
+    {
+      "id": "coordination-sheaf",
+      "title": "Coordination sheaf",
+      "kind": "concept",
+      "level": 0,
+      "dim": 4,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "summary": "## Definition A **coordination sheaf** is a triple: a graph `G`, a ] `F` on `G`, and a family of ]s `{U_e}` — one convex function per edge measuring how bad the disagreement on that edge is . This is the central object of the wiki. The shea",
+      "sources": [
+        "S2",
+        "S1",
+        "S3",
+        "S41"
+      ]
+    },
+    {
+      "id": "discourse-sheaf",
+      "title": "Discourse sheaf",
+      "kind": "concept",
+      "level": 0,
+      "dim": 4,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "summary": "## Definition A ] read semantically: vertex stalk = private opinion space of an agent; edge stalk = discourse space of a channel, i.e. the space of things that can be *said* there; restriction map = ] taking a belief to its utterance . Noth",
+      "sources": [
+        "S5",
+        "S41"
+      ]
+    },
+    {
+      "id": "distributed-coordination-cellular-sheaves",
+      "title": "Distributed Multi-agent Coordination over Cellular Sheaves",
+      "kind": "paper",
+      "level": 1,
+      "dim": 8,
+      "known": true,
+      "section": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "summary": "## Summary Hanks, Riess, Cohen, Gross, Hale, Fairbanks (2025), arXiv:2504.02049 — the paper that defines the ] and turns multi-agent coordination into a homological constraint . Contributions: the definition `(G, F, {U_e})`; the ] and",
+      "sources": [
+        "S2",
+        "S3",
+        "S41",
+        "S42"
+      ]
+    },
+    {
+      "id": "game-sheaf-strategic-multi-agent",
+      "title": "A Sheaf Framework for Strategic Multi-Agent Systems",
+      "kind": "paper",
+      "level": 1,
+      "dim": 8,
+      "known": true,
+      "section": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "summary": "## Summary Hernandez and Sanchez-Soto, arXiv:2606.01663 (May 2026) — pushes sheaves from consensus into game theory . The site is `S = T x G` (time crossed with the interaction graph), and the total stalk is `C_geom x C_know x Sigma x R`: g",
+      "sources": [
+        "S13",
+        "S41"
+      ]
+    },
+    {
+      "id": "interval-sheaf",
+      "title": "Interval sheaf",
+      "kind": "concept",
+      "level": 0,
+      "dim": 4,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "summary": "## Definition A sheaf on the site `Int` (or `Int_N`) of closed time intervals: a section over an interval is a trajectory, restriction is looking at a subinterval, and gluing means compatible trajectories on overlapping intervals combine . ",
+      "sources": [
+        "S22",
+        "S41"
+      ]
+    },
+    {
+      "id": "learning-sheaf-laplacian-restriction-maps",
+      "title": "Learning Sheaf Laplacian Optimizing Restriction Maps",
+      "kind": "paper",
+      "level": 1,
+      "dim": 8,
+      "known": true,
+      "section": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "summary": "## Summary Di Nino, Barbarossa and Di Lorenzo, arXiv:2501.19207, ICASSP 2025 — learns a sheaf Laplacian from data by optimizing the restriction maps directly . The problem is `min` over `F` and an edge selector `a` of `sum_e a_e ||F_{u<|e} ",
+      "sources": [
+        "S18",
+        "S41"
+      ]
+    },
+    {
+      "id": "nonlinear-sheaf-laplacian",
+      "title": "Nonlinear sheaf Laplacian",
+      "kind": "concept",
+      "level": 0,
+      "dim": 4,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "summary": "## Definition The nonlinear sheaf Laplacian is `L_F^{grad U} := delta_F^T . grad U . delta_F`, equivalently `grad(U . delta_F)`: push the state through the ], take the gradient of the ] in each edge stalk, and pull back . It is the exact ob",
+      "sources": [
+        "S2",
+        "S1",
+        "S41"
+      ]
+    },
+    {
+      "id": "sheaf-diffusion",
+      "title": "Sheaf diffusion",
+      "kind": "algorithm",
+      "level": 2,
+      "dim": 5,
+      "known": false,
+      "section": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "summary": "## Definition Gradient flow on disagreement: `x <- x - gamma L_F x` in the linear case, or `x <- x - gamma L_F^{grad U} x` with ]s . It is the sheaf generalization of average consensus, converging to the orthogonal projection of the initial",
+      "sources": [
+        "S2",
+        "S4",
+        "S1",
+        "S41"
+      ]
+    },
+    {
+      "id": "partial-asynchrony",
+      "title": "partial asynchrony",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "thm-async-linear-convergence",
+      "title": "thm async linear convergence",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "async-block-update",
+      "title": "async block update",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "yichen-zhao",
+      "title": "yichen zhao",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "sheaf-diffusion-goes-nonlinear",
+      "title": "sheaf diffusion goes nonlinear",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "op-staleness-semantics",
+      "title": "op staleness semantics",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "thm-nash-as-global-sections",
+      "title": "thm nash as global sections",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "caveat-nonabelian-h1",
+      "title": "caveat nonabelian h1",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "cochain-complex",
+      "title": "cochain complex",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "sheaf-neural-network",
+      "title": "sheaf neural network",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "spectral-theory-cellular-sheaves",
+      "title": "spectral theory cellular sheaves",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "nonlinear-homological-program",
+      "title": "nonlinear homological program",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "admm",
+      "title": "admm",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "multi-robot-formation-flocking",
+      "title": "multi robot formation flocking",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "opinion-dynamics-discourse-sheaves",
+      "title": "opinion dynamics discourse sheaves",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "expression-map",
+      "title": "expression map",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "op-llm-commitment-sheaf",
+      "title": "op llm commitment sheaf",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "tyler-hanks",
+      "title": "tyler hanks",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "thm-admm-convergence",
+      "title": "thm admm convergence",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "algebraicoptimization-jl",
+      "title": "algebraicoptimization jl",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "kunneth-split-h1",
+      "title": "kunneth split h1",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "sheaf-theoretic-planning",
+      "title": "sheaf theoretic planning",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "dynamical-systems-and-sheaves",
+      "title": "dynamical systems and sheaves",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "behavior-type",
+      "title": "behavior type",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "limit-vs-colimit-composition",
+      "title": "limit vs colimit composition",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "algebras-open-dynamical-systems",
+      "title": "algebras open dynamical systems",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "temporal-type-theory",
+      "title": "temporal type theory",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "procrustes-restriction-learning",
+      "title": "procrustes restriction learning",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "restriction-map",
+      "title": "restriction map",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "sheaf-nn-connection-laplacians",
+      "title": "sheaf nn connection laplacians",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "sheaflearning-jl",
+      "title": "sheaflearning jl",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "sheaf-laplacian",
+      "title": "sheaf laplacian",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "coboundary-map",
+      "title": "coboundary map",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "dirichlet-energy",
+      "title": "dirichlet energy",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    },
+    {
+      "id": "cellularsheaves-jl",
+      "title": "cellularsheaves jl",
+      "kind": "concept",
+      "level": 0,
+      "dim": 3,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0
+      ],
+      "summary": "Stub target from a wiki relation (page not in this folder).",
+      "sources": []
+    }
+  ],
+  "edges": [
+    {
+      "id": "async-sheaf-diffusion→distributed-coordination-cellular-sheaves:extends",
+      "source": "async-sheaf-diffusion",
+      "target": "distributed-coordination-cellular-sheaves",
+      "relation": "extends",
+      "restrictKind": "embed",
+      "edgeDim": 8,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 0
+    },
+    {
+      "id": "async-sheaf-diffusion→partial-asynchrony:assumes",
+      "source": "async-sheaf-diffusion",
+      "target": "partial-asynchrony",
+      "relation": "assumes",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          -0.2576797382251165,
+          -0.10791864301311337,
+          -0.09040690935077482,
+          0.4349548315293387,
+          0.8160463198363798,
+          0.11259180614669982,
+          -0.04824160645183565,
+          -0.2089493736445267
+        ],
+        [
+          -0.018108930137656767,
+          -0.14685673958950354,
+          -0.5349374037618363,
+          -0.5919448559126355,
+          0.14929288776525523,
+          0.53712786861977,
+          -0.17506268354388008,
+          0.010332935044554577
+        ],
+        [
+          0.21754155092531535,
+          -0.46108935878362045,
+          0.3977767844103142,
+          0.2466912063528073,
+          -0.2512941262961445,
+          0.5653497466655879,
+          -0.18409132729054895,
+          -0.3230025767397564
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.7284043368985917,
+          -0.6733045968690141,
+          0.12683864483026266
+        ],
+        [
+          0.05219977826880346,
+          0.23912413108497318,
+          0.969584876677408
+        ],
+        [
+          0.6831561352546072,
+          0.6996288800270545,
+          -0.2093254048033304
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1.0471978329788654
+    },
+    {
+      "id": "async-sheaf-diffusion→thm-async-linear-convergence:proves",
+      "source": "async-sheaf-diffusion",
+      "target": "thm-async-linear-convergence",
+      "relation": "proves",
+      "restrictKind": "type-aware",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          0,
+          0,
+          -1,
+          0.2871137766400352,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0.013956086779944598,
+          0
+        ],
+        [
+          0,
+          0,
+          -1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "Ftgt": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1
+        ],
+        [
+          -1,
+          0.009149019955657423,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 1.7320508075688772
+    },
+    {
+      "id": "async-sheaf-diffusion→async-block-update:defines",
+      "source": "async-sheaf-diffusion",
+      "target": "async-block-update",
+      "relation": "defines",
+      "restrictKind": "embed",
+      "edgeDim": 8,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 1.4142135623730951
+    },
+    {
+      "id": "async-sheaf-diffusion→yichen-zhao:authored_by",
+      "source": "async-sheaf-diffusion",
+      "target": "yichen-zhao",
+      "relation": "authored_by",
+      "restrictKind": "type-aware",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          0,
+          0,
+          -1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          -1
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0.0070961941033601756,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 2.23606797749979
+    },
+    {
+      "id": "async-sheaf-diffusion→sheaf-diffusion-goes-nonlinear:closes",
+      "source": "async-sheaf-diffusion",
+      "target": "sheaf-diffusion-goes-nonlinear",
+      "relation": "closes",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          -0.48621487990222145,
+          -0.2757183909349677,
+          -0.23481817605693897,
+          0.3895360954868566,
+          0.3804983288634099,
+          -0.2190591039846568,
+          0.5365891859481638,
+          0.001640178382410185
+        ],
+        [
+          -0.5004971425423026,
+          0.3670452971122054,
+          -0.347807267203927,
+          -0.2788552170848656,
+          0.3504977639726059,
+          0.2844462875802304,
+          -0.34802011751826145,
+          0.30195009139607026
+        ],
+        [
+          -0.3861918382966744,
+          0.42682140052146017,
+          0.23731169265019803,
+          0.6370182577881223,
+          -0.40481747543711316,
+          0.05645034552721141,
+          -0.1788437721292944,
+          -0.08672560813948554
+        ]
+      ],
+      "Ftgt": [
+        [
+          -0.5818388058733894,
+          -0.15536260209703356,
+          -0.7983270419129412
+        ],
+        [
+          -0.1297495075683862,
+          -0.9512815650593199,
+          0.2796934916369204
+        ],
+        [
+          0.8028877065104371,
+          -0.2663190677513152,
+          -0.5333343087468506
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 0.6984616893642159
+    },
+    {
+      "id": "async-sheaf-diffusion→op-staleness-semantics:open_problem_in",
+      "source": "async-sheaf-diffusion",
+      "target": "op-staleness-semantics",
+      "relation": "open_problem_in",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          0.040890629488067556,
+          -0.4043457520478407,
+          0.19712852179901033,
+          0.04987074491821105,
+          -0.44909747990276605,
+          0.5157427206178495,
+          -0.5682358088468336,
+          -0.0539878609915583
+        ],
+        [
+          0.2952298100322005,
+          -0.30241038746134136,
+          0.615689143980815,
+          0.021138882320236446,
+          0.14937101143543166,
+          -0.04200894395954197,
+          0.23862587538799993,
+          0.60070673679236
+        ],
+        [
+          0.5512058216452652,
+          -0.48290328773950003,
+          -0.3981054768760782,
+          -0.270249718264483,
+          -0.2198011209483144,
+          -0.03824538495343609,
+          0.3789983363881133,
+          -0.19503511147651847
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.3559590721048078,
+          -0.3735624710257242,
+          -0.8565887106584111
+        ],
+        [
+          0.8847371583946712,
+          -0.16041662979066768,
+          0.4376147454580644
+        ],
+        [
+          -0.3008875197511636,
+          -0.9136288005135121,
+          0.27340284440772433
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 0.327208357102967
+    },
+    {
+      "id": "best-response-sheaf→game-sheaf-strategic-multi-agent:defined_in",
+      "source": "best-response-sheaf",
+      "target": "game-sheaf-strategic-multi-agent",
+      "relation": "defined_in",
+      "restrictKind": "embed",
+      "edgeDim": 8,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 1.4142135623730951
+    },
+    {
+      "id": "best-response-sheaf→thm-nash-as-global-sections:characterizes",
+      "source": "best-response-sheaf",
+      "target": "thm-nash-as-global-sections",
+      "relation": "characterizes",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          -0.12680193365534137,
+          0.22872934636990033,
+          -0.7705636257275137,
+          0.5812364875299318
+        ],
+        [
+          -0.35885435551804273,
+          -0.9176120369009986,
+          -0.1273092848135106,
+          0.11403528953969952
+        ],
+        [
+          -0.713977417916025,
+          0.26024978324436754,
+          0.5041885159616127,
+          0.41024411927491644
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.5325960787888976,
+          0.6244600256968815,
+          -0.5713064791907583
+        ],
+        [
+          -0.1634820689494666,
+          -0.5863945760886531,
+          -0.7933568013610338
+        ],
+        [
+          -0.830430629246472,
+          0.5159370867077301,
+          -0.21022343487073114
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 0.6975223434440077
+    },
+    {
+      "id": "best-response-sheaf→cellular-sheaf:contradicts",
+      "source": "best-response-sheaf",
+      "target": "cellular-sheaf",
+      "relation": "contradicts",
+      "restrictKind": "spectral",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          0.7216212064364417,
+          -0.2174878706172815,
+          -0.5356772893550119,
+          -0.3808040207571893
+        ],
+        [
+          -0.09036693298350701,
+          -0.7763899564092833,
+          -0.22112447638127858,
+          0.5832293022088746
+        ],
+        [
+          0.49617852419897723,
+          -0.3078698146807114,
+          0.8114074135502045,
+          -0.02531913442353244
+        ],
+        [
+          0.4742399434548903,
+          0.5051077498213771,
+          -0.07597247429258516,
+          0.7170710008445119
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.009153835408802722,
+          0.8048973018826595,
+          -0.5447854816594345,
+          0.23508577092716865
+        ],
+        [
+          -0.8906234515944359,
+          -0.16986623303318713,
+          -0.08790598631023153,
+          0.41256256242654116
+        ],
+        [
+          0.430111488209111,
+          -0.18464601285386592,
+          0.11264017790011036,
+          0.8764828281092251
+        ],
+        [
+          -0.14734375615500536,
+          0.5377654193366285,
+          0.8263132014354816,
+          0.07940191698743727
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 1.2404641869975652
+    },
+    {
+      "id": "best-response-sheaf→caveat-nonabelian-h1:caveat_of",
+      "source": "best-response-sheaf",
+      "target": "caveat-nonabelian-h1",
+      "relation": "caveat_of",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          -0.4197396782804423,
+          0.1705686557458415,
+          0.06998971363852619,
+          -0.8887217653117787
+        ],
+        [
+          0.8549235944614728,
+          -0.2549866311548056,
+          0.015508073254774485,
+          -0.45149414750284717
+        ],
+        [
+          -0.27256003799296313,
+          -0.8232292457075607,
+          -0.49331960910955625,
+          -0.06812046659433292
+        ]
+      ],
+      "Ftgt": [
+        [
+          -0.9190769473708849,
+          0.36194062539745214,
+          0.15587350159124835
+        ],
+        [
+          0.03768624668860378,
+          0.47445165440452536,
+          -0.8794744876591558
+        ],
+        [
+          -0.39227198679225306,
+          -0.8024304401751656,
+          -0.4496977619005329
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 0.9651660694320218
+    },
+    {
+      "id": "cellular-sheaf→cochain-complex:part_of",
+      "source": "cellular-sheaf",
+      "target": "cochain-complex",
+      "relation": "part_of",
+      "restrictKind": "projection",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 0
+    },
+    {
+      "id": "cellular-sheaf→coordination-sheaf:generalized_by",
+      "source": "cellular-sheaf",
+      "target": "coordination-sheaf",
+      "relation": "generalized_by",
+      "restrictKind": "spectral",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          0.13813235927385575,
+          0.8568773964208066,
+          0.10508800378575393,
+          -0.48542464944094416
+        ],
+        [
+          -0.7683988482410443,
+          0.1836466516649824,
+          -0.6124576543698758,
+          -0.027069151405740757
+        ],
+        [
+          0.4010854442455406,
+          -0.3449549672374696,
+          -0.5792328877875382,
+          -0.6201820689909237
+        ],
+        [
+          0.4791796403830533,
+          0.3362158613354473,
+          -0.5275806997696033,
+          0.6156333097383918
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.041510699422573454,
+          -0.268522822591699,
+          0.6672991777679954,
+          -0.6934581190893889
+        ],
+        [
+          0.5002932454590132,
+          0.30162095189847554,
+          -0.5396962394496365,
+          -0.606184327616498
+        ],
+        [
+          -0.5984903719860631,
+          0.7618464506199608,
+          0.11657226689511861,
+          -0.2186553610334869
+        ],
+        [
+          0.6243338890541823,
+          0.506468440083893,
+          0.49985066076280343,
+          0.32225181320274493
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 1.6245420714994765
+    },
+    {
+      "id": "cellular-sheaf→sheaf-neural-network:used",
+      "source": "cellular-sheaf",
+      "target": "sheaf-neural-network",
+      "relation": "used",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          0.8126580906257851,
+          -0.07705615072828335,
+          0.21977530007340018,
+          -0.5341797402120755
+        ],
+        [
+          0.3759695416285816,
+          0.33592740462708076,
+          0.47713803612994754,
+          0.7198187112503848
+        ],
+        [
+          -0.005635346185025444,
+          -0.9258869422074384,
+          0.28861272554554757,
+          0.2437299894889934
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.13837221572946498,
+          -0.5765133969660777,
+          -0.805285932469177
+        ],
+        [
+          0.7098159587838,
+          0.6247674462442195,
+          -0.32531053282872846
+        ],
+        [
+          0.6906623158750977,
+          -0.5265908670230713,
+          0.49566886547163397
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1.0251562346893597
+    },
+    {
+      "id": "cellular-sheaf→spectral-theory-cellular-sheaves:see",
+      "source": "cellular-sheaf",
+      "target": "spectral-theory-cellular-sheaves",
+      "relation": "see",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          0.5539849855266371,
+          0.3704434394115848,
+          -0.7438381871656801,
+          -0.05076460698204805
+        ],
+        [
+          0.6854826564337697,
+          -0.6228480631485219,
+          0.17763689105797392,
+          0.3325942767034555
+        ],
+        [
+          0.21202015428299367,
+          0.6615058784329364,
+          0.4489898738930385,
+          0.5620191456863353
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.7232303752122474,
+          -0.4412844708070686,
+          -0.5312304962959837
+        ],
+        [
+          -0.4110470269350778,
+          -0.8931904420734239,
+          0.18234904945328118
+        ],
+        [
+          0.5549578056196569,
+          -0.0864803446640167,
+          0.8273711283146203
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1.1613042586433264
+    },
+    {
+      "id": "coordination-sheaf→cellular-sheaf:extends",
+      "source": "coordination-sheaf",
+      "target": "cellular-sheaf",
+      "relation": "extends",
+      "restrictKind": "embed",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 0
+    },
+    {
+      "id": "coordination-sheaf→distributed-coordination-cellular-sheaves:defined_in",
+      "source": "coordination-sheaf",
+      "target": "distributed-coordination-cellular-sheaves",
+      "relation": "defined_in",
+      "restrictKind": "embed",
+      "edgeDim": 8,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 1.4142135623730951
+    },
+    {
+      "id": "coordination-sheaf→nonlinear-homological-program:defines",
+      "source": "coordination-sheaf",
+      "target": "nonlinear-homological-program",
+      "relation": "defines",
+      "restrictKind": "embed",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 0
+    },
+    {
+      "id": "coordination-sheaf→admm:solved_by",
+      "source": "coordination-sheaf",
+      "target": "admm",
+      "relation": "solved_by",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          -0.6244666337896737,
+          -0.45977514325818397,
+          0.05707958290515208,
+          0.6288005742210195
+        ],
+        [
+          -0.5875532744278711,
+          0.8077116024501969,
+          -0.04746765612551969,
+          0.011399061293436416
+        ],
+        [
+          0.5142983073035479,
+          0.36199561800391244,
+          -0.019592359531499782,
+          0.7772210516311683
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.4031053052349948,
+          -0.6664839605846469,
+          -0.6271405290481589
+        ],
+        [
+          -0.8114172519116194,
+          -0.5772031794357233,
+          0.09186148784712568
+        ],
+        [
+          -0.42321171556514936,
+          0.4718427915447002,
+          -0.7734702475698131
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1.408880482250012
+    },
+    {
+      "id": "coordination-sheaf→multi-robot-formation-flocking:applies_to",
+      "source": "coordination-sheaf",
+      "target": "multi-robot-formation-flocking",
+      "relation": "applies_to",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          -0.32740692378837927,
+          -0.4302854212441217,
+          -0.22348438849539493,
+          0.8109956168926183
+        ],
+        [
+          0.6596707334178009,
+          -0.6023399041998522,
+          0.44412099289611046,
+          0.06912095882948067
+        ],
+        [
+          0.4465596208291396,
+          -0.16683407889166635,
+          -0.8666737061762991,
+          -0.14706319113885136
+        ]
+      ],
+      "Ftgt": [
+        [
+          -0.7145959565864727,
+          -0.6462028172114003,
+          -0.2679077039920907
+        ],
+        [
+          -0.21379352454231704,
+          -0.16290940959181224,
+          0.9631992800714818
+        ],
+        [
+          0.6660667742006343,
+          -0.7455752432145905,
+          0.021739572476601837
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 0.980325735372789
+    },
+    {
+      "id": "coordination-sheaf→async-sheaf-diffusion:carried",
+      "source": "coordination-sheaf",
+      "target": "async-sheaf-diffusion",
+      "relation": "carried",
+      "restrictKind": "spectral",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          -0.5370412339147497,
+          0.696398739590177,
+          0.2498413165796062,
+          -0.40520960637959347
+        ],
+        [
+          0.19565875481636755,
+          -0.3250478536575623,
+          0.8840931901766651,
+          -0.27283836896515784
+        ],
+        [
+          -0.38531216900858617,
+          -0.5625366021835929,
+          -0.3239515323361421,
+          -0.6558525049999445
+        ],
+        [
+          -0.7244576572532939,
+          -0.3048364471869511,
+          0.2258626846340077,
+          0.5755188016072325
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.012039423823889983,
+          -0.16669044707158207,
+          -0.6422731202252481,
+          -0.34030633323821474,
+          -0.5992418167265515,
+          -0.20508912472912688,
+          0.2003801403526404,
+          -0.04941336944095878
+        ],
+        [
+          0.005694203941059993,
+          0.4472487174666742,
+          0.20731518539970983,
+          -0.44308241276188604,
+          -0.102236121655241,
+          -0.4962395731369648,
+          -0.546951880507539,
+          -0.06908148855291682
+        ],
+        [
+          0.5183888804276596,
+          0.08123701875750218,
+          -0.07050316665359461,
+          -0.5635037673854374,
+          0.45134915541835535,
+          0.05421908477977446,
+          0.33100757969236516,
+          0.29316298538793867
+        ],
+        [
+          -0.034634563061204826,
+          0.1707657367949257,
+          0.5728612025405476,
+          0.009185800584662791,
+          -0.48409797558320655,
+          -0.1266396263872997,
+          0.5083718822221609,
+          0.36408070300482237
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 1.339160391518114
+    },
+    {
+      "id": "discourse-sheaf→cellular-sheaf:is_a",
+      "source": "discourse-sheaf",
+      "target": "cellular-sheaf",
+      "relation": "is_a",
+      "restrictKind": "projection",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 0
+    },
+    {
+      "id": "discourse-sheaf→opinion-dynamics-discourse-sheaves:defined_in",
+      "source": "discourse-sheaf",
+      "target": "opinion-dynamics-discourse-sheaves",
+      "relation": "defined_in",
+      "restrictKind": "embed",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 0
+    },
+    {
+      "id": "discourse-sheaf→expression-map:uses",
+      "source": "discourse-sheaf",
+      "target": "expression-map",
+      "relation": "uses",
+      "restrictKind": "identity",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 0
+    },
+    {
+      "id": "discourse-sheaf→coordination-sheaf:related_to",
+      "source": "discourse-sheaf",
+      "target": "coordination-sheaf",
+      "relation": "related_to",
+      "restrictKind": "spectral",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          -0.6112746757889266,
+          0.6529747847305919,
+          0.2645974206360027,
+          -0.36049328182083196
+        ],
+        [
+          0.30498260925886983,
+          0.7156692997336385,
+          -0.3845178637588407,
+          0.4969397085349015
+        ],
+        [
+          -0.6280164582061941,
+          -0.2179747826012993,
+          -0.735626688392295,
+          0.1301372264075468
+        ],
+        [
+          0.3727253774710541,
+          0.1180185497060437,
+          -0.4909048714039186,
+          -0.7785626642385598
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.2839357375652611,
+          0.6044921610128469,
+          -0.5476741615863466,
+          -0.5040066834259066
+        ],
+        [
+          -0.5265381643521085,
+          -0.529935540606635,
+          -0.6056265269256214,
+          -0.27412113046366055
+        ],
+        [
+          -0.6944131015106064,
+          0.3907562718752277,
+          0.4462177854119833,
+          -0.40741829662230256
+        ],
+        [
+          -0.3999106185942097,
+          0.44840504687853944,
+          -0.366277504901307,
+          0.7105245952623487
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 1.4471362678691426
+    },
+    {
+      "id": "discourse-sheaf→op-llm-commitment-sheaf:motivates",
+      "source": "discourse-sheaf",
+      "target": "op-llm-commitment-sheaf",
+      "relation": "motivates",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          0.32438502921744755,
+          -0.6152493413230882,
+          -0.6609101589798396,
+          -0.28185166768771297
+        ],
+        [
+          -0.6144418033349787,
+          0.10621945476878487,
+          -0.6093332793507074,
+          0.48978735428632114
+        ],
+        [
+          -0.0808264393725693,
+          0.6431445765975906,
+          -0.3499779647007275,
+          -0.6762747699828779
+        ]
+      ],
+      "Ftgt": [
+        [
+          -0.7342993610318119,
+          0.6707472769941595,
+          -0.10441522299546689
+        ],
+        [
+          -0.6607907422493745,
+          -0.7415045198687685,
+          -0.11630409266963823
+        ],
+        [
+          -0.15543501325568035,
+          -0.016405408227391446,
+          0.9877098861685547
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1.0623216563700508
+    },
+    {
+      "id": "distributed-coordination-cellular-sheaves→tyler-hanks:authored_by",
+      "source": "distributed-coordination-cellular-sheaves",
+      "target": "tyler-hanks",
+      "relation": "authored_by",
+      "restrictKind": "type-aware",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          0,
+          0,
+          0,
+          0,
+          -1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0.0013660960132256149,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          -1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "Ftgt": [
+        [
+          0,
+          0,
+          -1
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 0
+    },
+    {
+      "id": "distributed-coordination-cellular-sheaves→coordination-sheaf:defines",
+      "source": "distributed-coordination-cellular-sheaves",
+      "target": "coordination-sheaf",
+      "relation": "defines",
+      "restrictKind": "embed",
+      "edgeDim": 8,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 1.4142135623730951
+    },
+    {
+      "id": "distributed-coordination-cellular-sheaves→thm-admm-convergence:proves",
+      "source": "distributed-coordination-cellular-sheaves",
+      "target": "thm-admm-convergence",
+      "relation": "proves",
+      "restrictKind": "type-aware",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          -1,
+          -0.27654397403821346
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0.06695434255525469,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 1.7320508075688772
+    },
+    {
+      "id": "distributed-coordination-cellular-sheaves→spectral-theory-cellular-sheaves:cites",
+      "source": "distributed-coordination-cellular-sheaves",
+      "target": "spectral-theory-cellular-sheaves",
+      "relation": "cites",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          0.24008504157142002,
+          -0.46067440294252787,
+          0.0743648232045874,
+          -0.24753360412661912,
+          -0.5995222915683491,
+          0.03625141221338626,
+          0.2219464095814008,
+          -0.5033228620717789
+        ],
+        [
+          0.7574309491160076,
+          -0.19384904175022147,
+          -0.16929861645123595,
+          0.33588819969777733,
+          0.33301590204534803,
+          0.07816322552706423,
+          -0.31257284409614167,
+          -0.18035281644322976
+        ],
+        [
+          -0.2594676399195065,
+          -0.17533476443864526,
+          0.3079957571992982,
+          0.43478746656286527,
+          0.4331335160085405,
+          0.044740105813523494,
+          0.4980752454922824,
+          -0.4246733647765056
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.6915736185149248,
+          0.3543024775007531,
+          0.6294407713288054
+        ],
+        [
+          -0.06157759094684535,
+          -0.839340200070089,
+          0.5401076085739634
+        ],
+        [
+          0.7196764067741528,
+          -0.4122836195910919,
+          -0.5586484462965166
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 0.7496875839831748
+    },
+    {
+      "id": "distributed-coordination-cellular-sheaves→async-sheaf-diffusion:extended_by",
+      "source": "distributed-coordination-cellular-sheaves",
+      "target": "async-sheaf-diffusion",
+      "relation": "extended_by",
+      "restrictKind": "spectral",
+      "edgeDim": 8,
+      "Fsrc": [
+        [
+          0.5078138363648063,
+          0.1592966561985849,
+          -0.15719157583808777,
+          -0.1440332962308096,
+          0.3859883845874617,
+          -0.2747304888453238,
+          -0.3586363447351823,
+          -0.5641019399720167
+        ],
+        [
+          -0.6228184976033769,
+          0.18418685255220013,
+          0.06072823593601255,
+          -0.3059314279311404,
+          -0.2770273002277719,
+          -0.5015213440364037,
+          -0.003329015276000543,
+          -0.39065521782746343
+        ],
+        [
+          -0.20049853073734147,
+          0.43505000456577486,
+          -0.38860578408103585,
+          -0.34863056032273365,
+          0.5235414097879485,
+          0.1627906206311435,
+          0.4168828147214357,
+          0.15357875682858732
+        ],
+        [
+          0.2225308608263695,
+          0.38409909619413907,
+          -0.44900078629090556,
+          -0.26308252747808336,
+          -0.6239191143263725,
+          0.19238421181239015,
+          -0.28304283321110413,
+          0.16041753744514306
+        ],
+        [
+          -0.22853372042656775,
+          0.49286410489505583,
+          0.3632962894347987,
+          0.2609873299293865,
+          0.05187080993824137,
+          0.5800727334399772,
+          -0.23719252945213434,
+          -0.33064101288428427
+        ],
+        [
+          0.1987770682931771,
+          0.5452856513830134,
+          0.03325550745206614,
+          0.580913498346696,
+          -0.09875321572887841,
+          -0.45657679101760207,
+          0.29257752336698256,
+          0.14411330017385074
+        ],
+        [
+          0.08654425977215495,
+          0.2482192813657497,
+          0.5624701287198794,
+          -0.38932701643140283,
+          0.16783889565409574,
+          -0.2094745146708195,
+          -0.3407727352701543,
+          0.5241885001969812
+        ],
+        [
+          0.40653743817860394,
+          0.045109614951773624,
+          0.41173287449438045,
+          -0.37115264037489626,
+          -0.26511412537374635,
+          0.14373835389883677,
+          0.5995635103465542,
+          -0.27384589609505133
+        ]
+      ],
+      "Ftgt": [
+        [
+          -0.1934855540889678,
+          0.29298773098996844,
+          0.3409221987840097,
+          0.5553504007530632,
+          0.39755712555324474,
+          -0.5245620296918839,
+          -0.08332308385026334,
+          0.10917778726910413
+        ],
+        [
+          0.4711631660191246,
+          0.07611021066017806,
+          0.35515677300617454,
+          -0.44462905045439927,
+          0.3226807608221727,
+          -0.16158289911723903,
+          0.5166405241794909,
+          0.22634452276030614
+        ],
+        [
+          0.23834694525748412,
+          -0.5270235000631643,
+          -0.23024484523748073,
+          0.07888157321187703,
+          0.594149048357679,
+          0.1257823672384447,
+          -0.3792844733601322,
+          0.30579562686910705
+        ],
+        [
+          0.44926756087286795,
+          0.44224780999981067,
+          -0.20075955565589504,
+          -0.09810179150528281,
+          0.26204389625440255,
+          -0.0305530167330009,
+          -0.3254710633450935,
+          -0.6140971170290218
+        ],
+        [
+          -0.3614934828891966,
+          0.5191595944293346,
+          -0.5466907676194046,
+          -0.22993431189962574,
+          0.2844147324339773,
+          0.09992193543372109,
+          0.11905939761407708,
+          0.37815859210788844
+        ],
+        [
+          0.3063317246654042,
+          0.40364383687587685,
+          0.32743484006699997,
+          0.21924004933804478,
+          -0.17447486546989185,
+          0.555474506555705,
+          -0.2749517456527559,
+          0.4163662872287464
+        ],
+        [
+          0.38781360281850985,
+          -0.011334011173652072,
+          -0.43750747927729683,
+          0.6010611442757813,
+          -0.08446580159444124,
+          0.053547698664175136,
+          0.5355212667553011,
+          0.00003548991027447976
+        ],
+        [
+          0.3271115246220689,
+          0.04944733470027754,
+          -0.2584984887866144,
+          -0.12583397635730498,
+          -0.4446095736073646,
+          -0.6004725441953616,
+          -0.3159035895985309,
+          0.38711409951408415
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 1.6689189950424013
+    },
+    {
+      "id": "distributed-coordination-cellular-sheaves→algebraicoptimization-jl:implemented_in",
+      "source": "distributed-coordination-cellular-sheaves",
+      "target": "algebraicoptimization-jl",
+      "relation": "implemented_in",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          -0.38186546235434926,
+          0.2064010148542424,
+          -0.43079361465570526,
+          -0.07835007978172939,
+          0.34658441167373066,
+          0.43073963052403735,
+          -0.33640880605230594,
+          0.4483606224785558
+        ],
+        [
+          0.2959183228380455,
+          -0.4673442396828423,
+          0.09354574083400767,
+          0.28246716904545316,
+          0.26045499308469583,
+          0.0815853818441345,
+          -0.70093095053011,
+          -0.1992135167673179
+        ],
+        [
+          -0.35461242952411404,
+          -0.27088393164502467,
+          0.21212673582304192,
+          0.3660519958949787,
+          0.6457753674550825,
+          -0.044991897543567624,
+          0.449479453768578,
+          -0.02825295095181761
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.19546489633119998,
+          -0.419164755995168,
+          -0.8866196375186738
+        ],
+        [
+          0.6415610894467876,
+          -0.62912217711544,
+          0.4388674683425282
+        ],
+        [
+          0.741749851911064,
+          0.6546038447741043,
+          -0.14594849638442736
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 0.9864183645865018
+    },
+    {
+      "id": "distributed-coordination-cellular-sheaves→multi-robot-formation-flocking:applies_to",
+      "source": "distributed-coordination-cellular-sheaves",
+      "target": "multi-robot-formation-flocking",
+      "relation": "applies_to",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          -0.2691375764125926,
+          -0.3088596374080956,
+          0.3016858941544302,
+          -0.5309772175515712,
+          0.3801020799685238,
+          -0.5126571437315615,
+          -0.17348740144674954,
+          -0.1477385812040389
+        ],
+        [
+          0.011042472463569347,
+          -0.38624682908515184,
+          -0.4558955083761066,
+          0.33070495551719276,
+          0.4727530242146673,
+          0.1339772365586177,
+          -0.5379945735522359,
+          0.05100476125588579
+        ],
+        [
+          -0.18678164899349273,
+          0.12745854272715176,
+          -0.22357792824690007,
+          0.12002573854538277,
+          -0.5294599389854546,
+          -0.5788687085709577,
+          -0.41158284455389404,
+          0.31568405231882907
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.5338300398952477,
+          -0.7924723273113451,
+          -0.29497982804113704
+        ],
+        [
+          0.7212839894366471,
+          0.24467884681377583,
+          0.6479827686784856
+        ],
+        [
+          0.44133308859385695,
+          0.5586768944279167,
+          -0.7022145203173923
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1.3717686156158517
+    },
+    {
+      "id": "game-sheaf-strategic-multi-agent→best-response-sheaf:defines",
+      "source": "game-sheaf-strategic-multi-agent",
+      "target": "best-response-sheaf",
+      "relation": "defines",
+      "restrictKind": "embed",
+      "edgeDim": 8,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 1.4142135623730951
+    },
+    {
+      "id": "game-sheaf-strategic-multi-agent→thm-nash-as-global-sections:proves",
+      "source": "game-sheaf-strategic-multi-agent",
+      "target": "thm-nash-as-global-sections",
+      "relation": "proves",
+      "restrictKind": "type-aware",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          -1
+        ],
+        [
+          0,
+          0,
+          -1,
+          -0.050300968182273205,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "Ftgt": [
+        [
+          0,
+          0,
+          -1
+        ],
+        [
+          0,
+          0,
+          -1
+        ],
+        [
+          -1,
+          -0.26963604241609573,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 1.7320508075688772
+    },
+    {
+      "id": "game-sheaf-strategic-multi-agent→kunneth-split-h1:uses",
+      "source": "game-sheaf-strategic-multi-agent",
+      "target": "kunneth-split-h1",
+      "relation": "uses",
+      "restrictKind": "identity",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1.4142135623730951
+    },
+    {
+      "id": "game-sheaf-strategic-multi-agent→caveat-nonabelian-h1:caveat_of",
+      "source": "game-sheaf-strategic-multi-agent",
+      "target": "caveat-nonabelian-h1",
+      "relation": "caveat_of",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          -0.0816153765316909,
+          -0.05019479407004003,
+          0.09406694845319703,
+          0.43999619385729566,
+          -0.45211866033642134,
+          0.0911375298572555,
+          0.5852043118984321,
+          -0.4829003546532695
+        ],
+        [
+          0.24164413909527926,
+          0.4954089270722346,
+          0.28934802841516727,
+          -0.338843725139881,
+          -0.149081340814573,
+          -0.5719794968578298,
+          0.3633889221865818,
+          0.1272927870340293
+        ],
+        [
+          -0.4155341331390422,
+          -0.24367184021034013,
+          0.289627467657963,
+          0.19414940344973497,
+          0.09400331310739295,
+          -0.6603723666559893,
+          -0.3388187120501627,
+          -0.29436533839721885
+        ]
+      ],
+      "Ftgt": [
+        [
+          -0.3839546353886992,
+          0.12434189735249222,
+          -0.9149414902201743
+        ],
+        [
+          -0.5222365056201469,
+          0.7879328333768734,
+          0.3262374630301533
+        ],
+        [
+          0.7614774259038738,
+          0.6030762328673503,
+          -0.2375945857744575
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1.053478273910146
+    },
+    {
+      "id": "game-sheaf-strategic-multi-agent→coordination-sheaf:extends",
+      "source": "game-sheaf-strategic-multi-agent",
+      "target": "coordination-sheaf",
+      "relation": "extends",
+      "restrictKind": "embed",
+      "edgeDim": 8,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 1.4142135623730951
+    },
+    {
+      "id": "game-sheaf-strategic-multi-agent→sheaf-theoretic-planning:related_to",
+      "source": "game-sheaf-strategic-multi-agent",
+      "target": "sheaf-theoretic-planning",
+      "relation": "related_to",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          0.7632547326481555,
+          -0.09513838345334116,
+          0.324898634115238,
+          -0.25014483973325546,
+          0.04140429939724615,
+          -0.1650198325051707,
+          0.2615771707725248,
+          -0.3780090744823258
+        ],
+        [
+          -0.2193662118813777,
+          -0.3127885073293286,
+          -0.18339038089022086,
+          -0.7084121152593872,
+          0.2850564532673471,
+          -0.30099135568882296,
+          -0.35740193240650997,
+          -0.13774229155021042
+        ],
+        [
+          -0.1944201659115529,
+          -0.5672705995761277,
+          0.49832511030090515,
+          -0.2010613618436326,
+          -0.48078996574791477,
+          0.1650676345869905,
+          0.12956866302612288,
+          0.2765084547897899
+        ]
+      ],
+      "Ftgt": [
+        [
+          -0.5166097349792473,
+          -0.5962908671958699,
+          -0.6144522629329876
+        ],
+        [
+          0.028271653078181046,
+          0.7053619305120239,
+          -0.7082833194538594
+        ],
+        [
+          0.8557541091674048,
+          -0.38327763916402463,
+          -0.3475387114552177
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 0.9384522583010868
+    },
+    {
+      "id": "interval-sheaf→dynamical-systems-and-sheaves:defined_in",
+      "source": "interval-sheaf",
+      "target": "dynamical-systems-and-sheaves",
+      "relation": "defined_in",
+      "restrictKind": "embed",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 0
+    },
+    {
+      "id": "interval-sheaf→behavior-type:is_a",
+      "source": "interval-sheaf",
+      "target": "behavior-type",
+      "relation": "is_a",
+      "restrictKind": "projection",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 0
+    },
+    {
+      "id": "interval-sheaf→limit-vs-colimit-composition:composed",
+      "source": "interval-sheaf",
+      "target": "limit-vs-colimit-composition",
+      "relation": "composed",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          0.6512013547752612,
+          -0.7365845728372384,
+          -0.07255556888216512,
+          0.16767722570830096
+        ],
+        [
+          -0.5620429549612936,
+          -0.6298082802432736,
+          0.19702853856349678,
+          -0.4986271170994615
+        ],
+        [
+          -0.0783843916251493,
+          -0.043971233169830926,
+          0.868683509137686,
+          0.48714615748799184
+        ]
+      ],
+      "Ftgt": [
+        [
+          -0.18598514841142147,
+          0.925631161534019,
+          0.32957014028513604
+        ],
+        [
+          -0.8800030261113551,
+          -0.007727610274789353,
+          -0.47490520956744514
+        ],
+        [
+          0.43704027114813954,
+          0.378348036649622,
+          -0.8159954439567276
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1.033267840861534
+    },
+    {
+      "id": "interval-sheaf→algebras-open-dynamical-systems:alternative_to",
+      "source": "interval-sheaf",
+      "target": "algebras-open-dynamical-systems",
+      "relation": "alternative_to",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          -0.8684421769641282,
+          0.24843145747337902,
+          -0.19579523859168335,
+          -0.38177771117796283
+        ],
+        [
+          -0.4297494881922255,
+          -0.369154588554113,
+          0.7430375895360473,
+          0.3562799568940476
+        ],
+        [
+          -0.10803125887055995,
+          0.6773466522238853,
+          -0.0731181484392014,
+          0.7240058675154227
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.21369608317119224,
+          0.4801639612144356,
+          0.8507505829490527
+        ],
+        [
+          0.7570985261385444,
+          -0.6317560840034533,
+          0.16639132201970594
+        ],
+        [
+          -0.6173619730402372,
+          -0.6085448386729475,
+          0.49853522801140304
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1.684947832891625
+    },
+    {
+      "id": "interval-sheaf→temporal-type-theory:related_to",
+      "source": "interval-sheaf",
+      "target": "temporal-type-theory",
+      "relation": "related_to",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          -0.2526660281977064,
+          -0.09873981815490532,
+          0.8727663385429184,
+          -0.4058192267647261
+        ],
+        [
+          0.22329564803041682,
+          0.829773559392351,
+          -0.07662560616564489,
+          -0.5057107969816073
+        ],
+        [
+          0.49986834880640607,
+          -0.5438392504674846,
+          -0.21402559231525908,
+          -0.6391897600451875
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.23120384344100223,
+          0.6552622821646463,
+          -0.7191495841273133
+        ],
+        [
+          0.8570463820221491,
+          -0.4870090285446028,
+          -0.16820732795804874
+        ],
+        [
+          -0.4604522579387065,
+          -0.5774543684902053,
+          -0.6741885273947674
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1.248192979171899
+    },
+    {
+      "id": "learning-sheaf-laplacian-restriction-maps→procrustes-restriction-learning:defines",
+      "source": "learning-sheaf-laplacian-restriction-maps",
+      "target": "procrustes-restriction-learning",
+      "relation": "defines",
+      "restrictKind": "embed",
+      "edgeDim": 8,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 1.4142135623730951
+    },
+    {
+      "id": "learning-sheaf-laplacian-restriction-maps→restriction-map:learns",
+      "source": "learning-sheaf-laplacian-restriction-maps",
+      "target": "restriction-map",
+      "relation": "learns",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          -0.024089673602210752,
+          0.3296807233504328,
+          0.5178180597174904,
+          0.36559085491341714,
+          0.44238673096404324,
+          0.5343331144747752,
+          0.04450815582068891,
+          -0.07575763472442765
+        ],
+        [
+          -0.1457205896389705,
+          0.3549889192330296,
+          -0.13353296801415684,
+          -0.5088083754489889,
+          -0.16042150747069694,
+          0.47782333066276383,
+          -0.2518060451041206,
+          0.5085025867854764
+        ],
+        [
+          -0.2904481283643744,
+          -0.22974830706281177,
+          0.37873031142092506,
+          -0.20873506561840557,
+          0.4372858426532305,
+          -0.3842577748942854,
+          -0.5463175735118114,
+          0.19624674989463248
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.41541055036922714,
+          0.7592375365953866,
+          -0.5009914546841142
+        ],
+        [
+          -0.19200220689811262,
+          0.6115386677780852,
+          0.7675647271458343
+        ],
+        [
+          0.8891395993814414,
+          -0.22266302081121123,
+          0.3998148971399591
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 0.5238545514767864
+    },
+    {
+      "id": "learning-sheaf-laplacian-restriction-maps→sheaf-nn-connection-laplacians:alternative_to",
+      "source": "learning-sheaf-laplacian-restriction-maps",
+      "target": "sheaf-nn-connection-laplacians",
+      "relation": "alternative_to",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          0.4229132848851571,
+          -0.15702418093823675,
+          0.15600765082139362,
+          0.0017325823669420736,
+          -0.18515357751916334,
+          -0.48103696208611807,
+          0.6163429494666897,
+          0.3557939482247683
+        ],
+        [
+          0.2871656955857734,
+          0.05804522020303904,
+          -0.6949881492690606,
+          -0.32842765087105497,
+          -0.4145747977890348,
+          0.14631840827498419,
+          0.1683148232056412,
+          -0.3188763819045174
+        ],
+        [
+          0.12695703122864033,
+          0.4610108239401019,
+          -0.20740571559072152,
+          -0.3941729087537408,
+          0.3543094698733568,
+          0.16772537360163095,
+          -0.05133558225574222,
+          0.6454914222352705
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.7395072323133323,
+          -0.6128933175639789,
+          -0.2783717561853125
+        ],
+        [
+          0.29435023518656506,
+          -0.07748376772166611,
+          0.9525514184469354
+        ],
+        [
+          -0.6053816914987513,
+          -0.7863574549942758,
+          0.12310548555217286
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1.2155850763967464
+    },
+    {
+      "id": "learning-sheaf-laplacian-restriction-maps→sheaflearning-jl:alternative_to",
+      "source": "learning-sheaf-laplacian-restriction-maps",
+      "target": "sheaflearning-jl",
+      "relation": "alternative_to",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          -0.11529774901647956,
+          0.5681529199808156,
+          0.4075910934419514,
+          0.13777931162957646,
+          0.05771220719252003,
+          -0.5909577031469772,
+          0.06717929375292384,
+          0.3488843463753501
+        ],
+        [
+          0.41063813018589246,
+          0.21662624768849922,
+          -0.20074958344926339,
+          -0.5604189238983636,
+          -0.2898715961522714,
+          -0.20512770916504633,
+          0.5269448905858324,
+          -0.16219060482562564
+        ],
+        [
+          0.05183594248007458,
+          -0.20604263321020536,
+          -0.09526823802134571,
+          0.4583800318627379,
+          -0.19299857459615022,
+          -0.5561543731145988,
+          -0.019062768753683967,
+          -0.6234995203668052
+        ]
+      ],
+      "Ftgt": [
+        [
+          -0.3540481522101794,
+          0.2954734471306163,
+          0.8873248266318872
+        ],
+        [
+          -0.9034166940731028,
+          0.1372954979207937,
+          -0.40618742363680693
+        ],
+        [
+          0.2418433021329797,
+          0.945433968234393,
+          -0.218326427447493
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1.0897153753963569
+    },
+    {
+      "id": "nonlinear-sheaf-laplacian→sheaf-laplacian:generalizes",
+      "source": "nonlinear-sheaf-laplacian",
+      "target": "sheaf-laplacian",
+      "relation": "generalizes",
+      "restrictKind": "embed",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 0
+    },
+    {
+      "id": "nonlinear-sheaf-laplacian→coboundary-map:uses",
+      "source": "nonlinear-sheaf-laplacian",
+      "target": "coboundary-map",
+      "relation": "uses",
+      "restrictKind": "identity",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 0
+    },
+    {
+      "id": "nonlinear-sheaf-laplacian→distributed-coordination-cellular-sheaves:defined_in",
+      "source": "nonlinear-sheaf-laplacian",
+      "target": "distributed-coordination-cellular-sheaves",
+      "relation": "defined_in",
+      "restrictKind": "embed",
+      "edgeDim": 8,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 1.4142135623730951
+    },
+    {
+      "id": "nonlinear-sheaf-laplacian→sheaf-diffusion:iterated",
+      "source": "nonlinear-sheaf-laplacian",
+      "target": "sheaf-diffusion",
+      "relation": "iterated",
+      "restrictKind": "spectral",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          -0.5238373394537036,
+          -0.03815935293699926,
+          -0.6740460196303514,
+          -0.5194230154681007
+        ],
+        [
+          0.7638797313008207,
+          -0.32958949693102496,
+          -0.5541930724785431,
+          -0.026991814265298248
+        ],
+        [
+          -0.02908705198682324,
+          -0.7607308818510797,
+          0.43571709858923696,
+          -0.48020108163327946
+        ],
+        [
+          0.3758139716782324,
+          0.5578558529712332,
+          0.22064136473981777,
+          -0.7063130284533348
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.05931911815031255,
+          -0.8135978010674408,
+          -0.520556318547728,
+          0.24835667058975153,
+          0.0433583176991928
+        ],
+        [
+          -0.03942641672886713,
+          0.07729613631026946,
+          0.2803892170722057,
+          0.9043982256028306,
+          -0.30970405462556205
+        ],
+        [
+          -0.3143962037026604,
+          0.25644416304903767,
+          -0.21685385652644984,
+          0.31578239708435485,
+          0.8298477576861304
+        ],
+        [
+          0.9349510018199808,
+          0.059892375325909304,
+          0.0941087401770083,
+          0.1148755103188528,
+          0.316585991043372
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 0.8961321631919892
+    },
+    {
+      "id": "sheaf-diffusion→dirichlet-energy:implements",
+      "source": "sheaf-diffusion",
+      "target": "dirichlet-energy",
+      "relation": "implements",
+      "restrictKind": "identity",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1
+    },
+    {
+      "id": "sheaf-diffusion→sheaf-laplacian:uses",
+      "source": "sheaf-diffusion",
+      "target": "sheaf-laplacian",
+      "relation": "uses",
+      "restrictKind": "identity",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1
+    },
+    {
+      "id": "sheaf-diffusion→admm:part_of",
+      "source": "sheaf-diffusion",
+      "target": "admm",
+      "relation": "part_of",
+      "restrictKind": "projection",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1
+    },
+    {
+      "id": "sheaf-diffusion→async-block-update:generalized_by",
+      "source": "sheaf-diffusion",
+      "target": "async-block-update",
+      "relation": "generalized_by",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          -0.4330539568103147,
+          -0.3098939595075426,
+          0.5320126829627229,
+          -0.6371607271034708,
+          0.16558598176007966
+        ],
+        [
+          0.31623522053610775,
+          -0.6149916991401643,
+          0.32222309401466753,
+          0.19286593202510324,
+          -0.617053891673066
+        ],
+        [
+          -0.19528238736398928,
+          -0.629136070091941,
+          -0.7313216778520845,
+          -0.14608563277995645,
+          0.09939912420932619
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.7615014261986307,
+          -0.6272799326848078,
+          -0.16320374979881627
+        ],
+        [
+          0.5649249583445229,
+          0.5188801747280773,
+          0.641578643436328
+        ],
+        [
+          -0.3177662180548622,
+          -0.5807609235521131,
+          0.7494940829239457
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1.4574491282736972
+    },
+    {
+      "id": "sheaf-diffusion→cellularsheaves-jl:implemented_in",
+      "source": "sheaf-diffusion",
+      "target": "cellularsheaves-jl",
+      "relation": "implemented_in",
+      "restrictKind": "spectral",
+      "edgeDim": 3,
+      "Fsrc": [
+        [
+          0.3955389448352857,
+          0.2646141538982864,
+          0.5501462762959358,
+          -0.6574642580037249,
+          -0.19648948267174557
+        ],
+        [
+          -0.5341829428802246,
+          0.39957783320123547,
+          -0.16459873037775538,
+          -0.08254750715372978,
+          -0.721858231075025
+        ],
+        [
+          0.5723040925219359,
+          0.33531345788353023,
+          0.09788294950557297,
+          0.6615453083073796,
+          -0.3358714693114272
+        ]
+      ],
+      "Ftgt": [
+        [
+          0.01876670828663345,
+          0.6598555326541493,
+          0.7511580969980908
+        ],
+        [
+          -0.9648462338893741,
+          0.2089332813456732,
+          -0.15943220783650042
+        ],
+        [
+          -0.26214415043936357,
+          -0.7217600432081555,
+          0.6405801155348062
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "residual": 1.4453171206241149
+    }
+  ]
+}

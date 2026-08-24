@@ -5,7 +5,8 @@ This repo is set up so the next change is a small, reviewable enhancement — no
 ## Before you write code
 
 1. Read [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). Honour the store/algebra/view split.
-2. Pick an item from [`ROADMAP.md`](ROADMAP.md) or an open issue. If it is new, open an issue first.
+2. New knowledge graphs go through [`docs/GENERATE.md`](docs/GENERATE.md), not a one-off TypeScript module.
+3. Pick an item from [`ROADMAP.md`](ROADMAP.md) or an open issue. If it is new, open an issue first.
 3. Keep Bertin encodings: **size and value for quantity**, **ordered hue for hierarchy**, residual as a diverging scale. No rainbow, no forced common dimension.
 
 ## Dev loop

@@ -1,27 +1,49 @@
-import type { LevelId, NodeKind, RestrictionKind } from "./types";
+import type { RestrictionKind } from "./types";
 
-export const LEVEL_HEX: Record<LevelId, string> = {
-  0: "#4a9a92",
-  1: "#6b8ea3",
-  2: "#8a9a6e",
-  3: "#b08978",
+const LEVEL_PALETTE = ["#4a9a92", "#6b8ea3", "#8a9a6e", "#b08978", "#7a8b9a", "#9a7a8a"];
+
+export function levelHex(level: number): string {
+  const i = ((level % LEVEL_PALETTE.length) + LEVEL_PALETTE.length) % LEVEL_PALETTE.length;
+  return LEVEL_PALETTE[i]!;
+}
+
+/** @deprecated use levelHex — kept so 0–3 lookups stay terse */
+export const LEVEL_HEX: Record<number, string> = {
+  0: LEVEL_PALETTE[0]!,
+  1: LEVEL_PALETTE[1]!,
+  2: LEVEL_PALETTE[2]!,
+  3: LEVEL_PALETTE[3]!,
 };
 
 export const LEVELS = [
-  { id: 0 as const, code: "L0", label: "Foundations", kicker: "Cells & stalks" },
-  { id: 1 as const, code: "L1", label: "Sheaf theory", kicker: "Maps & embeddings" },
-  { id: 2 as const, code: "L2", label: "Applications", kicker: "Networks & KGE" },
-  { id: 3 as const, code: "L3", label: "Viz & integrity", kicker: "Residuals, Bertin" },
+  { id: 0, code: "L0", label: "Foundations", kicker: "Cells & stalks" },
+  { id: 1, code: "L1", label: "Sheaf theory", kicker: "Maps & embeddings" },
+  { id: 2, code: "L2", label: "Applications", kicker: "Networks & KGE" },
+  { id: 3, code: "L3", label: "Viz & integrity", kicker: "Residuals, Bertin" },
 ];
 
-export const KIND_LABEL: Record<NodeKind, string> = {
+const KIND_LABELS: Record<string, string> = {
   paper: "Paper",
   concept: "Concept",
   algorithm: "Algorithm",
   theorem: "Theorem",
   model: "Model",
   integrity: "Integrity",
+  entity: "Entity",
+  agent: "Agent",
+  channel: "Channel",
+  person: "Person",
+  software: "Software",
+  application: "Application",
+  "open-problem": "Open problem",
 };
+
+export function kindLabel(kind: string): string {
+  if (KIND_LABELS[kind]) return KIND_LABELS[kind];
+  return kind.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+export const KIND_LABEL = KIND_LABELS;
 
 export const RESTRICT_LABEL: Record<RestrictionKind, string> = {
   identity: "Identity",

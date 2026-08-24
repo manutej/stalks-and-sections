@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, type ComponentRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Html, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
-import { KIND_LABEL, LEVELS, LEVEL_HEX, hexToRgb01, residualColor } from "@/lib/sheaf/palette";
+import { kindLabel, levelHex, hexToRgb01, residualColor } from "@/lib/sheaf/palette";
 import { LAYER_Z, nodeRadius } from "@/lib/sheaf/layout";
 import type { NodeKind, SheafNode, Vec3 } from "@/lib/sheaf/types";
 import { useSheaf } from "@/store/sheaf";
@@ -171,7 +171,7 @@ function NodeMark({
               {node.title}
               {active ? (
                 <span className="sheaf-label-meta">
-                  {KIND_LABEL[node.kind]} · {LEVELS[node.level]?.label}
+                  {kindLabel(node.kind)} · L{node.level}
                   {node.known ? " · pinned" : ""}
                 </span>
               ) : null}
@@ -225,16 +225,17 @@ function EdgeLines({
 
 function LevelPlanes() {
   const maxLevel = useSheaf((s) => s.maxLevel);
+  const levels = useSheaf((s) => s.levels);
   const select = useSheaf((s) => s.select);
   return (
     <>
-      {([0, 1, 2, 3] as const).map((lv) => {
-        if (lv > maxLevel) return null;
-        const hex = LEVEL_HEX[lv];
+      {levels.map((lv) => {
+        if (lv.id > maxLevel) return null;
+        const hex = levelHex(lv.id);
         const [r, g, b] = hexToRgb01(hex);
-        const rad = 8.8 + (3 - lv) * 1.35;
+        const rad = 8.8 + Math.max(0, 3 - lv.id) * 1.35;
         return (
-          <group key={lv} position={[0, lv * LAYER_Z, 0]}>
+          <group key={lv.id} position={[0, lv.id * LAYER_Z, 0]}>
             <mesh
               rotation={[-Math.PI / 2, 0, 0]}
               onClick={(e) => {
@@ -261,7 +262,7 @@ function LevelPlanes() {
             >
               <div className="sheaf-layer-label">
                 <span className="sheaf-layer-swatch" style={{ background: hex }} />
-                {LEVELS[lv]?.label}
+                {lv.label}
               </div>
             </Html>
           </group>
@@ -310,7 +311,7 @@ function Lattice() {
             radius={nodeRadius(n.dim, stalkScale)}
             active={active}
             dimmed={dimmed}
-            color={LEVEL_HEX[n.level]}
+            color={levelHex(n.level)}
             showLabel={showLabel}
           />
         );

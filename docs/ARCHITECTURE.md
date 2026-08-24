@@ -5,11 +5,12 @@ Stalks & Sections is a **client-side sheaf engine** with a WebGL lattice on top.
 ## Data flow
 
 ```
-loadGraph(dataset)
+loadGraph(dataset)          src/lib/sheaf/catalog.ts
     │
     ├─ literatureGraph()     src/lib/sheaf/lattice.ts
-    └─ cobbGraph()           src/lib/sheaf/cobb.ts
-            │
+    ├─ cobbGraph()           src/lib/sheaf/cobb.ts
+    └─ graphFromJson(...)    src/lib/sheaf/from-json.ts
+            │                  docs/examples/*.json
             ▼
     buildGraph(nodes, edges) src/lib/sheaf/build.ts
             │  stalks, restriction maps F_s, F_t, residuals
@@ -71,7 +72,7 @@ Labels are screen-space HTML chips, pushed radially from each node. They draw fo
 
 **New operator** — implement in `src/lib/sheaf/`, call from a store method, bind a dock button, add a `HINTS` entry.
 
-**New dataset** — see [`DATASETS.md`](DATASETS.md).
+**New dataset** — JSON in `docs/examples/` via [`GENERATE.md`](GENERATE.md). Builtin TS graphs stay `literature` / `cobb`.
 
 **New visual encoding** — palette first (`palette.ts`), then Scene. Size and value stay quantitative; hue stays ordered. No rainbow.
 

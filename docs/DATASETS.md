@@ -1,63 +1,30 @@
 # Adding a dataset
 
-A dataset is a `SheafGraph`: levels, nodes with stalks, edges with restriction maps. The store loads one via `loadGraph(id)` in `src/lib/sheaf/index.ts`.
+**Canonical path:** [`GENERATE.md`](GENERATE.md) — JSON spec, templates, and generator CLI.
 
-## 1. Declare the id
+A dataset is a `SheafGraph`: levels, nodes with stalks, edges with restriction maps.
 
-In `src/lib/sheaf/types.ts`:
+## Preferred: generate JSON
 
-```ts
-export type DatasetId = "literature" | "cobb" | "my-graph";
+```bash
+cp templates/kg/triples.json /tmp/my-kg.json
+# edit nodes + triples (give every coordinate a meaning)
+npm run sheaf:generate -- --from /tmp/my-kg.json --out docs/examples/my-kg.json
+npm run sheaf:validate -- docs/examples/my-kg.json
 ```
 
-## 2. Write the specs
+Put the file in `docs/examples/`. The catalog (`src/lib/sheaf/catalog.ts`) loads every JSON there except the schema. Restart the app; pick it in the dataset switcher.
 
-Follow `src/lib/sheaf/lattice.ts` / `cobb.ts`. You describe **intent**; `buildGraph` builds the numeric maps.
+Hand-authored sheaves (maps already filled) also belong in `docs/examples/` — see `discourse-triangle.json`.
 
-```ts
-const N: NodeSpec[] = [
-  {
-    id: "entity-a",
-    title: "Entity A",
-    kind: "concept",       // paper | concept | algorithm | theorem | model | integrity
-    level: 0,              // 0..3
-    dim: 4,                // stalk dimension, 2–16
-    known: true,           // pinned during Diffuse
-    summary: "…",
-    sources: ["S1"],
-  },
-];
+## Builtin TypeScript graphs
 
-const E: EdgeSpec[] = [
-  {
-    source: "entity-a",
-    target: "entity-b",
-    relation: "restricts",
-    restrictKind: "projection", // identity | projection | embed | spectral | type-aware
-  },
-];
-```
+`literature` and `cobb` still live in `src/lib/sheaf/lattice.ts` and `cobb.ts`. Use that path only when the graph is part of the algebra demo (closed-form TransE, sampled literature sections). New knowledge graphs should be JSON.
 
-`build.ts` samples a section in \(\mathbb{R}^{\mathrm{dim}}\) and a pair of maps into a shared edge stalk. Override `section`, `Fsrc`, `Ftgt`, or `translation` on the spec when you have real numbers (the Cobb seed does this for TransE).
+## Loader rules
 
-## 3. Register
+`src/lib/sheaf/from-json.ts`:
 
-```ts
-// src/lib/sheaf/index.ts
-export function loadGraph(id: DatasetId): SheafGraph {
-  if (id === "cobb") return cobbGraph();
-  if (id === "my-graph") return myGraph();
-  return literatureGraph();
-}
-```
-
-Add a dataset button in `TopBar.tsx` and a `HINTS` entry in `Hint.tsx`.
-
-## 4. Prove it
-
-- Energy is finite after load
-- Diffuse does not increase energy
-- Known stalks do not drift (`boundaryDrift ≈ 0`)
-- Screenshot the four layers and one selected stalk
-
-JSON import (Roadmap v1.2) will replace this boilerplate with a file drop. Until then, a module is the API.
+- Missing `section` → **zeros**, never Gaussians
+- Missing `Fsrc`/`Ftgt` → built from `restrictKind`
+- `kind` and `level` are data, not a closed TypeScript union

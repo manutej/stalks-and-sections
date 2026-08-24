@@ -22,6 +22,7 @@ export function Dock() {
   const poolNow = useSheaf((s) => s.poolNow);
   const pooled = useSheaf((s) => s.pooled);
   const dataset = useSheaf((s) => s.dataset);
+  const levels = useSheaf((s) => s.levels);
   const energyLog = useSheaf((s) => s.energyLog);
   const setHelp = useSheaf((s) => s.setHelp);
 
@@ -32,12 +33,12 @@ export function Dock() {
           <SliderField
             hint="depth"
             valueLabel={`L${maxLevel}`}
-            caption={LEVELS[maxLevel]?.label ?? ""}
+            caption={levels.find((l) => l.id === maxLevel)?.label ?? LEVELS[maxLevel]?.label ?? ""}
           >
             <input
               type="range"
               min={0}
-              max={3}
+              max={Math.max(0, ...levels.map((l) => l.id), 0)}
               step={1}
               value={maxLevel}
               onChange={(e) => setMaxLevel(Number(e.target.value))}
