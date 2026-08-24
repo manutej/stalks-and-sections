@@ -1,0 +1,44 @@
+{
+  "id": "my-graph",
+  "title": "Replace this title",
+  "kicker": "one-line claim",
+  "blurb": "What a reviewer should understand after looking at the lattice.",
+  "residualMeaning": "One sentence: what a terracotta edge means in this domain.",
+  "levels": [
+    { "id": 0, "code": "L0", "label": "Layer 0", "kicker": "", "blurb": "" },
+    { "id": 1, "code": "L1", "label": "Layer 1", "kicker": "", "blurb": "" }
+  ],
+  "nodes": [
+    {
+      "id": "a",
+      "title": "Node A",
+      "kind": "entity",
+      "level": 0,
+      "dim": 2,
+      "known": true,
+      "section": [1, 0],
+      "summary": "Say what coordinate 0 and 1 mean.",
+      "sources": []
+    },
+    {
+      "id": "b",
+      "title": "Node B",
+      "kind": "entity",
+      "level": 1,
+      "dim": 2,
+      "known": false,
+      "section": [0, 0],
+      "summary": "Unknown stalk. Diffuse will move it.",
+      "sources": []
+    }
+  ],
+  "triples": [
+    {
+      "source": "a",
+      "relation": "restricts",
+      "target": "b",
+      "restrictKind": "projection",
+      "note": "Optional. Fsrc/Ftgt omitted → generator builds them from restrictKind."
+    }
+  ]
+}

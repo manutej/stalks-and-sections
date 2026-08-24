@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
 import { StalkPlot } from "../canvas/StalkPlot";
-import { KIND_LABEL, LEVELS, RESTRICT_LABEL, residualColor } from "@/lib/sheaf/palette";
+import { kindLabel, RESTRICT_LABEL, residualColor } from "@/lib/sheaf/palette";
 import { useSheaf } from "@/store/sheaf";
 import { useVisible } from "../useVisible";
 import { Hint } from "./Hint";
@@ -14,6 +14,7 @@ export function Inspector({ className = "" }: { className?: string }) {
   const dataset = useSheaf((s) => s.dataset);
   const select = useSheaf((s) => s.select);
   const vis = useVisible();
+  const levels = useSheaf((s) => s.levels);
   const node = nodes.find((n) => n.id === selectedId) ?? null;
 
   const nbrs = node
@@ -37,7 +38,7 @@ export function Inspector({ className = "" }: { className?: string }) {
           <p className="font-display text-lg leading-tight">{node ? node.title : "Lattice"}</p>
           {node ? (
             <p className="mt-1 text-[11px] text-fg-muted">
-              {KIND_LABEL[node.kind]} · {LEVELS[node.level]?.label} · dim {node.dim}
+              {kindLabel(node.kind)} · {levels.find((l) => l.id === node.level)?.label ?? `L${node.level}`} · dim {node.dim}
               {node.known ? " · pinned" : " · free"}
             </p>
           ) : (

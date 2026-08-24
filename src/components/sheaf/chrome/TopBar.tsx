@@ -1,4 +1,5 @@
 import { BookOpen, CircleHelp, Layers2, RotateCcw, Search } from "lucide-react";
+import { DATASETS } from "@/lib/sheaf";
 import { useSheaf } from "@/store/sheaf";
 import { Explained, Hint } from "./Hint";
 
@@ -81,28 +82,23 @@ export function TopBar() {
         </div>
 
         <div className="sheaf-panel ml-auto flex items-center gap-1 rounded-xl p-1">
-          <Explained k="lattice" side="bottom">
-            <button
-              type="button"
-              onClick={() => setDataset("literature")}
-              className={`rounded-lg px-2.5 py-1.5 text-xs font-medium ${
-                dataset === "literature" ? "bg-fg text-bg" : "text-fg-muted hover:text-fg"
-              }`}
-            >
-              Lattice
-            </button>
-          </Explained>
-          <Explained k="cobb" side="bottom">
-            <button
-              type="button"
-              onClick={() => setDataset("cobb")}
-              className={`rounded-lg px-2.5 py-1.5 text-xs font-medium ${
-                dataset === "cobb" ? "bg-fg text-bg" : "text-fg-muted hover:text-fg"
-              }`}
-            >
-              Cobb graph
-            </button>
-          </Explained>
+          <label className="sr-only" htmlFor="dataset">
+            Dataset
+          </label>
+          <select
+            id="dataset"
+            value={dataset}
+            onChange={(e) => setDataset(e.target.value)}
+            className="h-8 max-w-[11rem] rounded-lg bg-fg px-2 text-xs font-medium text-bg outline-none"
+            aria-label="Knowledge graph"
+          >
+            {DATASETS.map((d) => (
+              <option key={d.id} value={d.id} className="text-fg">
+                {d.label}
+              </option>
+            ))}
+          </select>
+          <Hint k="dataset" side="bottom" />
         </div>
 
         <div className="sheaf-panel hidden items-center gap-1 rounded-xl px-3 py-2 sm:flex">

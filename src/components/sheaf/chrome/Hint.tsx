@@ -3,6 +3,10 @@ import * as Popover from "@radix-ui/react-popover";
 import { CircleHelp } from "lucide-react";
 
 export const HINTS = {
+  dataset: {
+    title: "Knowledge graph",
+    body: "Switch the sheaf. Lattice and Cobb are built in. Anything in docs/examples/*.json appears here after you generate it (see docs/GENERATE.md).",
+  },
   lattice: {
     title: "Lattice",
     body: "The literature graph. Each node is a stalk (a vector space of its own dimension) drawn from sheaf papers. Edges are restriction maps between them.",

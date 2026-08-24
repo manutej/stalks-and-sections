@@ -28,12 +28,25 @@ npm run dev
 
 Then open the printed local URL. `npm run typecheck` and `npm run build` are the gates.
 
+### Add a knowledge graph
+
+```bash
+cp templates/kg/triples.json /tmp/my-kg.json
+npm run sheaf:generate -- --from /tmp/my-kg.json --out docs/examples/my-kg.json
+npm run sheaf:validate -- docs/examples/my-kg.json
+```
+
+Full contract: **[docs/GENERATE.md](docs/GENERATE.md)** — schema, templates, wiki import, restriction kinds.
+
 | Script | What it does |
 | --- | --- |
 | `npm run dev` | Vite + TanStack Start, bound on `0.0.0.0:8080` |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run build` | Production client + server bundle |
 | `npm run preview` | Serve the production build |
+| `npm run sheaf:generate` | Compile triples / CSV / wiki → sheaf JSON |
+| `npm run sheaf:examples` | Regenerate shipped example graphs |
+| `npm run sheaf:validate` | Check a sheaf JSON against the contract |
 
 ## How to read the lattice
 

@@ -1,0 +1,370 @@
+{
+  "id": "toy-kg",
+  "title": "Geo fragment",
+  "kicker": "TransE sheaf on a tiny place graph",
+  "blurb": "A handful of geographic entities with identity restrictions and explicit translations. Paris→France is a clean triple (residual ≈ 0). Paris→Europe is a noisy skip that should light up terracotta.",
+  "residualMeaning": "TransE violation: F(head) + r should equal F(tail) in the edge stalk. Teal means the triple holds; terracotta means it does not.",
+  "levels": [
+    {
+      "id": 0,
+      "code": "L0",
+      "label": "World",
+      "kicker": "Continents",
+      "blurb": "Coarse geography."
+    },
+    {
+      "id": 1,
+      "code": "L1",
+      "label": "Polity",
+      "kicker": "Countries",
+      "blurb": "Administrative units."
+    },
+    {
+      "id": 2,
+      "code": "L2",
+      "label": "Place",
+      "kicker": "Cities & landmarks",
+      "blurb": "Pinned local facts."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "europe",
+      "title": "Europe",
+      "kind": "entity",
+      "level": 0,
+      "dim": 4,
+      "known": true,
+      "section": [
+        0,
+        0,
+        2,
+        0
+      ],
+      "summary": "Continent. Coordinate 2 is the regional axis.",
+      "sources": []
+    },
+    {
+      "id": "france",
+      "title": "France",
+      "kind": "entity",
+      "level": 1,
+      "dim": 4,
+      "known": true,
+      "section": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "summary": "Country. Known embedding.",
+      "sources": []
+    },
+    {
+      "id": "paris",
+      "title": "Paris",
+      "kind": "entity",
+      "level": 2,
+      "dim": 4,
+      "known": true,
+      "section": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "summary": "City. Pinned.",
+      "sources": []
+    },
+    {
+      "id": "eiffel",
+      "title": "Eiffel Tower",
+      "kind": "entity",
+      "level": 2,
+      "dim": 4,
+      "known": false,
+      "section": [
+        1,
+        0,
+        0,
+        0.4
+      ],
+      "summary": "Landmark. Left free so Diffuse can pull it toward Paris.",
+      "sources": []
+    }
+  ],
+  "edges": [
+    {
+      "id": "paris→france:capital_of",
+      "source": "paris",
+      "target": "france",
+      "relation": "capital_of",
+      "restrictKind": "identity",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "residual": 0,
+      "note": "Clean TransE: paris + (0,1,0,0) = france."
+    },
+    {
+      "id": "france→europe:part_of",
+      "source": "france",
+      "target": "europe",
+      "relation": "part_of",
+      "restrictKind": "identity",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        -1,
+        -1,
+        2,
+        0
+      ],
+      "residual": 0,
+      "note": "Clean TransE: france + r = europe."
+    },
+    {
+      "id": "eiffel→paris:located_in",
+      "source": "eiffel",
+      "target": "paris",
+      "relation": "located_in",
+      "restrictKind": "identity",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        -0.4
+      ],
+      "residual": 0,
+      "note": "Should become consistent once Eiffel is diffused toward Paris."
+    },
+    {
+      "id": "paris→europe:located_in",
+      "source": "paris",
+      "target": "europe",
+      "relation": "located_in",
+      "restrictKind": "identity",
+      "edgeDim": 4,
+      "Fsrc": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "Ftgt": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "residual": 2.23606797749979,
+      "note": "Noisy skip: Paris is not a continent. Residual should stay high."
+    }
+  ]
+}

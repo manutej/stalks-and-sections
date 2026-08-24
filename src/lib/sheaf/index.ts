@@ -1,11 +1,5 @@
-import { cobbGraph } from "./cobb";
-import { literatureGraph } from "./lattice";
-import type { DatasetId, SheafGraph } from "./types";
-
-export function loadGraph(id: DatasetId): SheafGraph {
-  return id === "cobb" ? cobbGraph() : literatureGraph();
-}
-
+export { loadGraph, DATASETS, datasetMeta } from "./catalog";
+export { graphFromJson } from "./from-json";
 export { cobbGraph } from "./cobb";
 export { literatureGraph } from "./lattice";
 export { diffuse } from "./diffuse";

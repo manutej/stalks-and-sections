@@ -131,6 +131,7 @@ export const useSheaf = create<SheafStore>((set, get) => ({
 
   setDataset: (id) => {
     const snap = snapshot(id);
+    const top = Math.max(0, ...snap.levels.map((l) => l.id));
     set({
       dataset: id,
       ...snap,
@@ -143,6 +144,7 @@ export const useSheaf = create<SheafStore>((set, get) => ({
       energyLog: [snap.energy],
       flyToId: null,
       mobilePanel: "none",
+      maxLevel: top,
     });
   },
 
@@ -250,6 +252,7 @@ export const useSheaf = create<SheafStore>((set, get) => ({
   reset: () => {
     const { dataset } = get();
     const snap = snapshot(dataset);
+    const top = Math.max(0, ...snap.levels.map((l) => l.id));
     set({
       ...snap,
       baseNodes: snap.nodes.map((n) => ({ ...n, section: n.section.slice() })),
@@ -261,7 +264,7 @@ export const useSheaf = create<SheafStore>((set, get) => ({
       energyLog: [snap.energy],
       flyToId: null,
       filterNoise: false,
-      maxLevel: 3,
+      maxLevel: top,
       stalkScale: 1,
       consistency: 0.55,
       mobilePanel: "none",

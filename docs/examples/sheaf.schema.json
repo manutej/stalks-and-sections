@@ -10,7 +10,10 @@
     "id": { "type": "string", "minLength": 1 },
     "title": { "type": "string" },
     "kicker": { "type": "string" },
-    "blurb": { "type": "string" },
+    "residualMeaning": {
+      "type": "string",
+      "description": "One sentence a reviewer can quote: what a terracotta edge means in this domain."
+    },
     "levels": {
       "type": "array",
       "minItems": 1,

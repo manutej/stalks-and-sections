@@ -67,9 +67,7 @@ Diffuse *does* walk sections toward \(\ker L_F\). On `literature`, those section
 
 `DatasetId = "literature" | "cobb"`. `NodeKind` is `{paper, concept, algorithm, theorem, model, integrity}`. Levels are hardcoded `0 | 1 | 2 | 3`. There is no JSON import, no adapter, no generic kind.
 
-Until import exists, every new scenario is a TypeScript module. That does not scale, and it is why the discourse / coordination / game sheaves in `docs/sources/` are *nodes in the literature graph* rather than *live sheaves*.
-
-**Fix:** generic schema + file drop. See §6 and issue #5. Kinds and levels must become data, not types.
+**P0 shipped in part:** JSON schema, generator CLI, templates, and a catalog loader. See [`docs/GENERATE.md`](docs/GENERATE.md). Discourse triangle, geo fragment, and wiki-integrity are loadable datasets. Remaining: file-drop in the UI (issue #5) and generic kinds polish (#11).
 
 ### A3 — “2D review was promised and is missing”
 

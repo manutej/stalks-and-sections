@@ -1,10 +1,4 @@
-export type NodeKind =
-  | "paper"
-  | "concept"
-  | "algorithm"
-  | "theorem"
-  | "model"
-  | "integrity";
+export type NodeKind = string;
 
 export type RestrictionKind =
   | "identity"
@@ -13,9 +7,9 @@ export type RestrictionKind =
   | "spectral"
   | "type-aware";
 
-export type DatasetId = "literature" | "cobb";
+export type DatasetId = string;
 
-export type LevelId = 0 | 1 | 2 | 3;
+export type LevelId = number;
 
 export interface LevelDef {
   id: LevelId;
@@ -23,6 +17,13 @@ export interface LevelDef {
   label: string;
   kicker: string;
   blurb: string;
+}
+
+export interface DatasetMeta {
+  id: DatasetId;
+  label: string;
+  hint: "lattice" | "cobb" | "dataset";
+  builtin: boolean;
 }
 
 export interface SheafNode {
@@ -65,6 +66,7 @@ export interface SheafGraph {
   title: string;
   kicker: string;
   blurb: string;
+  residualMeaning?: string;
   levels: LevelDef[];
   nodes: SheafNode[];
   edges: SheafEdge[];

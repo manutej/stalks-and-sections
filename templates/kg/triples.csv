@@ -1,0 +1,5 @@
+source,relation,target,restrictKind
+paris,capital_of,france,identity
+france,part_of,europe,identity
+eiffel,located_in,paris,identity
+paris,located_in,europe,identity
