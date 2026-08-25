@@ -34,8 +34,13 @@ const KIND_LABELS: Record<string, string> = {
   channel: "Channel",
   person: "Person",
   software: "Software",
-  application: "Application",
-  "open-problem": "Open problem",
+  lcel: "LCEL",
+  package: "Package",
+  module: "Module",
+  api: "API cluster",
+  provider: "Provider",
+  surface: "Surface",
+  core: "Core",
 };
 
 export function kindLabel(kind: string): string {

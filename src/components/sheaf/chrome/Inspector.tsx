@@ -15,6 +15,7 @@ export function Inspector({ className = "" }: { className?: string }) {
   const select = useSheaf((s) => s.select);
   const vis = useVisible();
   const levels = useSheaf((s) => s.levels);
+  const sheafEval = useSheaf((s) => s.eval);
   const node = nodes.find((n) => n.id === selectedId) ?? null;
 
   const nbrs = node
@@ -114,7 +115,7 @@ export function Inspector({ className = "" }: { className?: string }) {
             </ul>
           </>
         ) : (
-          <ProofBlock proof={proof} energy={energy} dataset={dataset} />
+          <ProofBlock proof={proof} energy={energy} dataset={dataset} sheafEval={sheafEval} />
         )}
       </div>
     </aside>
@@ -125,11 +126,16 @@ function ProofBlock({
   proof,
   energy,
   dataset,
+  sheafEval,
 }: {
   proof: ReturnType<typeof useSheaf.getState>["proof"];
   energy: number;
   dataset: string;
+  sheafEval: ReturnType<typeof useSheaf.getState>["eval"];
 }) {
+  const h = sheafEval?.holdout;
+  const c = sheafEval?.cohomo;
+  const seg = sheafEval?.segments;
   return (
     <div>
       <div className="flex items-center gap-1">
@@ -140,22 +146,51 @@ function ProofBlock({
       <p className="mt-2 text-[12px] leading-relaxed text-fg-muted">
         {dataset === "cobb"
           ? "Cobb–Gebhart seed. Diffuse runs the Euler scheme; Exact solve is Theorem 3.1."
-          : "Literature lattice with variable-dimension stalks. Diffuse descends the sheaf Laplacian; Coarsen pools it."}
+          : sheafEval
+            ? "Rich index: package ⊂ module ⊂ API. Diffuse is harmonic extension on free stalks."
+            : "Literature lattice with variable-dimension stalks. Diffuse descends the sheaf Laplacian; Coarsen pools it."}
       </p>
+      {seg ? (
+        <p className="mt-3 text-[11px] text-fg-muted">
+          Index {seg.package} packages · {seg.module} modules · {seg.api} API clusters · lattice {seg.viz}
+        </p>
+      ) : null}
+      {c ? (
+        <dl className="mt-3 grid grid-cols-2 gap-2 text-[12px]">
+          <Stat label="dim H⁰" value={String(c.h0)} />
+          <Stat label="dim H¹" value={String(c.h1)} />
+          <Stat label="χ" value={String(c.chi)} />
+          <Stat label="radius" value={c.radius.toFixed(3)} />
+        </dl>
+      ) : null}
+      {h ? (
+        <>
+          <h3 className="mt-4 text-[10px] uppercase tracking-wider text-fg-subtle">
+            Hold-out cosine (n={h.n})
+          </h3>
+          <dl className="mt-2 grid grid-cols-3 gap-2 text-[12px]">
+            <Stat label="Sheaf" value={h.sheafCos.toFixed(3)} />
+            <Stat label="Graph L" value={h.graphCos.toFixed(3)} />
+            <Stat label="Neighbours" value={h.neighborCos.toFixed(3)} />
+          </dl>
+          {h.sheafFamCos != null ? (
+            <p className="mt-2 text-[11px] text-fg-muted">
+              Interface 16-d: sheaf {h.sheafFamCos.toFixed(3)} · graph {(h.graphFamCos ?? 0).toFixed(3)}.
+              Graph Laplacian wins reconstruction when restriction rank is lower than stalk dim — the maps refuse to glue hashed export noise.
+            </p>
+          ) : null}
+        </>
+      ) : null}
       {proof ? (
         <dl className="mt-4 grid grid-cols-2 gap-2 text-[12px]">
           <Stat label="Before" value={proof.energyBefore.toFixed(3)} />
           <Stat label="After" value={proof.energyAfter.toFixed(3)} />
           <Stat label="Iters" value={String(proof.iters)} />
           <Stat label="Boundary drift" value={proof.boundaryDrift.toExponential(1)} />
-          <Stat label="Energy rises" value={String(proof.energyIncreases)} />
-          {proof.unique != null ? (
-            <Stat label="Unique H⁰" value={proof.unique ? "yes" : "pinv"} />
-          ) : null}
         </dl>
       ) : (
         <p className="mt-4 text-[12px] text-fg-muted">
-          Run Diffuse to watch energy fall and free stalks settle onto the pinned boundary.
+          Run Diffuse to watch energy fall and free stalks settle onto the pinned LCEL boundary.
         </p>
       )}
     </div>

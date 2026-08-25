@@ -127,6 +127,14 @@ npm run sheaf:langchainjs
 
 That streams every `libs/**/*.ts` file, pools to ~90 module stalks, glues providers onto the pinned LCEL contract, and writes `docs/examples/langchainjs.json`. Report: `docs/experiments/langchainjs.md`. Extractor: `scripts/sheaf/from-code.mjs`.
 
+### Rich index (three matched segmentations + hold-out)
+
+```bash
+npm run sheaf:rich
+```
+
+Writes `docs/examples/langchainjs-rich.json` (package ⊂ module ⊂ API-cluster) and `docs/experiments/rich-index.md`. Eval: hold-out harmonic extension vs graph Laplacian, dim H⁰ / H¹, impact ranking from a Laplacian heat kernel. Extractor: `scripts/sheaf/rich-index.mjs`.
+
 ## Do not
 
 - Sample Gaussians on a real KG (`--sample-sections` is a demo flag).

@@ -11,6 +11,7 @@ import type {
   DatasetId,
   ProofReport,
   SheafEdge,
+  SheafEval,
   SheafNode,
   Vec3,
 } from "@/lib/sheaf/types";
@@ -29,10 +30,11 @@ function snapshot(id: DatasetId) {
     blurb: g.blurb,
     positions,
     energy: dirichletEnergy(g.nodes, g.edges),
+    eval: g.eval,
   };
 }
 
-const boot = snapshot("langchainjs");
+const boot = snapshot("langchainjs-rich");
 
 interface SheafStore {
   dataset: DatasetId;
@@ -57,6 +59,7 @@ interface SheafStore {
   showLabels: boolean;
   energy: number;
   energyLog: number[];
+  eval: SheafEval | undefined;
   proof: ProofReport | null;
   flyToId: string | null;
   search: string;
@@ -90,7 +93,7 @@ interface SheafStore {
 }
 
 export const useSheaf = create<SheafStore>((set, get) => ({
-  dataset: "langchainjs",
+  dataset: "langchainjs-rich",
   title: boot.title,
   kicker: boot.kicker,
   blurb: boot.blurb,
@@ -112,6 +115,7 @@ export const useSheaf = create<SheafStore>((set, get) => ({
   showLabels: true,
   energy: boot.energy,
   energyLog: [boot.energy],
+  eval: boot.eval,
   proof: null,
   flyToId: null,
   search: "",

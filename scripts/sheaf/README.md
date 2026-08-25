@@ -9,7 +9,8 @@ Portable generator. No extra npm dependencies.
 | `npm run sheaf:examples` | regenerate shipped JSON |
 | `npm run sheaf:validate -- <file.json>` | `validate.mjs` |
 | `npm run sheaf:langchainjs` | `from-code.mjs` — stream a TS monorepo into a sheaf |
+| `npm run sheaf:rich` | `rich-index.mjs` — matched segmentations + hold-out / H⁰ / H¹ |
 
 Algebra is duplicated here on purpose so the CLI does not load the Vite app. Keep `algebra.mjs` aligned with `src/lib/sheaf/{linear,maps,energy,rng}.ts`.
 
-Docs: [`docs/GENERATE.md`](../../docs/GENERATE.md). Experiment write-up: [`docs/experiments/langchainjs.md`](../../docs/experiments/langchainjs.md).
+Docs: [`docs/GENERATE.md`](../../docs/GENERATE.md). Experiments: [`docs/experiments/`](../../docs/experiments/).

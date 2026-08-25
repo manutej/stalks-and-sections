@@ -24,6 +24,7 @@ export function Dock() {
   const dataset = useSheaf((s) => s.dataset);
   const levels = useSheaf((s) => s.levels);
   const energyLog = useSheaf((s) => s.energyLog);
+  const sheafEval = useSheaf((s) => s.eval);
   const setHelp = useSheaf((s) => s.setHelp);
 
   return (
@@ -152,6 +153,11 @@ export function Dock() {
           </button>
         </div>
 
+        {sheafEval?.holdout ? (
+          <p className="px-1 text-[10px] tabular text-fg-muted">
+            H⁰ {sheafEval.cohomo?.h0 ?? "–"} · H¹ {sheafEval.cohomo?.h1 ?? "–"} · hold-out sheaf {sheafEval.holdout.sheafCos.toFixed(2)} / graph {sheafEval.holdout.graphCos.toFixed(2)}
+          </p>
+        ) : null}
         {energyLog.length > 1 ? <EnergySpark log={energyLog} /> : null}
       </div>
     </div>

@@ -16,6 +16,7 @@ export function TopBar() {
   const reset = useSheaf((s) => s.reset);
   const energy = useSheaf((s) => s.energy);
   const kicker = useSheaf((s) => s.kicker);
+  const levels = useSheaf((s) => s.levels);
 
   const q = search.trim().toLowerCase();
   const hits = q
@@ -66,13 +67,7 @@ export function TopBar() {
                   >
                     <span>{n.title}</span>
                     <span className="font-mono text-[10px] text-fg-subtle">
-                      {n.level === 0
-                        ? "Foundations"
-                        : n.level === 1
-                          ? "Sheaf theory"
-                          : n.level === 2
-                            ? "Applications"
-                            : "Integrity"}
+                      {levels.find((l) => l.id === n.level)?.label ?? `L${n.level}`}
                     </span>
                   </button>
                 </li>
