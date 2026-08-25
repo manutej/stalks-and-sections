@@ -118,6 +118,15 @@ The shipped **Geo fragment** (`docs/examples/toy-kg.json`) is the reference: Par
 
 `src/lib/sheaf/from-json.ts` accepts the same JSON. Missing maps are built from `restrictKind`. Missing sections are zeros. The store’s dataset switcher lists every `docs/examples/*.json` except the schema file, plus the two builtin graphs (`literature`, `cobb`).
 
+## From a codebase (LangChain.js)
+
+```bash
+git clone --depth 1 https://github.com/langchain-ai/langchainjs.git /tmp/langchainjs
+npm run sheaf:langchainjs
+```
+
+That streams every `libs/**/*.ts` file, pools to ~90 module stalks, glues providers onto the pinned LCEL contract, and writes `docs/examples/langchainjs.json`. Report: `docs/experiments/langchainjs.md`. Extractor: `scripts/sheaf/from-code.mjs`.
+
 ## Do not
 
 - Sample Gaussians on a real KG (`--sample-sections` is a demo flag).

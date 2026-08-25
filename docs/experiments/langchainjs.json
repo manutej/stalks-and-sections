@@ -1,0 +1,520 @@
+{
+  "repo": "langchain-ai/langchainjs",
+  "files": 1041,
+  "loc": 202693,
+  "tokens": 367626,
+  "modulesKept": 88,
+  "edges": 531,
+  "energy": 569.7858639013856,
+  "astUniqueGrams": 183328,
+  "astCompression": 0.5013192755681045,
+  "peakHeapMB": 38.9,
+  "elapsedMs": 966,
+  "dim": 16,
+  "issueCount": 55,
+  "precisionAtK": {
+    "k": 15,
+    "sheaf": 0.6,
+    "astEntropy": 0.5333333333333333,
+    "sheafHits": 9,
+    "astHits": 8
+  },
+  "goldRecallAt20": {
+    "sheaf": {
+      "k": 20,
+      "hit": 10,
+      "total": 18,
+      "recall": 0.5555555555555556,
+      "details": [
+        {
+          "number": 11372,
+          "pkgs": [
+            "langchain-openai",
+            "langchain-google",
+            "langchain-aws",
+            "langchain-anthropic"
+          ],
+          "recovered": true
+        },
+        {
+          "number": 11396,
+          "pkgs": [
+            "langchain-anthropic"
+          ],
+          "recovered": true
+        },
+        {
+          "number": 11155,
+          "pkgs": [
+            "langchain-ollama"
+          ],
+          "recovered": false
+        },
+        {
+          "number": 11326,
+          "pkgs": [
+            "langchain-aws"
+          ],
+          "recovered": true
+        },
+        {
+          "number": 11341,
+          "pkgs": [
+            "langchain-aws"
+          ],
+          "recovered": true
+        },
+        {
+          "number": 10956,
+          "pkgs": [
+            "langchain-google-genai"
+          ],
+          "recovered": false
+        },
+        {
+          "number": 10307,
+          "pkgs": [
+            "langchain-google"
+          ],
+          "recovered": false
+        },
+        {
+          "number": 11328,
+          "pkgs": [
+            "langchain-google-genai"
+          ],
+          "recovered": false
+        },
+        {
+          "number": 11311,
+          "pkgs": [
+            "langchain-core"
+          ],
+          "recovered": false
+        },
+        {
+          "number": 11355,
+          "pkgs": [
+            "langchain-core"
+          ],
+          "recovered": false
+        },
+        {
+          "number": 11293,
+          "pkgs": [
+            "langchain-core",
+            "langchain-openai"
+          ],
+          "recovered": true
+        },
+        {
+          "number": 11444,
+          "pkgs": [
+            "langchain-google"
+          ],
+          "recovered": false
+        },
+        {
+          "number": 11381,
+          "pkgs": [
+            "langchain-openai"
+          ],
+          "recovered": true
+        },
+        {
+          "number": 6795,
+          "pkgs": [
+            "langchain-openai",
+            "langchain-google",
+            "langchain-anthropic"
+          ],
+          "recovered": true
+        },
+        {
+          "number": 11332,
+          "pkgs": [
+            "langchain-openai"
+          ],
+          "recovered": true
+        },
+        {
+          "number": 11409,
+          "pkgs": [
+            "langchain-openrouter"
+          ],
+          "recovered": true
+        },
+        {
+          "number": 11417,
+          "pkgs": [
+            "langchain-openrouter"
+          ],
+          "recovered": true
+        },
+        {
+          "number": 11351,
+          "pkgs": [
+            "langchain-mcp-adapters"
+          ],
+          "recovered": false
+        }
+      ]
+    },
+    "ast": {
+      "k": 20,
+      "hit": 7,
+      "total": 18,
+      "recall": 0.3888888888888889,
+      "details": [
+        {
+          "number": 11372,
+          "pkgs": [
+            "langchain-openai",
+            "langchain-google",
+            "langchain-aws",
+            "langchain-anthropic"
+          ],
+          "recovered": true
+        },
+        {
+          "number": 11396,
+          "pkgs": [
+            "langchain-anthropic"
+          ],
+          "recovered": false
+        },
+        {
+          "number": 11155,
+          "pkgs": [
+            "langchain-ollama"
+          ],
+          "recovered": false
+        },
+        {
+          "number": 11326,
+          "pkgs": [
+            "langchain-aws"
+          ],
+          "recovered": false
+        },
+        {
+          "number": 11341,
+          "pkgs": [
+            "langchain-aws"
+          ],
+          "recovered": false
+        },
+        {
+          "number": 10956,
+          "pkgs": [
+            "langchain-google-genai"
+          ],
+          "recovered": false
+        },
+        {
+          "number": 10307,
+          "pkgs": [
+            "langchain-google"
+          ],
+          "recovered": true
+        },
+        {
+          "number": 11328,
+          "pkgs": [
+            "langchain-google-genai"
+          ],
+          "recovered": false
+        },
+        {
+          "number": 11311,
+          "pkgs": [
+            "langchain-core"
+          ],
+          "recovered": false
+        },
+        {
+          "number": 11355,
+          "pkgs": [
+            "langchain-core"
+          ],
+          "recovered": false
+        },
+        {
+          "number": 11293,
+          "pkgs": [
+            "langchain-core",
+            "langchain-openai"
+          ],
+          "recovered": true
+        },
+        {
+          "number": 11444,
+          "pkgs": [
+            "langchain-google"
+          ],
+          "recovered": true
+        },
+        {
+          "number": 11381,
+          "pkgs": [
+            "langchain-openai"
+          ],
+          "recovered": true
+        },
+        {
+          "number": 6795,
+          "pkgs": [
+            "langchain-openai",
+            "langchain-google",
+            "langchain-anthropic"
+          ],
+          "recovered": true
+        },
+        {
+          "number": 11332,
+          "pkgs": [
+            "langchain-openai"
+          ],
+          "recovered": true
+        },
+        {
+          "number": 11409,
+          "pkgs": [
+            "langchain-openrouter"
+          ],
+          "recovered": false
+        },
+        {
+          "number": 11417,
+          "pkgs": [
+            "langchain-openrouter"
+          ],
+          "recovered": false
+        },
+        {
+          "number": 11351,
+          "pkgs": [
+            "langchain-mcp-adapters"
+          ],
+          "recovered": false
+        }
+      ]
+    }
+  },
+  "topResidual": [
+    {
+      "id": "langchain-core/singletons",
+      "residual": 1.887,
+      "astEntropy": 0.883,
+      "issues": 4,
+      "issueIds": [
+        10558,
+        11311,
+        11293,
+        10907
+      ]
+    },
+    {
+      "id": "langchain-core/testing",
+      "residual": 1.763,
+      "astEntropy": 0.665,
+      "issues": 4,
+      "issueIds": [
+        10558,
+        11311,
+        11293,
+        10907
+      ]
+    },
+    {
+      "id": "langchain-core/tracers",
+      "residual": 1.28,
+      "astEntropy": 0.594,
+      "issues": 4,
+      "issueIds": [
+        10558,
+        11311,
+        11293,
+        10907
+      ]
+    },
+    {
+      "id": "langchain-classic/prompts",
+      "residual": 1.265,
+      "astEntropy": 0.753,
+      "issues": 0,
+      "issueIds": []
+    },
+    {
+      "id": "langchain-ibm/embeddings",
+      "residual": 1.21,
+      "astEntropy": 0.82,
+      "issues": 0,
+      "issueIds": []
+    },
+    {
+      "id": "langchain-pinecone/index",
+      "residual": 1.195,
+      "astEntropy": 0.846,
+      "issues": 0,
+      "issueIds": []
+    },
+    {
+      "id": "langchain-core/retrievers",
+      "residual": 1.18,
+      "astEntropy": 0.841,
+      "issues": 4,
+      "issueIds": [
+        10558,
+        11311,
+        11293,
+        10907
+      ]
+    },
+    {
+      "id": "langchain-openrouter/chat_models",
+      "residual": 1.138,
+      "astEntropy": 0.71,
+      "issues": 2,
+      "issueIds": [
+        11417,
+        11409
+      ]
+    },
+    {
+      "id": "langchain-core/output_parsers",
+      "residual": 1.135,
+      "astEntropy": 0.729,
+      "issues": 4,
+      "issueIds": [
+        10558,
+        11311,
+        11293,
+        10907
+      ]
+    },
+    {
+      "id": "langchain-ibm/agents",
+      "residual": 1.123,
+      "astEntropy": 0.936,
+      "issues": 0,
+      "issueIds": []
+    }
+  ],
+  "topAstEntropy": [
+    {
+      "id": "langchain-ibm/agents",
+      "astEntropy": 0.936,
+      "issues": 0
+    },
+    {
+      "id": "langchain-neo4j/chains",
+      "astEntropy": 0.92,
+      "issues": 0
+    },
+    {
+      "id": "langchain-core/singletons",
+      "astEntropy": 0.883,
+      "issues": 4
+    },
+    {
+      "id": "langchain-classic/smith",
+      "astEntropy": 0.874,
+      "issues": 0
+    },
+    {
+      "id": "langchain-xai/tools",
+      "astEntropy": 0.866,
+      "issues": 0
+    },
+    {
+      "id": "langchain-pinecone/index",
+      "astEntropy": 0.846,
+      "issues": 0
+    },
+    {
+      "id": "langchain-xai/converters",
+      "astEntropy": 0.844,
+      "issues": 0
+    },
+    {
+      "id": "langchain-core/retrievers",
+      "astEntropy": 0.841,
+      "issues": 4
+    }
+  ],
+  "loudestEdges": [
+    {
+      "edge": "langchain-openai/azure → langchain-core/utils",
+      "residual": 2.194,
+      "kind": "type-aware",
+      "relation": "imports"
+    },
+    {
+      "edge": "langchain-classic/experimental → langchain-core/language_models",
+      "residual": 2.169,
+      "kind": "type-aware",
+      "relation": "imports"
+    },
+    {
+      "edge": "langchain/agents → langchain-core/singletons",
+      "residual": 2.134,
+      "kind": "type-aware",
+      "relation": "imports"
+    },
+    {
+      "edge": "langchain-tavily/index → langchain-core/utils",
+      "residual": 2.106,
+      "kind": "type-aware",
+      "relation": "imports"
+    },
+    {
+      "edge": "langchain-classic/tools → langchain-core/callbacks",
+      "residual": 2.039,
+      "kind": "type-aware",
+      "relation": "imports"
+    },
+    {
+      "edge": "langchain-openrouter/chat_models → langchain-core/language_models",
+      "residual": 1.984,
+      "kind": "type-aware",
+      "relation": "imports"
+    },
+    {
+      "edge": "langchain-xai/converters → langchain-core/messages",
+      "residual": 1.962,
+      "kind": "type-aware",
+      "relation": "imports"
+    },
+    {
+      "edge": "langchain-anthropic/tools → langchain-core/messages",
+      "residual": 1.952,
+      "kind": "type-aware",
+      "relation": "imports"
+    },
+    {
+      "edge": "langchain-xai/chat_models → langchain-core/load",
+      "residual": 1.935,
+      "kind": "type-aware",
+      "relation": "imports"
+    },
+    {
+      "edge": "langchain-ollama/index → langchain-core/messages",
+      "residual": 1.918,
+      "kind": "type-aware",
+      "relation": "imports"
+    },
+    {
+      "edge": "langchain/agents → langchain-core/language_models",
+      "residual": 1.85,
+      "kind": "type-aware",
+      "relation": "imports"
+    },
+    {
+      "edge": "langchain-classic/memory → langchain-core/load",
+      "residual": 1.839,
+      "kind": "type-aware",
+      "relation": "imports"
+    }
+  ]
+}

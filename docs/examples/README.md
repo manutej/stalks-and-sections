@@ -7,6 +7,7 @@ Portable JSON graphs for the explorer. Schema: [`sheaf.schema.json`](sheaf.schem
 | `discourse-triangle.json` | hand-authored | Public agreement vs private disagreement |
 | `toy-kg.json` | `npm run sheaf:examples` from `templates/kg/triples.json` | TransE triple violation |
 | `wiki-integrity.json` | `npm run sheaf:examples` from `docs/sources` | Typed wiki-relation mismatch |
+| `langchainjs.json` | `npm run sheaf:langchainjs` from [langchain-ai/langchainjs](https://github.com/langchain-ai/langchainjs) | LCEL-contract mismatch |
 
 Drop a new `*.json` here (not `sheaf.schema.json`). Restart the app. It appears in the dataset switcher.
 
