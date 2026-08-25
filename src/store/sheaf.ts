@@ -32,7 +32,7 @@ function snapshot(id: DatasetId) {
   };
 }
 
-const boot = snapshot("literature");
+const boot = snapshot("langchainjs");
 
 interface SheafStore {
   dataset: DatasetId;
@@ -90,7 +90,7 @@ interface SheafStore {
 }
 
 export const useSheaf = create<SheafStore>((set, get) => ({
-  dataset: "literature",
+  dataset: "langchainjs",
   title: boot.title,
   kicker: boot.kicker,
   blurb: boot.blurb,
