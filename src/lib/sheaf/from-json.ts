@@ -4,6 +4,7 @@ import { zeros } from "./linear";
 import type {
   RestrictionKind,
   SheafEdge,
+  SheafEval,
   SheafGraph,
   SheafNode,
 } from "./types";
@@ -142,5 +143,6 @@ export function graphFromJson(raw: unknown): SheafGraph {
     levels,
     nodes,
     edges: recomputeResiduals(nodes, edges),
+    eval: o.eval && typeof o.eval === "object" ? (o.eval as SheafEval) : undefined,
   };
 }

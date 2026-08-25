@@ -138,15 +138,18 @@ export function kindForRelation(rel) {
     case "extends":
     case "capital_of":
     case "located_in":
+    case "contains":
       return "embed";
     case "is_a":
     case "specializes":
     case "part_of":
     case "expresses":
+    case "restricts":
       return "projection";
     case "uses":
     case "implements":
     case "minimizes":
+    case "imports":
       return "identity";
     case "proves":
     case "authored":
@@ -222,13 +225,210 @@ export const LEVEL_FOR_KIND = {
   entity: 1,
   application: 3,
   integrity: 3,
-  "open-problem": 3,
-  model: 2,
 };
 
 export const DEFAULT_LEVELS = [
-  { id: 0, code: "L0", label: "Foundations", kicker: "Pinned / primitive", blurb: "Known stalks and primitive types." },
-  { id: 1, code: "L1", label: "Structure", kicker: "Types & papers", blurb: "Declared structure that restrictions compare against." },
-  { id: 2, code: "L2", label: "Operations", kicker: "Algorithms & models", blurb: "Things that move or embed the stalks." },
-  { id: 3, code: "L3", label: "Integrity", kicker: "Applications & checks", blurb: "Where residual is read as a claim." },
+  { id: 0, code: "L0", label: "Foundations", kicker: "", blurb: "" },
+  { id: 1, code: "L1", label: "Sheaf theory", kicker: "", blurb: "" },
+  { id: 2, code: "L2", label: "Applications", kicker: "", blurb: "" },
+  { id: 3, code: "L3", label: "Integrity", kicker: "", blurb: "" },
 ];
+
+export function unpack(nodes, x) {
+  const map = new Map();
+  let o = 0;
+  for (const n of nodes) {
+    const d = n.dim ?? n.section?.length ?? 0;
+    map.set(n.id, x.slice(o, o + d));
+    o += d;
+  }
+  return map;
+}
+
+export function pack(nodes, map) {
+  const x = [];
+  for (const n of nodes) {
+    const d = n.dim ?? n.section?.length ?? 0;
+    const s = map.get(n.id) || zeros(d);
+    for (let i = 0; i < d; i++) x.push(s[i] ?? 0);
+  }
+  return x;
+}
+
+export function applySheafLaplacian(nodes, edges, x) {
+  const sec = unpack(nodes, x);
+  const g = new Map(nodes.map((n) => [n.id, zeros(n.dim ?? n.section.length)]));
+  const byId = new Map(nodes.map((n) => [n.id, n]));
+  for (const e of edges) {
+    const s = byId.get(e.source);
+    const t = byId.get(e.target);
+    if (!s || !t || !e.Fsrc || !e.Ftgt) continue;
+    const xs = sec.get(e.source);
+    const xt = sec.get(e.target);
+    if (!xs || !xt) continue;
+    const d = sub(matVec(e.Fsrc, xs), matVec(e.Ftgt, xt));
+    const gs = g.get(e.source);
+    const gt = g.get(e.target);
+    for (let i = 0; i < e.Fsrc.length; i++) {
+      const row = e.Fsrc[i];
+      for (let j = 0; j < row.length; j++) gs[j] += row[j] * d[i];
+    }
+    for (let i = 0; i < e.Ftgt.length; i++) {
+      const row = e.Ftgt[i];
+      for (let j = 0; j < row.length; j++) gt[j] -= row[j] * d[i];
+    }
+  }
+  return pack(nodes, g);
+}
+
+export function lambdaMax(nodes, edges, iters = 24) {
+  const N = nodes.reduce((s, n) => s + (n.dim ?? n.section.length), 0);
+  if (N === 0) return 1;
+  let x = Array.from({ length: N }, (_, i) => Math.sin(1 + i * 1.7));
+  let n = nrm2(x) || 1;
+  for (let i = 0; i < x.length; i++) x[i] /= n;
+  let lam = 1;
+  for (let k = 0; k < iters; k++) {
+    const y = applySheafLaplacian(nodes, edges, x);
+    lam = Math.abs(dot(x, y));
+    n = nrm2(y) || 1;
+    x = y.map((v) => v / n);
+  }
+  return Math.max(lam, 1e-6);
+}
+
+export function estimateH0(nodes, edges, samples = 12, iters = 50) {
+  const N = nodes.reduce((s, n) => s + (n.dim ?? n.section.length), 0);
+  if (N === 0) return 0;
+  const lam = lambdaMax(nodes, edges);
+  const h = 0.85 / lam;
+  const basis = [];
+  for (let s = 0; s < samples; s++) {
+    let x = Array.from({ length: N }, (_, i) => Math.sin((s + 1) * 2.3 + i * 0.41));
+    for (let it = 0; it < iters; it++) {
+      const Lx = applySheafLaplacian(nodes, edges, x);
+      for (let i = 0; i < N; i++) x[i] -= h * Lx[i];
+    }
+    for (const b of basis) axpy(x, -dot(x, b), b);
+    const n = nrm2(x);
+    if (n < 1e-4) continue;
+    basis.push(x.map((v) => v / n));
+  }
+  return basis.length;
+}
+
+export function eulerCharacteristic(nodes, edges) {
+  const v = nodes.reduce((s, n) => s + (n.dim ?? n.section.length), 0);
+  const e = edges.reduce((s, ed) => s + (ed.edgeDim || ed.Fsrc?.length || 0), 0);
+  return v - e;
+}
+
+export function cosine(a, b) {
+  const n = Math.min(a.length, b.length);
+  let dp = 0,
+    na = 0,
+    nb = 0;
+  for (let i = 0; i < n; i++) {
+    dp += a[i] * b[i];
+    na += a[i] * a[i];
+    nb += b[i] * b[i];
+  }
+  return dp / (Math.sqrt(na) * Math.sqrt(nb) + 1e-12);
+}
+
+export function mse(a, b) {
+  const n = Math.min(a.length, b.length);
+  let s = 0;
+  for (let i = 0; i < n; i++) {
+    const d = a[i] - b[i];
+    s += d * d;
+  }
+  return n ? s / n : 0;
+}
+
+export function identityEdges(nodes, edges) {
+  const byId = new Map(nodes.map((n) => [n.id, n]));
+  return edges.map((e) => {
+    const s = byId.get(e.source);
+    const t = byId.get(e.target);
+    const sd = s?.dim ?? s?.section?.length ?? 4;
+    const td = t?.dim ?? t?.section?.length ?? 4;
+    const maps = makePair("identity", sd, td, `${e.source}|id|${e.target}`);
+    return { ...e, restrictKind: "identity", edgeDim: maps.edgeDim, Fsrc: maps.Fsrc, Ftgt: maps.Ftgt };
+  });
+}
+
+export function harmonicExtend(nodesIn, edges, knownIds, iters = 80) {
+  const known = new Set(knownIds);
+  const nodes = nodesIn.map((n) => ({ ...n, section: n.section.slice() }));
+  const lam = lambdaMax(nodes, edges, 16);
+  const h = 0.85 / lam;
+  for (let it = 0; it < iters; it++) {
+    const x = pack(nodes, new Map(nodes.map((n) => [n.id, n.section])));
+    const Lx = applySheafLaplacian(nodes, edges, x);
+    const g = unpack(nodes, Lx);
+    for (const n of nodes) {
+      if (known.has(n.id)) continue;
+      const gn = g.get(n.id);
+      if (!gn) continue;
+      for (let i = 0; i < n.section.length; i++) n.section[i] -= h * gn[i];
+    }
+  }
+  return nodes;
+}
+
+export function holdoutTest(nodes, edges, holdIds, iters = 80) {
+  const hold = new Set(holdIds);
+  const truth = new Map(nodes.filter((n) => hold.has(n.id)).map((n) => [n.id, n.section.slice()]));
+  const knownIds = nodes.filter((n) => !hold.has(n.id)).map((n) => n.id);
+  const masked = nodes.map((n) => ({
+    ...n,
+    section: hold.has(n.id) ? zeros(n.dim) : n.section.slice(),
+  }));
+  const sheafN = harmonicExtend(masked, edges, knownIds, iters);
+  const graphN = harmonicExtend(masked, identityEdges(nodes, edges), knownIds, iters);
+  const byId = new Map(nodes.map((n) => [n.id, n]));
+  const nbr = new Map();
+  for (const e of edges) {
+    if (!nbr.has(e.source)) nbr.set(e.source, []);
+    if (!nbr.has(e.target)) nbr.set(e.target, []);
+    nbr.get(e.source).push(e.target);
+    nbr.get(e.target).push(e.source);
+  }
+  const neighborN = masked.map((n) => {
+    if (!hold.has(n.id)) return n;
+    const ids = nbr.get(n.id) || [];
+    const acc = zeros(n.dim);
+    let c = 0;
+    for (const id of ids) {
+      if (hold.has(id)) continue;
+      const o = byId.get(id);
+      if (!o) continue;
+      for (let i = 0; i < n.dim; i++) acc[i] += o.section[i] ?? 0;
+      c++;
+    }
+    return { ...n, section: c ? acc.map((v) => v / c) : acc };
+  });
+  const score = (recon) => {
+    const rec = new Map(recon.map((n) => [n.id, n.section]));
+    let c = 0,
+      m = 0,
+      cf = 0,
+      k = 0;
+    for (const [id, t] of truth) {
+      const r = rec.get(id);
+      if (!r) continue;
+      c += cosine(r, t);
+      cf += cosine(r.slice(0, 16), t.slice(0, 16));
+      m += mse(r, t);
+      k++;
+    }
+    return { cos: k ? c / k : 0, famCos: k ? cf / k : 0, mse: k ? m / k : 0, n: k };
+  };
+  return {
+    n: hold.size,
+    sheaf: score(sheafN),
+    graph: score(graphN),
+    neighbor: score(neighborN),
+  };
+}

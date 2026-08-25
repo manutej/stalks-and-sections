@@ -1,0 +1,70 @@
+{
+  "files": 1041,
+  "loc": 202693,
+  "elapsedMs": 1633,
+  "heapMB": 29.7,
+  "dim": 32,
+  "segments": {
+    "package": 36,
+    "module": 166,
+    "api": 77,
+    "viz": 96,
+    "edges": 208
+  },
+  "holdout": {
+    "n": 8,
+    "sheafCos": 0.38423152740530386,
+    "graphCos": 0.7736575379549065,
+    "neighborCos": 0.7736575379549743,
+    "sheafFamCos": 0.5967643087223106,
+    "graphFamCos": 0.772300447443774,
+    "neighborFamCos": 0.7723004474440534,
+    "sheafMse": 0.0246929855382273,
+    "graphMse": 0.01301290913796931,
+    "neighborMse": 0.013131086247099553
+  },
+  "cohomo": {
+    "h0": 2,
+    "h1": 0,
+    "chi": 2064,
+    "energy": 28.565546564026743,
+    "radius": 0.9511692264434025
+  },
+  "impact": {
+    "seed": "m-langchain-openai-chat-models",
+    "ranked": [
+      {
+        "id": "m-langchain-core-language-models",
+        "mag": 0.09646167943521589
+      },
+      {
+        "id": "m-langchain-classic-experimental",
+        "mag": 0.00886647297880681
+      },
+      {
+        "id": "m-langchain-xai-chat-models",
+        "mag": 0.00874538013053484
+      },
+      {
+        "id": "m-langchain-classic-chat-models",
+        "mag": 0.008499862356266128
+      },
+      {
+        "id": "m-langchain-chat-models",
+        "mag": 0.008498945777389959
+      },
+      {
+        "id": "m-langchain-ibm-chat-models",
+        "mag": 0.00849891461807039
+      },
+      {
+        "id": "m-langchain-ollama-index",
+        "mag": 0.00849891461807039
+      },
+      {
+        "id": "m-langchain-perplexity-index",
+        "mag": 0.00849891461807039
+      }
+    ]
+  }
+}
