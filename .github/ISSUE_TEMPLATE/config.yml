@@ -1,1 +1,8 @@
 blank_issues_enabled: true
+contact_links:
+  - name: Ingest contract
+    url: https://github.com/manutej/stalks-and-sections/blob/main/docs/INGEST.md
+    about: Schema, loader rules, and how to add a library or JSON graph
+  - name: JSON Schema
+    url: https://github.com/manutej/stalks-and-sections/blob/main/schemas/sheaf-graph.schema.json
+    about: Canonical SheafGraph spec scrapers must emit

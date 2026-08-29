@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schemas/library-ingest.schema.json",
+  "id": "langchainjs",
+  "title": "LangChain.js LCEL sheaf",
+  "kind": "codebase",
+  "source": {
+    "git": "https://github.com/langchain-ai/langchainjs.git",
+    "ref": "main",
+    "root": "/tmp/langchainjs",
+    "sparse": ["libs"]
+  },
+  "include": ["libs/**/*.{ts,tsx}"],
+  "exclude": ["**/node_modules/**", "**/*.d.ts", "**/*.{test,spec}.*", "**/dist/**"],
+  "segmentation": ["package", "module"],
+  "cap": 88,
+  "dim": 16,
+  "contract": {
+    "pinned": ["langchain-core/runnables", "langchain-core/messages"],
+    "families": [
+      { "id": "runnable", "pattern": "\\b(Runnable|RunnableLike|\\.pipe\\b|\\.invoke\\b|\\.batch\\b|\\.streamEvents\\b|\\.stream\\b)\\b" },
+      { "id": "combinators", "pattern": "\\b(RunnableSequence|RunnableMap|RunnableLambda|RunnablePassthrough|RunnableBranch|RunnableBinding)\\b" },
+      { "id": "messages", "pattern": "\\b(BaseMessage|AIMessage|HumanMessage|ToolMessage|SystemMessage)\\b" },
+      { "id": "tools", "pattern": "\\b(BaseTool|bindTools|tool_calls|DynamicStructuredTool)\\b" },
+      { "id": "llm", "pattern": "\\b(BaseChatModel|BaseLLM|_generate|SimpleChatModel)\\b" },
+      { "id": "structured", "pattern": "\\b(withStructuredOutput|responseSchema|zodToJsonSchema)\\b" },
+      { "id": "callbacks", "pattern": "\\b(CallbackManager|handleLLMNewToken|BaseCallbackHandler|callbacks)\\b" },
+      { "id": "streaming", "pattern": "\\b(streamEvents|EventStreamCallbackHandler|_streamResponseChunks)\\b" }
+    ]
+  },
+  "output": {
+    "sheaf": "docs/examples/langchainjs.json",
+    "report": "docs/experiments/langchainjs.md",
+    "issues": "docs/experiments/langchainjs-issues.json"
+  },
+  "residualMeaning": "Interface mismatch vs the pinned LCEL contract: a wrapper that looks locally like ChatModel but does not restrict invoke/stream/callbacks/structured-output into core."
+}

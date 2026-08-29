@@ -1,0 +1,45 @@
+name: Ingest a SheafGraph JSON
+description: Add a hand-authored or externally scraped lattice
+title: "[json] "
+labels: ["enhancement", "dataset"]
+body:
+  - type: input
+    id: graph_id
+    attributes:
+      label: Graph id
+      description: Must match ^[a-z0-9][a-z0-9._-]*$ and the filename stem.
+      placeholder: my-kg
+    validations:
+      required: true
+  - type: textarea
+    id: residual
+    attributes:
+      label: residualMeaning
+      description: One sentence a reviewer can quote.
+    validations:
+      required: true
+  - type: textarea
+    id: payload
+    attributes:
+      label: SheafGraph JSON
+      description: Paste the object, or link a gist / PR. Must satisfy schemas/sheaf-graph.schema.json.
+      render: json
+    validations:
+      required: true
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: id / title / levels / nodes / (edges or triples) are present
+          required: true
+        - label: Every node has id, title, level, dim (1–64)
+          required: true
+        - label: Sections omitted or length === dim (no Gaussian fill)
+          required: true
+        - label: restrictKind is one of identity | projection | embed | spectral | type-aware
+          required: true
+        - label: `npm run sheaf:validate -- <file>` exits 0
+          required: true
+        - label: Lattice is ≤120 nodes after pooling
+          required: true

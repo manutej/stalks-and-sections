@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schemas/catalog.schema.json",
+  "schemaVersion": 1,
+  "graphs": [
+    {
+      "id": "discourse-triangle",
+      "path": "docs/examples/discourse-triangle.json",
+      "title": "Discourse triangle",
+      "kind": "demo"
+    },
+    {
+      "id": "toy-kg",
+      "path": "docs/examples/toy-kg.json",
+      "title": "Geo fragment",
+      "kind": "triples",
+      "ingest": "templates/kg/triples.json"
+    },
+    {
+      "id": "wiki-integrity",
+      "path": "docs/examples/wiki-integrity.json",
+      "title": "Wiki integrity",
+      "kind": "wiki"
+    },
+    {
+      "id": "langchainjs",
+      "path": "docs/examples/langchainjs.json",
+      "title": "LangChain.js LCEL sheaf",
+      "kind": "codebase",
+      "ingest": "templates/library/langchainjs.json"
+    },
+    {
+      "id": "langchainjs-rich",
+      "path": "docs/examples/langchainjs-rich.json",
+      "title": "LangChain.js rich index",
+      "kind": "codebase",
+      "ingest": "templates/library/langchainjs.json"
+    }
+  ]
+}

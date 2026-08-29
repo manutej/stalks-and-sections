@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/manutej/stalks-and-sections/schemas/sheaf-graph.schema.json",
+  "title": "SheafGraph",
+  "description": "Portable cellular sheaf for the Stalks & Sections explorer and scrapers. Missing sections MUST be treated as zeros — never Gaussian-filled. Missing Fsrc/Ftgt MAY be rebuilt from restrictKind. Loader: src/lib/sheaf/from-json.ts. Validator: npm run sheaf:validate.",
+  "type": "object",
+  "required": ["id", "title", "levels", "nodes"],
+  "additionalProperties": true,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Optional pointer to this file or docs/examples/sheaf.schema.json."
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "description": "Stable dataset id. Catalog key. Prefer kebab-case matching the filename without .json."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human label in the dataset switcher."
+    },
+    "kicker": { "type": "string", "description": "One-line subtitle under the title." },
+    "blurb": { "type": "string", "description": "Short paragraph the inspector shows when nothing is selected." },
+    "residualMeaning": {
+      "type": "string",
+      "description": "REQUIRED in practice. One sentence a reviewer can quote: what a terracotta edge means in this domain."
+    },
+    "levels": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/level" },
+      "description": "Ordered hierarchy planes. id 0 is the pinned/foundation slice."
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "edges": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/edge" },
+      "description": "Restriction edges. Either edges or triples is required."
+    },
+    "triples": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/edge" },
+      "description": "Alias for edges. Accepted by generate.mjs and from-json.ts."
+    },
+    "eval": { "$ref": "#/$defs/eval" }
+  },
+  "anyOf": [
+    { "required": ["edges"] },
+    { "required": ["triples"] }
+  ],
+  "$defs": {
+    "level": {
+      "type": "object",
+      "required": ["id", "label"],
+      "additionalProperties": true,
+      "properties": {
+        "id": { "type": "integer", "minimum": 0, "description": "Plane index. 0 = foundations / pinned contract." },
+        "code": { "type": "string", "description": "Short code, e.g. L0." },
+        "label": { "type": "string" },
+        "kicker": { "type": "string" },
+        "blurb": { "type": "string" }
+      }
+    },
+    "node": {
+      "type": "object",
+      "required": ["id", "title", "level", "dim"],
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Stable id. Slug-safe [a-z0-9-]. Loader lowercases and replaces other chars with '-'."
+        },
+        "title": { "type": "string", "minLength": 1 },
+        "kind": {
+          "type": "string",
+          "description": "Open vocabulary. Known display kinds: lcel, package, module, api, concept, paper, agent, channel, entity, software, integrity."
+        },
+        "level": { "type": "integer", "minimum": 0, "description": "Must match a levels[].id." },
+        "dim": { "type": "integer", "minimum": 1, "maximum": 64, "description": "Stalk dimension dim F(v)." },
+        "known": {
+          "type": "boolean",
+          "description": "Pinned boundary. Diffuse / harmonic extension MUST NOT move this section."
+        },
+        "section": {
+          "type": "array",
+          "items": { "type": "number" },
+          "description": "Assignment x_v in R^dim. Length MUST equal dim. Omit → zeros."
+        },
+        "summary": { "type": "string" },
+        "sources": { "type": "array", "items": { "type": "string" } },
+        "arxiv": { "type": "string" },
+        "aliases": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Search aliases (export names, issue tags)."
+        },
+        "pooledFrom": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Child ids this stalk was pooled from (HiSP / hierarchical index)."
+        }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "required": ["source", "target"],
+      "additionalProperties": true,
+      "properties": {
+        "id": { "type": "string" },
+        "source": { "type": "string", "description": "Node id. Also accepted as subject." },
+        "target": { "type": "string", "description": "Node id. Also accepted as object." },
+        "subject": { "type": "string" },
+        "object": { "type": "string" },
+        "relation": { "type": "string", "description": "Also accepted as predicate. Default related_to." },
+        "predicate": { "type": "string" },
+        "restrictKind": {
+          "type": "string",
+          "enum": ["identity", "projection", "embed", "spectral", "type-aware"],
+          "description": "How Fsrc/Ftgt are built when matrices are omitted."
+        },
+        "edgeDim": { "type": "integer", "minimum": 1, "description": "Row count of Fsrc and Ftgt." },
+        "Fsrc": {
+          "type": "array",
+          "items": { "type": "array", "items": { "type": "number" } },
+          "description": "Restriction F_s : F(source) → F(e). Columns = source.dim, rows = edgeDim."
+        },
+        "Ftgt": {
+          "type": "array",
+          "items": { "type": "array", "items": { "type": "number" } },
+          "description": "Restriction F_t : F(target) → F(e). Columns = target.dim, rows = edgeDim."
+        },
+        "translation": {
+          "type": "array",
+          "items": { "type": "number" },
+          "description": "TransE-style offset added to the coboundary."
+        },
+        "residual": {
+          "type": "number",
+          "description": "‖Fsrc xs − Ftgt xt − r‖. Recomputed on load; stored value is advisory."
+        },
+        "note": { "type": "string" }
+      }
+    },
+    "eval": {
+      "type": "object",
+      "description": "Optional experiment block the explorer inspector can render.",
+      "additionalProperties": true,
+      "properties": {
+        "files": { "type": "integer" },
+        "loc": { "type": "integer" },
+        "dim": { "type": "integer" },
+        "elapsedMs": { "type": "number" },
+        "heapMB": { "type": "number" },
+        "segments": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" },
+          "properties": {
+            "package": { "type": "integer" },
+            "module": { "type": "integer" },
+            "api": { "type": "integer" },
+            "viz": { "type": "integer" },
+            "edges": { "type": "integer" }
+          }
+        },
+        "holdout": {
+          "type": "object",
+          "additionalProperties": { "type": "number" },
+          "properties": {
+            "n": { "type": "number" },
+            "sheafCos": { "type": "number" },
+            "graphCos": { "type": "number" },
+            "neighborCos": { "type": "number" },
+            "sheafFamCos": { "type": "number" },
+            "graphFamCos": { "type": "number" },
+            "sheafMse": { "type": "number" },
+            "graphMse": { "type": "number" }
+          }
+        },
+        "cohomo": {
+          "type": "object",
+          "additionalProperties": { "type": "number" },
+          "properties": {
+            "h0": { "type": "number" },
+            "h1": { "type": "number" },
+            "chi": { "type": "number" },
+            "energy": { "type": "number" },
+            "radius": { "type": "number" }
+          }
+        },
+        "impact": {
+          "type": "object",
+          "properties": {
+            "seed": { "type": ["string", "null"] },
+            "ranked": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["id", "mag"],
+                "properties": {
+                  "id": { "type": "string" },
+                  "mag": { "type": "number" }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

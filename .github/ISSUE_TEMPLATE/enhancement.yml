@@ -11,6 +11,7 @@ body:
         - visualization
         - algebra
         - dataset
+        - ingest
         - ux
         - tests
     validations:
@@ -26,14 +27,14 @@ body:
     id: files
     attributes:
       label: Files likely to change
-      description: See docs/ARCHITECTURE.md
-      placeholder: src/lib/sheaf/…, src/components/sheaf/…
+      description: See docs/ARCHITECTURE.md and docs/INGEST.md
+      placeholder: src/lib/sheaf/…, schemas/…, templates/library/…
     validations:
       required: true
   - type: textarea
     id: done
     attributes:
       label: Definition of done
-      description: Screenshot-testable. Include Close-path, energy, and mobile if UI.
+      description: Screenshot-testable. Include Close-path, energy, and mobile if UI. New graphs must validate and have a catalog row.
     validations:
       required: true

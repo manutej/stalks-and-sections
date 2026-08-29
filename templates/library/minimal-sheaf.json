@@ -1,0 +1,43 @@
+{
+  "$schema": "../../schemas/sheaf-graph.schema.json",
+  "id": "minimal",
+  "title": "Minimal sheaf",
+  "kicker": "Smallest object a scraper may emit",
+  "blurb": "Two stalks, one restriction. Missing section is zeros. Missing maps rebuild from restrictKind.",
+  "residualMeaning": "Identity restriction between two copies of the same fibre. Terracotta here means the scraper emitted unequal sections on an identity edge.",
+  "levels": [
+    { "id": 0, "code": "L0", "label": "Core", "kicker": "Pinned", "blurb": "Foundation plane." },
+    { "id": 1, "code": "L1", "label": "Surface", "kicker": "Derived", "blurb": "Must restrict into core." }
+  ],
+  "nodes": [
+    {
+      "id": "core",
+      "title": "Core",
+      "kind": "module",
+      "level": 0,
+      "dim": 4,
+      "known": true,
+      "section": [1, 0, 0, 0],
+      "summary": "Pinned contract. Diffuse must not move this stalk.",
+      "aliases": ["contract"]
+    },
+    {
+      "id": "wrapper",
+      "title": "Wrapper",
+      "kind": "api",
+      "level": 1,
+      "dim": 4,
+      "known": false,
+      "summary": "No section supplied — loader fills zeros."
+    }
+  ],
+  "edges": [
+    {
+      "source": "wrapper",
+      "target": "core",
+      "relation": "restricts",
+      "restrictKind": "projection",
+      "note": "Maps omitted. Loader rebuilds a projection wrapper.dim → core.dim."
+    }
+  ]
+}

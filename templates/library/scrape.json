@@ -1,0 +1,28 @@
+{
+  "$schema": "../../schemas/library-ingest.schema.json",
+  "id": "my-lib",
+  "title": "My library",
+  "kind": "codebase",
+  "source": {
+    "git": "https://github.com/org/my-lib.git",
+    "ref": "main",
+    "root": "/tmp/my-lib",
+    "sparse": []
+  },
+  "include": ["**/*.{ts,tsx,js,jsx}"],
+  "exclude": ["**/node_modules/**", "**/*.d.ts", "**/*.{test,spec}.*", "**/dist/**"],
+  "segmentation": ["package", "module"],
+  "cap": 96,
+  "dim": 16,
+  "contract": {
+    "pinned": [],
+    "families": [
+      { "id": "family-a", "pattern": "\\bPublicApi\\b" }
+    ]
+  },
+  "output": {
+    "sheaf": "docs/examples/my-lib.json",
+    "report": "docs/experiments/my-lib.md"
+  },
+  "residualMeaning": "Replace this with one sentence a reviewer can quote: what a terracotta edge means in this library."
+}

@@ -1,0 +1,77 @@
+name: Ingest a library
+description: Scrape a new codebase into a SheafGraph the explorer can load
+title: "[ingest] "
+labels: ["enhancement", "dataset"]
+body:
+  - type: input
+    id: git
+    attributes:
+      label: Source repository
+      description: Clone URL.
+      placeholder: https://github.com/org/lib.git
+    validations:
+      required: true
+  - type: input
+    id: ref
+    attributes:
+      label: Ref
+      description: Branch, tag, or SHA.
+      placeholder: main
+    validations:
+      required: true
+  - type: textarea
+    id: include
+    attributes:
+      label: Include globs
+      description: Source files the scraper should stream. Never the whole tree in memory.
+      placeholder: libs/**/*.{ts,tsx}
+    validations:
+      required: true
+  - type: textarea
+    id: contract
+    attributes:
+      label: Pinned contract
+      description: Node ids or path fragments that become known:true on L0, plus interface-family regexes.
+      placeholder: |
+        pinned: core/runnables, core/messages
+        families: runnable, messages, tools, …
+    validations:
+      required: true
+  - type: textarea
+    id: residual
+    attributes:
+      label: residualMeaning
+      description: One sentence a reviewer can quote. What does a terracotta edge mean in this library?
+    validations:
+      required: true
+  - type: dropdown
+    id: segmentation
+    attributes:
+      label: Segmentation
+      options:
+        - package ⊂ module
+        - package ⊂ module ⊂ api
+        - module only
+    validations:
+      required: true
+  - type: input
+    id: cap
+    attributes:
+      label: Node cap after pooling
+      description: Explorer stays playable under ~120.
+      placeholder: "96"
+    validations:
+      required: true
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Scraper rules
+      options:
+        - label: Missing sections will be zeros, not Gaussians
+          required: true
+        - label: Missing Fsrc/Ftgt will be rebuilt from restrictKind
+          required: true
+        - label: I will validate the output with `npm run sheaf:validate`
+          required: true
+        - label: I will add a row to docs/examples/catalog.json
+          required: true

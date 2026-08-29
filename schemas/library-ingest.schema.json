@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/manutej/stalks-and-sections/schemas/library-ingest.schema.json",
+  "title": "LibraryIngest",
+  "description": "Job spec a code scraper / from-code extractor reads before walking a repository. Output of a successful job is a SheafGraph JSON that validates against sheaf-graph.schema.json.",
+  "type": "object",
+  "required": ["id", "kind", "source", "output"],
+  "additionalProperties": true,
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "description": "Becomes SheafGraph.id and the example filename stem."
+    },
+    "title": { "type": "string" },
+    "kind": {
+      "type": "string",
+      "enum": ["codebase", "wiki", "triples", "csv", "sheaf"],
+      "description": "Which extractor to run."
+    },
+    "source": {
+      "type": "object",
+      "required": ["root"],
+      "additionalProperties": true,
+      "properties": {
+        "git": { "type": "string", "description": "Clone URL." },
+        "ref": { "type": "string", "description": "Branch, tag, or SHA. Default HEAD." },
+        "root": { "type": "string", "description": "Local path after clone, e.g. /tmp/langchainjs." },
+        "sparse": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Optional sparse-checkout paths."
+        }
+      }
+    },
+    "include": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": ["**/*.{ts,tsx,js,jsx}"],
+      "description": "Glob of source files to stream. Never load file text into memory as a whole tree."
+    },
+    "exclude": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": ["**/node_modules/**", "**/*.d.ts", "**/*.{test,spec}.*", "**/dist/**"]
+    },
+    "segmentation": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["package", "module", "api", "file"] },
+      "default": ["package", "module"],
+      "description": "Matched segmentations. package ⊂ module ⊂ api. Each becomes a hierarchy level."
+    },
+    "cap": {
+      "type": "integer",
+      "minimum": 8,
+      "maximum": 400,
+      "default": 96,
+      "description": "Max lattice nodes after pooling. Explorer stays playable under ~120."
+    },
+    "dim": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 64,
+      "default": 16,
+      "description": "Stalk dimension. Interface-family coords first; hashed extras after."
+    },
+    "contract": {
+      "type": "object",
+      "description": "Pinned global section. Wrappers restrict into these stalks.",
+      "properties": {
+        "pinned": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Node ids or path fragments that become known:true on L0."
+        },
+        "families": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "pattern"],
+            "properties": {
+              "id": { "type": "string" },
+              "pattern": { "type": "string", "description": "JS regex source tested per source line." }
+            }
+          }
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "required": ["sheaf"],
+      "properties": {
+        "sheaf": { "type": "string", "description": "Path for the SheafGraph JSON, usually docs/examples/<id>.json." },
+        "report": { "type": "string" },
+        "issues": { "type": "string", "description": "Optional gold-issue JSON for recall eval." }
+      }
+    },
+    "residualMeaning": {
+      "type": "string",
+      "description": "Copied onto the generated SheafGraph."
+    }
+  }
+}
