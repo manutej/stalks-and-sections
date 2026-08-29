@@ -28,6 +28,18 @@ npm run dev
 
 Then open the printed local URL. `npm run typecheck` and `npm run build` are the gates.
 
+### Grok Build / migrate
+
+Wired for [Grok Build](https://docs.x.ai/build/overview): `AGENTS.md` at the root, skills under `.grok/skills/`. Unzip-and-continue: **[MIGRATE.md](MIGRATE.md)**. Enhancement contract: **[HANDOFF.md](HANDOFF.md)**.
+
+```bash
+git clone https://github.com/manutej/stalks-and-sections.git
+cd stalks-and-sections
+npm install
+grok inspect    # AGENTS.md + sheaf-ingest + sheaf-enhance
+grok
+```
+
 ### Add a knowledge graph
 
 ```bash
