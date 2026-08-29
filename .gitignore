@@ -14,9 +14,13 @@ coverage
 /tmp
 artifacts
 screenshots
-.grok
+# Grok App Builder local state — keep project skills + rules
+.grok/*
+!.grok/skills/
+!.grok/skills/**
+!.grok/rules/
+!.grok/rules/**
 attachments
-AGENTS.md
 AGENTS.project.md
 *.tsbuildinfo
 .cache
