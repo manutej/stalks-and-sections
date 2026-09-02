@@ -34,6 +34,13 @@
       "title": "LangChain.js rich index",
       "kind": "codebase",
       "ingest": "templates/library/langchainjs.json"
+    },
+    {
+      "id": "hermes-agent",
+      "path": "docs/examples/hermes-agent.json",
+      "title": "Hermes Agent harness",
+      "kind": "architecture",
+      "ingest": "templates/library/hermes-agent.json"
     }
   ]
 }

@@ -1,0 +1,63 @@
+{
+  "$schema": "../../schemas/library-ingest.schema.json",
+  "id": "hermes-agent",
+  "title": "Hermes Agent harness",
+  "kind": "codebase",
+  "source": {
+    "git": "https://github.com/NousResearch/hermes-agent.git",
+    "ref": "main",
+    "root": "/tmp/hermes-agent",
+    "sparse": [
+      "run_agent.py",
+      "cli.py",
+      "model_tools.py",
+      "toolsets.py",
+      "hermes_state.py",
+      "agent/",
+      "tools/",
+      "gateway/",
+      "cron/",
+      "acp_adapter/",
+      "plugins/",
+      "skills/",
+      "optional-skills/",
+      "website/docs/",
+      "AGENTS.md",
+      "README.md"
+    ]
+  },
+  "include": ["**/*.{py,md}"],
+  "exclude": ["**/tests/**", "**/.git/**", "**/node_modules/**"],
+  "segmentation": ["runtime", "subsystem", "surface"],
+  "cap": 96,
+  "dim": 12,
+  "contract": {
+    "pinned": [
+      "agent-loop",
+      "tool-protocol",
+      "session-state",
+      "prompt-tiers",
+      "provider-transport",
+      "profile-isolation"
+    ],
+    "families": [
+      { "id": "loop", "pattern": "\\b(AIAgent|_run_agent_loop|run_conversation)\\b" },
+      { "id": "prompt", "pattern": "\\b(prompt_builder|prompt_caching|system prompt|SOUL\\.md)\\b" },
+      { "id": "tools", "pattern": "\\b(registry\\.register|handle_function_call|toolsets)\\b" },
+      { "id": "state", "pattern": "\\b(SessionDB|hermes_state|FTS5)\\b" },
+      { "id": "memory", "pattern": "\\b(memory_manager|MEMORY\\.md|USER\\.md|Honcho)\\b" },
+      { "id": "skills", "pattern": "\\b(SKILL\\.md|skills_hub|agentskills)\\b" },
+      { "id": "providers", "pattern": "\\b(runtime_provider|chat_completions|anthropic_messages|codex_responses)\\b" },
+      { "id": "gateway", "pattern": "\\b(GatewayRunner|gateway/run)\\b" },
+      { "id": "cron", "pattern": "\\b(cron/jobs|scheduler)\\b" },
+      { "id": "acp", "pattern": "\\b(acp_adapter|ACP)\\b" },
+      { "id": "mcp", "pattern": "\\b(mcp_serve|mcp_tool|MCP)\\b" },
+      { "id": "security", "pattern": "\\b(approval|HERMES_HOME|container isolation|DM pairing)\\b" }
+    ]
+  },
+  "output": {
+    "sheaf": "docs/examples/hermes-agent.json",
+    "report": "docs/experiments/hermes-agent.md"
+  },
+  "residualMeaning": "A terracotta edge is a harness gluing failure: a surface, skill, plugin, or backend that does not restrict into the pinned AIAgent + tool-registry + SessionDB + prompt-tier contract — unregistered tool, dropped session lineage, skill never injected, provider api_mode mismatch, or a second memory writer."
+}
