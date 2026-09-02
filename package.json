@@ -18,6 +18,7 @@
     "sheaf:generate": "node scripts/sheaf/generate.mjs",
     "sheaf:examples": "node scripts/sheaf/generate.mjs --all",
     "sheaf:validate": "node scripts/sheaf/validate.mjs",
+    "sheaf:ingest": "node scripts/sheaf/ingest.mjs",
     "sheaf:langchainjs": "node scripts/sheaf/from-code.mjs --root /tmp/langchainjs --out docs/examples/langchainjs.json --issues docs/experiments/langchainjs-issues.json --report docs/experiments/langchainjs.md --cap 88",
     "sheaf:rich": "node scripts/sheaf/rich-index.mjs --root /tmp/langchainjs --out docs/examples/langchainjs-rich.json --report docs/experiments/rich-index.md --cap 96",
     "lint": "eslint .",
