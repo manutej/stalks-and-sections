@@ -38,8 +38,8 @@
     {
       "id": "hermes-agent",
       "path": "docs/examples/hermes-agent.json",
-      "title": "Hermes Agent harness",
-      "kind": "architecture",
+      "title": "Hermes Agent digest",
+      "kind": "codebase",
       "ingest": "templates/library/hermes-agent.json"
     }
   ]
