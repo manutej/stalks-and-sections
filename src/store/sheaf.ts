@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import {
   closedFormTransE,
+  DATASETS,
   diffuse,
   hierarchicalPool,
   layoutForce,
@@ -17,6 +18,31 @@ import type {
 } from "@/lib/sheaf/types";
 
 const INTRO_KEY = "stalks-intro-v1";
+
+function queryDataset(): DatasetId | null {
+  try {
+    if (typeof window === "undefined") return null;
+    const params = new URLSearchParams(window.location.search);
+    const raw = params.get("g") ?? params.get("dataset") ?? params.get("graph");
+    if (!raw) return null;
+    return DATASETS.some((d) => d.id === raw) ? raw : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeQuery(id: DatasetId) {
+  try {
+    if (typeof window === "undefined" || typeof history === "undefined") return;
+    const url = new URL(window.location.href);
+    url.searchParams.delete("dataset");
+    url.searchParams.delete("graph");
+    url.searchParams.set("g", id);
+    history.replaceState(history.state, "", `${url.pathname}${url.search}${url.hash}`);
+  } catch {
+    /* ignore */
+  }
+}
 
 function snapshot(id: DatasetId) {
   const g = loadGraph(id);
@@ -126,6 +152,13 @@ export const useSheaf = create<SheafStore>((set, get) => ({
   mobilePanel: "none",
 
   hydrate: () => {
+    const id = queryDataset();
+    if (id) {
+      if (get().dataset !== id) get().setDataset(id);
+      else writeQuery(id);
+      set({ introOpen: false });
+      return;
+    }
     try {
       if (localStorage.getItem(INTRO_KEY) === "1") set({ introOpen: false });
     } catch {
@@ -136,6 +169,7 @@ export const useSheaf = create<SheafStore>((set, get) => ({
   setDataset: (id) => {
     const snap = snapshot(id);
     const top = Math.max(0, ...snap.levels.map((l) => l.id));
+    writeQuery(id);
     set({
       dataset: id,
       ...snap,
