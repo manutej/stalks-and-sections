@@ -2,7 +2,7 @@
 
 Portable JSON graphs for the explorer. Schema: [`sheaf.schema.json`](sheaf.schema.json). How to build a new one: [`../GENERATE.md`](../GENERATE.md) · ingest: [`../INGEST.md`](../INGEST.md).
 
-LangChain.js and Hermes Agent are **separate lattices**. Do not merge them. Do not run `sheaf:langchainjs` / `sheaf:rich` on the Hermes tree.
+LangChain.js and Hermes Agent are **separate lattices**. Do not merge them. Do not run `sheaf:langchainjs` / `sheaf:rich` / `from-code.mjs` on the Hermes tree. Use `from-hermes.mjs`.
 
 | File | Origin | Residual means |
 | --- | --- | --- |
@@ -11,7 +11,7 @@ LangChain.js and Hermes Agent are **separate lattices**. Do not merge them. Do n
 | `wiki-integrity.json` | `npm run sheaf:examples` from `docs/sources` | Typed wiki-relation mismatch |
 | `langchainjs.json` | `npm run sheaf:langchainjs` from langchain-ai/langchainjs | LCEL-contract mismatch |
 | `langchainjs-rich.json` | `npm run sheaf:rich` | Segmentation mismatch (package ⊂ module ⊂ API) |
-| `hermes-agent.json` | hand-authored harness map of [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) | Harness gluing failure vs pinned AIAgent + registry + SessionDB |
+| `hermes-agent.json` | tree + docs digest of [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) via `from-hermes.mjs` | Harness gluing failure vs pinned AIAgent + registry + SessionDB |
 
 Drop a new `*.json` here (not `sheaf.schema.json` or `catalog.json`). Restart the app. It appears in the dataset switcher.
 
