@@ -1,10 +1,22 @@
-# Hermes Agent digest
+# Hermes Agent family digest
 
-Source-grounded sheaf of [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) `@ afc3d9d3` plus official docs.
+Walker: `scripts/sheaf/from-hermes.mjs`.
+Files scored: 2918 py/md under `/tmp/hermes-agent` @ `485aaf6` (NousResearch/hermes-agent@main).
+Nodes: 94 / edges: 91 / dim 12.
+Layers: L0 8 pinned · L1 34 subsystems · L2 19 surfaces · L3 33 adapters/docs.
 
-- Graph: `docs/examples/hermes-agent.json` (id `hermes-agent`)
-- 81 nodes / 70 edges / dim 12 harness families
-- L0 waist files from architecture.md: `run_agent.py`, `tools/registry.py`, `hermes_state.py`, `toolsets.py`, `model_tools.py`, `hermes_cli/runtime_provider.py`, `agent/system_prompt.py`, `tools/approval.py`
-- Method: tree + docs digest. Restriction edges follow the documented import chain in `tools/registry.py` and data flow in architecture.md / agent-loop.md.
-- Not an AST family-hash. Do not run `from-code.mjs` or `sheaf:rich` on this repo.
-- Separate from `langchainjs` / `langchainjs-rich` / builtin `literature`.
+Not an official-architecture sketch. Each stalk is a real file or directory on the cloned tree. Restriction maps omitted in JSON and rebuilt at load. Missing sections stay zeros — no Gaussian fill.
+
+Type-aware terracotta (documented gluing failures only):
+- plugins/memory → SessionDB (Honcho/Mem0 second writer)
+- apps/desktop → SessionDB (second session writer)
+- cron/scheduler → SessionDB (fresh AIAgent, lineage skip)
+- mcp_serve.py → approval (external MCP can skip the gate)
+- optional-skills → prompt_builder (often never injected)
+- tools/bot_relay.py → SessionDB (Bot Mode / peer DM can fork lineage)
+- plugins/context_engine → prompt_builder (parallel memory path)
+- agent/moa_loop.py → run_agent.py (second conversation loop)
+- gateway/session.py → SessionDB (two session objects)
+- plugins/model-providers → runtime_provider (api_mode mismatch)
+
+Never from-code.mjs / rich-index.mjs. Dataset id stays `hermes-agent`.
