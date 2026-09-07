@@ -15,6 +15,8 @@ npm run sheaf:validate -- docs/examples/my-kg.json
 
 Put the file in `docs/examples/`. The catalog (`src/lib/sheaf/catalog.ts`) loads every JSON there except the schema. Restart the app; pick it in the dataset switcher.
 
+The default dataset is **`hermes-agent`** (113 stalks, rooms inside fat stalks). File map: [`FILEMAP.md`](FILEMAP.md). Eval: [`experiments/hermes-agent.md`](experiments/hermes-agent.md). Emit only via `npm run sheaf:hermes` — never `from-code.mjs`.
+
 Hand-authored sheaves (maps already filled) also belong in `docs/examples/` — see `discourse-triangle.json`.
 
 ## Builtin TypeScript graphs

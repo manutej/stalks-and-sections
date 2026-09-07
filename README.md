@@ -2,7 +2,9 @@
 
 A full-viewport **WebGL** explorer of **cellular sheaves** on a hierarchical knowledge graph.
 
-Nodes are stalks — finite-dimensional vector spaces of their own size (dim 2–16). Edges are typed restriction maps. Edge colour and thickness are the residual of the sheaf Laplacian. Only approximate global sections survive as trusted knowledge.
+Default graph is the **Hermes Agent digest** (113 stalks, enterable rooms). It is a consistency structure — stalks, restriction maps, residuals, pinned facts — **not** an AST of 3387 files.
+
+Review this build: [`docs/REVIEW.md`](docs/REVIEW.md). File map: [`docs/FILEMAP.md`](docs/FILEMAP.md).
 
 ![Stalks & Sections](public/og.jpg)
 
@@ -47,6 +49,9 @@ Full contract: **[docs/GENERATE.md](docs/GENERATE.md)** — schema, templates, w
 | `npm run sheaf:generate` | Compile triples / CSV / wiki → sheaf JSON |
 | `npm run sheaf:examples` | Regenerate shipped example graphs |
 | `npm run sheaf:validate` | Check a sheaf JSON against the contract |
+| `npm run sheaf:hermes` | Emit the 113-stalk Hermes digest + rooms |
+| `npm run sheaf:hermes:pack` | Compact review drop under `artifacts/hermes-ship113/` |
+| `npm run sheaf:qa` | Playwright: lattice → enter `run_agent` room |
 
 ## How to read the lattice
 

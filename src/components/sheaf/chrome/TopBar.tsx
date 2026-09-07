@@ -1,4 +1,4 @@
-import { BookOpen, CircleHelp, Layers2, RotateCcw, Search } from "lucide-react";
+import { BookOpen, ChevronRight, CircleHelp, Layers2, RotateCcw, Search, Undo2 } from "lucide-react";
 import { DATASETS } from "@/lib/sheaf";
 import { useSheaf } from "@/store/sheaf";
 import { Explained, Hint } from "./Hint";
@@ -17,6 +17,9 @@ export function TopBar() {
   const energy = useSheaf((s) => s.energy);
   const kicker = useSheaf((s) => s.kicker);
   const levels = useSheaf((s) => s.levels);
+  const roomPath = useSheaf((s) => s.roomPath);
+  const leaveRoom = useSheaf((s) => s.leaveRoom);
+  const leaveToRoot = useSheaf((s) => s.leaveToRoot);
 
   const q = search.trim().toLowerCase();
   const hits = q
@@ -99,6 +102,7 @@ export function TopBar() {
         <div className="sheaf-panel hidden items-center gap-1 rounded-xl px-3 py-2 sm:flex">
           <span className="text-[10px] uppercase tracking-wider text-fg-subtle">Energy</span>
           <span className="tabular font-mono text-sm">{energy.toFixed(3)}</span>
+          <span className="text-[10px] text-fg-subtle">{nodes.length} stalks</span>
           <Hint k="energy" side="bottom" />
         </div>
 
@@ -142,6 +146,32 @@ export function TopBar() {
           </button>
         </Explained>
       </div>
+
+      {roomPath.length ? (
+        <div className="pointer-events-auto sheaf-panel mt-2 flex max-w-full items-center gap-1 overflow-x-auto rounded-xl px-2 py-1.5">
+          <button
+            type="button"
+            onClick={leaveToRoot}
+            className="shrink-0 rounded-md px-2 py-1 text-[11px] font-medium text-fg-muted hover:bg-bg-soft hover:text-fg"
+          >
+            {dataset === "hermes-agent" ? "Hermes" : "Lattice"}
+          </button>
+          {roomPath.map((step, i) => (
+            <span key={`${step.id}-${i}`} className="flex shrink-0 items-center gap-1">
+              <ChevronRight className="size-3 text-fg-subtle" />
+              <span className="max-w-[10rem] truncate text-[11px] font-medium">{step.title}</span>
+            </span>
+          ))}
+          <button
+            type="button"
+            onClick={leaveRoom}
+            className="ml-auto flex h-8 shrink-0 items-center gap-1 rounded-md bg-bg-soft px-2 text-[11px] font-medium"
+          >
+            <Undo2 className="size-3" />
+            Leave
+          </button>
+        </div>
+      ) : null}
     </header>
   );
 }

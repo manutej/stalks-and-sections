@@ -41,6 +41,9 @@ const KIND_LABELS: Record<string, string> = {
   provider: "Provider",
   surface: "Surface",
   core: "Core",
+  runtime: "Runtime waist",
+  subsystem: "Subsystem",
+  adapter: "Adapter",
 };
 
 export function kindLabel(kind: string): string {
@@ -78,8 +81,8 @@ function lerpHex(a: string, b: string, t: number): string {
   const B = hexRgb(b);
   const r = Math.round(A[0] + (B[0] - A[0]) * t);
   const g = Math.round(A[1] + (B[1] - A[1]) * t);
-  const bl = Math.round(A[2] + (B[2] - A[2]) * t);
-  return `#${[r, g, bl].map((v) => v.toString(16).padStart(2, "0")).join("")}`;
+  const bch = Math.round(A[2] + (B[2] - A[2]) * t);
+  return `#${[r, g, bch].map((x) => x.toString(16).padStart(2, "0")).join("")}`;
 }
 
 function hexRgb(h: string): [number, number, number] {

@@ -33,6 +33,8 @@ npm run sheaf:examples
 
 Drop the JSON in `docs/examples/` (id = filename without `.json`). The catalog picks it up. Restart the app. The new graph appears in the dataset switcher.
 
+Optional: `pooledFrom` on a node lists member ids; `rooms` on the root is a map of interior sheaves. The explorer treats those as enterable rooms (double-click / Enter room) so a ~120-stalk working set can still hold a much larger digest.
+
 ## Input shapes
 
 ### A. Triples JSON (preferred)
@@ -126,6 +128,17 @@ npm run sheaf:langchainjs
 ```
 
 That streams every `libs/**/*.ts` file, pools to ~90 module stalks, glues providers onto the pinned LCEL contract, and writes `docs/examples/langchainjs.json`. Report: `docs/experiments/langchainjs.md`. Extractor: `scripts/sheaf/from-code.mjs`.
+
+### Hermes Agent (playable digest, not an AST)
+
+```bash
+npm run sheaf:hermes        # emit + validate
+npm run sheaf:hermes:pack   # compact review drop
+```
+
+Writes `docs/examples/hermes-agent.json` — **113 stalks · 112 restrictions**, L0 waist pinned, authored `rooms` for fat stalks. Emitter: `scripts/sheaf/emit-hermes.py`. Eval: [`experiments/hermes-agent.md`](experiments/hermes-agent.md). File map: [`FILEMAP.md`](FILEMAP.md).
+
+This is a hierarchical working set, not 3387 file-nodes. Do not route Hermes through `from-code.mjs` / `rich-index.mjs`.
 
 ### Rich index (three matched segmentations + hold-out)
 

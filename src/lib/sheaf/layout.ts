@@ -1,7 +1,7 @@
 import type { SheafEdge, SheafNode, Vec3 } from "./types";
 
-export const LAYER_Z = 5.1;
-export const WORLD_R = 9.5;
+export const LAYER_Z = 6.8;
+export const WORLD_R = 18;
 
 export function seedPositions(nodes: SheafNode[]): Record<string, Vec3> {
   const byLevel = new Map<number, SheafNode[]>();
@@ -13,93 +13,103 @@ export function seedPositions(nodes: SheafNode[]): Record<string, Vec3> {
   const pos: Record<string, Vec3> = {};
   for (const [level, group] of byLevel) {
     const n = group.length;
+    const ring = layerRadius(level, n) - 2.2;
     group.forEach((node, i) => {
-      const ang = (i / n) * Math.PI * 2 - Math.PI / 2;
-      const ring = 2.6 + (3 - Number(level)) * 1.55 + Math.min(3.2, n * 0.22);
-      const jitter = ((hash(node.id) % 1000) / 1000 - 0.5) * 0.55;
+      const ang = (i / Math.max(n, 1)) * Math.PI * 2 - Math.PI / 2;
+      const jitter = ((hash(node.id) % 1000) / 1000 - 0.5) * 0.28;
       pos[node.id] = {
         x: Math.cos(ang) * ring + jitter,
         y: level * LAYER_Z,
-        z: Math.sin(ang) * (ring * 0.86) + jitter * 0.6,
+        z: Math.sin(ang) * ring + jitter * 0.4,
       };
     });
   }
   return pos;
 }
 
+/**
+ * Intra-layer spacing + hard Y pin + radial clamp.
+ * Cross-layer all-pairs repulsion is unstable at n≈100.
+ * Ring grows with count so a 113-stalk working set stays readable;
+ * rooms (spaces inside stalks) are how density is navigated, not a node cap.
+ */
 export function layoutForce(
   nodes: SheafNode[],
   edges: SheafEdge[],
-  steps = 220,
+  steps = 80,
 ): Record<string, Vec3> {
   const pos = seedPositions(nodes);
-  const vel: Record<string, Vec3> = {};
-  for (const n of nodes) vel[n.id] = { x: 0, y: 0, z: 0 };
-
-  const ids = nodes.map((n) => n.id);
-  const rest = 2.35;
+  const byLevel = new Map<number, SheafNode[]>();
+  const counts = new Map<number, number>();
+  for (const n of nodes) {
+    const g = byLevel.get(n.level) ?? [];
+    g.push(n);
+    byLevel.set(n.level, g);
+  }
+  for (const [lv, g] of byLevel) counts.set(lv, g.length);
 
   for (let s = 0; s < steps; s++) {
     const alpha = 1 - s / steps;
-    for (let i = 0; i < ids.length; i++) {
-      const a = ids[i]!;
-      const pa = pos[a]!;
-      for (let j = i + 1; j < ids.length; j++) {
-        const b = ids[j]!;
-        const pb = pos[b]!;
-        let dx = pa.x - pb.x;
-        let dy = (pa.y - pb.y) * 0.35;
-        let dz = pa.z - pb.z;
-        let d2 = dx * dx + dy * dy + dz * dz + 0.08;
-        const inv = 1 / d2;
-        const f = 18 * inv * alpha;
-        dx *= f;
-        dy *= f;
-        dz *= f;
-        vel[a]!.x += dx;
-        vel[a]!.y += dy;
-        vel[a]!.z += dz;
-        vel[b]!.x -= dx;
-        vel[b]!.y -= dy;
-        vel[b]!.z -= dz;
+    for (const group of byLevel.values()) {
+      for (let i = 0; i < group.length; i++) {
+        const a = pos[group[i]!.id]!;
+        for (let j = i + 1; j < group.length; j++) {
+          const b = pos[group[j]!.id]!;
+          let dx = a.x - b.x;
+          let dz = a.z - b.z;
+          const d2 = dx * dx + dz * dz + 0.2;
+          const f = Math.min(0.9, (2.2 / d2) * alpha);
+          dx *= f;
+          dz *= f;
+          a.x += dx;
+          a.z += dz;
+          b.x -= dx;
+          b.z -= dz;
+        }
       }
     }
     for (const e of edges) {
-      const pa = pos[e.source];
-      const pb = pos[e.target];
-      if (!pa || !pb) continue;
-      const dx = pb.x - pa.x;
-      const dy = pb.y - pa.y;
-      const dz = pb.z - pa.z;
-      const dist = Math.sqrt(dx * dx + dy * dy + dz * dz) || 1;
-      const mag = 0.12 * (dist - rest) / dist;
-      vel[e.source]!.x += dx * mag;
-      vel[e.source]!.y += dy * mag * 0.25;
-      vel[e.source]!.z += dz * mag;
-      vel[e.target]!.x -= dx * mag;
-      vel[e.target]!.y -= dy * mag * 0.25;
-      vel[e.target]!.z -= dz * mag;
+      const a = pos[e.source];
+      const b = pos[e.target];
+      if (!a || !b) continue;
+      const dx = b.x - a.x;
+      const dz = b.z - a.z;
+      const dist = Math.hypot(dx, dz) || 1;
+      const mag = 0.03 * ((dist - 4.5) / dist) * alpha;
+      a.x += dx * mag;
+      a.z += dz * mag;
+      b.x -= dx * mag;
+      b.z -= dz * mag;
     }
     for (const n of nodes) {
       const p = pos[n.id]!;
-      const v = vel[n.id]!;
-      const targetY = n.level * LAYER_Z;
-      v.y += (targetY - p.y) * 0.22;
-      v.x += -p.x * 0.012;
-      v.z += -p.z * 0.012;
-      v.x *= 0.62;
-      v.y *= 0.55;
-      v.z *= 0.62;
-      p.x += v.x;
-      p.y += v.y;
-      p.z += v.z;
+      p.y = n.level * LAYER_Z;
+      const R = layerRadius(n.level, counts.get(n.level) ?? 1) * 0.86;
+      const r = Math.hypot(p.x, p.z) || 1;
+      if (r > R) {
+        p.x *= R / r;
+        p.z *= R / r;
+      }
     }
   }
   return pos;
 }
 
 export function nodeRadius(dim: number, scale: number): number {
-  return (0.18 + dim * 0.042) * scale;
+  const d = Math.min(Math.max(dim, 2), 12);
+  return (0.28 + d * 0.03) * scale;
+}
+
+export function layerRadius(level: number, count: number): number {
+  const n = Math.max(count, 1);
+  const ring = 4.2 + (3 - level) * 1.15 + Math.min(8.2, Math.sqrt(n) * 1.42);
+  return ring + 2.4;
+}
+
+export function layoutExtent(pos: Record<string, Vec3>): number {
+  let m = 0;
+  for (const p of Object.values(pos)) m = Math.max(m, Math.hypot(p.x, p.z), Math.abs(p.y));
+  return m;
 }
 
 function hash(s: string): number {

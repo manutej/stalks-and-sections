@@ -5,6 +5,8 @@
 **Product:** a WebGL explorer of *cellular sheaves* on a hierarchical knowledge graph
 **This document:** what v1 actually is, where it fails under adversarial review, and the smallest set of changes that would make it useful across many kinds of data — not just a literature demo.
 
+Hermes digest (post-v1, playable JSON): [`docs/REVIEW.md`](docs/REVIEW.md), [`docs/FILEMAP.md`](docs/FILEMAP.md) and [`docs/experiments/hermes-agent.md`](docs/experiments/hermes-agent.md). Default dataset is `hermes-agent` (113 stalks, not 3387 files).
+
 Read this before writing code. Architecture map: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). Live tickets: [issues](https://github.com/manutej/stalks-and-sections/issues).
 
 ---

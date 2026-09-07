@@ -1,49 +1,91 @@
 import { create } from "zustand";
 import {
+  buildRoom,
   closedFormTransE,
   diffuse,
   hierarchicalPool,
   layoutForce,
   loadGraph,
+  unfoldMembers,
 } from "@/lib/sheaf";
 import { dirichletEnergy } from "@/lib/sheaf/energy";
 import type {
   DatasetId,
+  FamilyDef,
+  LevelDef,
   ProofReport,
   SheafEdge,
   SheafEval,
+  SheafGraph,
   SheafNode,
   Vec3,
 } from "@/lib/sheaf/types";
 
 const INTRO_KEY = "stalks-intro-v1";
 
+type SpaceSnap = {
+  title: string;
+  kicker: string;
+  blurb: string;
+  nodes: SheafNode[];
+  edges: SheafEdge[];
+  levels: LevelDef[];
+  positions: Record<string, Vec3>;
+  baseNodes: SheafNode[];
+  baseEdges: SheafEdge[];
+  basePositions: Record<string, Vec3>;
+  energy: number;
+  maxLevel: number;
+  pooled: boolean;
+  selectedId: string | null;
+  eval: SheafEval | undefined;
+};
+
+function queryDataset(): DatasetId | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const g = new URLSearchParams(window.location.search).get("g");
+    return g && /^[a-z0-9][a-z0-9._-]*$/i.test(g) ? g : null;
+  } catch {
+    return null;
+  }
+}
+
 function snapshot(id: DatasetId) {
   const g = loadGraph(id);
   const positions = layoutForce(g.nodes, g.edges);
+  const top = Math.max(0, ...g.levels.map((l) => l.id));
   return {
+    dataset: g.id,
     nodes: g.nodes,
     edges: g.edges,
     levels: g.levels,
     title: g.title,
     kicker: g.kicker,
     blurb: g.blurb,
+    residualMeaning: g.residualMeaning,
+    families: g.families,
+    rooms: g.rooms,
     positions,
     energy: dirichletEnergy(g.nodes, g.edges),
     eval: g.eval,
+    maxLevel: top,
   };
 }
 
-const boot = snapshot("langchainjs-rich");
+const boot = snapshot(queryDataset() ?? "hermes-agent");
 
 interface SheafStore {
   dataset: DatasetId;
   title: string;
   kicker: string;
   blurb: string;
+  residualMeaning?: string;
+  families?: FamilyDef[];
+  rooms?: Record<string, SheafGraph>;
   nodes: SheafNode[];
   edges: SheafEdge[];
-  levels: ReturnType<typeof loadGraph>["levels"];
+  levels: LevelDef[];
   positions: Record<string, Vec3>;
   baseNodes: SheafNode[];
   baseEdges: SheafEdge[];
@@ -68,6 +110,8 @@ interface SheafStore {
   helpOpen: boolean;
   introOpen: boolean;
   mobilePanel: "none" | "inspect" | "controls";
+  roomStack: SpaceSnap[];
+  roomPath: { id: string; title: string }[];
   hydrate: () => void;
   setDataset: (id: DatasetId) => void;
   select: (id: string | null) => void;
@@ -83,6 +127,9 @@ interface SheafStore {
   diffuseNow: () => void;
   exactNow: () => void;
   poolNow: () => void;
+  enterRoom: (id: string) => void;
+  leaveRoom: () => void;
+  leaveToRoot: () => void;
   reset: () => void;
   setPrimer: (v: boolean) => void;
   setPrinciples: (v: boolean) => void;
@@ -92,11 +139,45 @@ interface SheafStore {
   closeOverlays: () => void;
 }
 
+function applyGraph(
+  room: SheafGraph,
+  extra: Partial<SheafStore> = {},
+): Partial<SheafStore> {
+  const positions = layoutForce(room.nodes, room.edges);
+  const top = Math.max(0, ...room.levels.map((l) => l.id), 0);
+  const energy = dirichletEnergy(room.nodes, room.edges);
+  return {
+    title: room.title,
+    kicker: room.kicker,
+    blurb: room.blurb,
+    nodes: room.nodes,
+    edges: room.edges,
+    levels: room.levels,
+    positions,
+    baseNodes: room.nodes.map((n) => ({ ...n, section: n.section.slice() })),
+    baseEdges: room.edges,
+    basePositions: positions,
+    energy,
+    energyLog: [energy],
+    eval: room.eval,
+    proof: null,
+    pooled: false,
+    maxLevel: top,
+    selectedId: extra.selectedId ?? null,
+    flyToId: extra.flyToId ?? extra.selectedId ?? null,
+    mobilePanel: extra.selectedId ? "inspect" : "none",
+    ...extra,
+  };
+}
+
 export const useSheaf = create<SheafStore>((set, get) => ({
-  dataset: "langchainjs-rich",
+  dataset: boot.dataset,
   title: boot.title,
   kicker: boot.kicker,
   blurb: boot.blurb,
+  residualMeaning: boot.residualMeaning,
+  families: boot.families,
+  rooms: boot.rooms,
   nodes: boot.nodes,
   edges: boot.edges,
   levels: boot.levels,
@@ -106,7 +187,7 @@ export const useSheaf = create<SheafStore>((set, get) => ({
   basePositions: boot.positions,
   selectedId: null,
   hoveredId: null,
-  maxLevel: 3,
+  maxLevel: boot.maxLevel,
   stalkScale: 1,
   consistency: 0.55,
   filterNoise: false,
@@ -122,22 +203,29 @@ export const useSheaf = create<SheafStore>((set, get) => ({
   primerOpen: false,
   principlesOpen: false,
   helpOpen: false,
-  introOpen: true,
+  introOpen: boot.dataset === "hermes-agent" || Boolean(queryDataset()) ? false : true,
   mobilePanel: "none",
+  roomStack: [],
+  roomPath: [],
 
   hydrate: () => {
+    const q = queryDataset();
+    let introOpen = get().introOpen;
     try {
-      if (localStorage.getItem(INTRO_KEY) === "1") set({ introOpen: false });
+      if (localStorage.getItem(INTRO_KEY) === "1") introOpen = false;
     } catch {
       /* ignore */
     }
+    if (q) introOpen = false;
+    if (q && q !== get().dataset) {
+      get().setDataset(q);
+    }
+    set({ introOpen });
   },
 
   setDataset: (id) => {
     const snap = snapshot(id);
-    const top = Math.max(0, ...snap.levels.map((l) => l.id));
     set({
-      dataset: id,
       ...snap,
       baseNodes: snap.nodes.map((n) => ({ ...n, section: n.section.slice() })),
       baseEdges: snap.edges,
@@ -148,7 +236,8 @@ export const useSheaf = create<SheafStore>((set, get) => ({
       energyLog: [snap.energy],
       flyToId: null,
       mobilePanel: "none",
-      maxLevel: top,
+      roomStack: [],
+      roomPath: [],
     });
   },
 
@@ -253,10 +342,106 @@ export const useSheaf = create<SheafStore>((set, get) => ({
     });
   },
 
+  enterRoom: (id) => {
+    const s = get();
+    const current = s.nodes.find((n) => n.id === id);
+    if (!current) return;
+    let room: SheafGraph | null = null;
+    if (current.pooledFrom?.length && !s.baseNodes.some((n) => n.id === id)) {
+      room = unfoldMembers(current, s.baseNodes, s.baseEdges);
+    } else {
+      const srcN = s.pooled ? s.baseNodes : s.nodes;
+      const srcE = s.pooled ? s.baseEdges : s.edges;
+      room = buildRoom(id, srcN, srcE, s.rooms);
+    }
+    if (!room || room.nodes.length < 3) return;
+    const snap: SpaceSnap = {
+      title: s.title,
+      kicker: s.kicker,
+      blurb: s.blurb,
+      nodes: s.nodes,
+      edges: s.edges,
+      levels: s.levels,
+      positions: s.positions,
+      baseNodes: s.baseNodes,
+      baseEdges: s.baseEdges,
+      basePositions: s.basePositions,
+      energy: s.energy,
+      maxLevel: s.maxLevel,
+      pooled: s.pooled,
+      selectedId: s.selectedId,
+      eval: s.eval,
+    };
+    const pin = room.nodes.find((n) => n.id === id)?.id ?? room.nodes[0]!.id;
+    set({
+      ...applyGraph(room, { selectedId: pin, flyToId: pin }),
+      roomStack: [...s.roomStack, snap],
+      roomPath: [...s.roomPath, { id, title: current.title }],
+    });
+  },
+
+  leaveRoom: () => {
+    const { roomStack, roomPath } = get();
+    const snap = roomStack[roomStack.length - 1];
+    if (!snap) return;
+    const left = roomPath[roomPath.length - 1];
+    set({
+      title: snap.title,
+      kicker: snap.kicker,
+      blurb: snap.blurb,
+      nodes: snap.nodes,
+      edges: snap.edges,
+      levels: snap.levels,
+      positions: snap.positions,
+      baseNodes: snap.baseNodes,
+      baseEdges: snap.baseEdges,
+      basePositions: snap.basePositions,
+      energy: snap.energy,
+      energyLog: [snap.energy],
+      eval: snap.eval,
+      maxLevel: snap.maxLevel,
+      pooled: snap.pooled,
+      proof: null,
+      selectedId: left?.id ?? snap.selectedId,
+      flyToId: left?.id ?? null,
+      mobilePanel: left?.id ? "inspect" : "none",
+      roomStack: roomStack.slice(0, -1),
+      roomPath: roomPath.slice(0, -1),
+    });
+  },
+
+  leaveToRoot: () => {
+    const { roomStack } = get();
+    const snap = roomStack[0];
+    if (!snap) return;
+    set({
+      title: snap.title,
+      kicker: snap.kicker,
+      blurb: snap.blurb,
+      nodes: snap.nodes,
+      edges: snap.edges,
+      levels: snap.levels,
+      positions: snap.positions,
+      baseNodes: snap.baseNodes,
+      baseEdges: snap.baseEdges,
+      basePositions: snap.basePositions,
+      energy: snap.energy,
+      energyLog: [snap.energy],
+      eval: snap.eval,
+      maxLevel: snap.maxLevel,
+      pooled: snap.pooled,
+      proof: null,
+      selectedId: null,
+      flyToId: null,
+      mobilePanel: "none",
+      roomStack: [],
+      roomPath: [],
+    });
+  },
+
   reset: () => {
     const { dataset } = get();
     const snap = snapshot(dataset);
-    const top = Math.max(0, ...snap.levels.map((l) => l.id));
     set({
       ...snap,
       baseNodes: snap.nodes.map((n) => ({ ...n, section: n.section.slice() })),
@@ -268,10 +453,11 @@ export const useSheaf = create<SheafStore>((set, get) => ({
       energyLog: [snap.energy],
       flyToId: null,
       filterNoise: false,
-      maxLevel: top,
       stalkScale: 1,
       consistency: 0.55,
       mobilePanel: "none",
+      roomStack: [],
+      roomPath: [],
     });
   },
 
@@ -293,12 +479,22 @@ export const useSheaf = create<SheafStore>((set, get) => ({
     set({ introOpen: false });
   },
   setMobilePanel: (p) => set({ mobilePanel: p }),
-  closeOverlays: () =>
+  closeOverlays: () => {
+    const { selectedId, roomStack } = get();
+    if (selectedId) {
+      set({ selectedId: null, mobilePanel: "none" });
+      return;
+    }
+    if (roomStack.length) {
+      get().leaveRoom();
+      return;
+    }
     set({
       selectedId: null,
       mobilePanel: "none",
       primerOpen: false,
       principlesOpen: false,
       helpOpen: false,
-    }),
+    });
+  },
 }));

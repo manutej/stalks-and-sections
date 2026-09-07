@@ -47,7 +47,12 @@
             "items": { "type": "number" }
           },
           "summary": { "type": "string" },
-          "sources": { "type": "array", "items": { "type": "string" } }
+          "sources": { "type": "array", "items": { "type": "string" } },
+          "pooledFrom": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Member stalk ids folded into this node. Enter-room unfolds them."
+          }
         }
       }
     },
@@ -81,6 +86,22 @@
           "note": { "type": "string" }
         }
       }
+    },
+    "families": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label"],
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string" }
+        }
+      }
+    },
+    "rooms": {
+      "type": "object",
+      "description": "Authored interior sheaves keyed by outer node id. Enter-room loads these.",
+      "additionalProperties": { "$ref": "#" }
     }
   }
 }

@@ -2,7 +2,11 @@
 
 **Read [`HANDOFF.md`](HANDOFF.md) first.** It is the adversarial evaluation of v1, the view catalog, the example catalog, and the PR sequence. Open GitHub issues are the live tracker; this file is the short intent list.
 
-Status of v1 (this repo): a literature-grounded cellular-sheaf lattice with variable-dimension stalks, residual-coloured restrictions, Diffuse / Exact / Coarsen operators, sliceable layers, and a documented inspector. **Utility blocker:** no JSON import; literature sections are sampled, not measured; no 2D review views.
+Status of v1 (this repo): a literature-grounded cellular-sheaf lattice with variable-dimension stalks, residual-coloured restrictions, Diffuse / Exact / Coarsen operators, sliceable layers, and a documented inspector.
+
+**Shipped since this list was written:** generic sheaf JSON (`docs/examples/`, `from-json.ts`), catalog loader, LangChain.js LCEL + rich index, and the Hermes **113-stalk playable digest** with enterable rooms (`?g=hermes-agent`). See [`docs/FILEMAP.md`](docs/FILEMAP.md). GitHub `main` may still serve the older 31-node Hermes JSON until that digest lands ([issue #16](https://github.com/manutej/stalks-and-sections/issues/16)).
+
+Remaining utility gaps: 2D review views (Bertin matrix, small multiples), spectral layout, and numeric restriction maps (still kind tags).
 
 ## Now — v1.1 visualization & UX
 

@@ -26,6 +26,11 @@ export interface DatasetMeta {
   builtin: boolean;
 }
 
+export interface FamilyDef {
+  id: string;
+  label: string;
+}
+
 export interface SheafNode {
   id: string;
   title: string;
@@ -65,12 +70,17 @@ export interface SheafEval {
   files?: number;
   loc?: number;
   dim?: number;
+  walker?: string;
+  clone?: string;
+  note?: string;
+  honestGaps?: string[];
   segments?: {
-    package: number;
-    module: number;
-    api: number;
-    viz: number;
-    edges: number;
+    package?: number;
+    module?: number;
+    api?: number;
+    viz?: number;
+    edges?: number;
+    nodes?: number;
   };
   holdout?: {
     n: number;
@@ -102,6 +112,8 @@ export interface SheafGraph {
   nodes: SheafNode[];
   edges: SheafEdge[];
   eval?: SheafEval;
+  families?: FamilyDef[];
+  rooms?: Record<string, SheafGraph>;
 }
 
 export interface ProofReport {

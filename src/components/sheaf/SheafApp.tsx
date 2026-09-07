@@ -8,6 +8,7 @@ import { Intro } from "./chrome/Intro";
 import { Legend } from "./chrome/Legend";
 import { PrimerModal } from "./chrome/Primer";
 import { TopBar } from "./chrome/TopBar";
+import { canEnterRoom } from "@/lib/sheaf/room";
 import { useSheaf } from "@/store/sheaf";
 
 export function SheafApp() {
@@ -15,6 +16,7 @@ export function SheafApp() {
   const closeOverlays = useSheaf((s) => s.closeOverlays);
   const mobilePanel = useSheaf((s) => s.mobilePanel);
   const introOpen = useSheaf((s) => s.introOpen);
+  const dataset = useSheaf((s) => s.dataset);
   const dismissIntro = useSheaf((s) => s.dismissIntro);
   const selectedId = useSheaf((s) => s.selectedId);
   const select = useSheaf((s) => s.select);
@@ -23,15 +25,21 @@ export function SheafApp() {
   const poolNow = useSheaf((s) => s.poolNow);
   const reset = useSheaf((s) => s.reset);
   const setHelp = useSheaf((s) => s.setHelp);
+  const enterRoom = useSheaf((s) => s.enterRoom);
+  const nodes = useSheaf((s) => s.nodes);
+  const edges = useSheaf((s) => s.edges);
+  const rooms = useSheaf((s) => s.rooms);
+  const roomPath = useSheaf((s) => s.roomPath);
 
   useEffect(() => {
     hydrate();
-  }, [hydrate]);
+    if (dataset === "hermes-agent") dismissIntro();
+  }, [hydrate, dataset, dismissIntro]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement | null)?.tagName;
-      if (tag === "INPUT" || tag === "TEXTAREA") return;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
       if (e.key === "Escape") {
         if (introOpen) {
           dismissIntro();
@@ -46,10 +54,29 @@ export function SheafApp() {
       if (e.key === "d") diffuseNow();
       if (e.key === "p") poolNow();
       if (e.key === "r") reset();
+      if (e.key === "Enter" && selectedId) {
+        const node = nodes.find((n) => n.id === selectedId);
+        if (canEnterRoom(node, edges, rooms)) enterRoom(selectedId);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [closeOverlays, introOpen, dismissIntro, diffuseNow, poolNow, reset, setHelp]);
+  }, [
+    closeOverlays,
+    introOpen,
+    dismissIntro,
+    diffuseNow,
+    poolNow,
+    reset,
+    setHelp,
+    selectedId,
+    nodes,
+    edges,
+    rooms,
+    enterRoom,
+  ]);
+
+  const inspectTop = roomPath.length ? "top-32" : "top-24";
 
   return (
     <main className="relative h-dvh w-full overflow-hidden bg-bg text-fg">
@@ -64,12 +91,12 @@ export function SheafApp() {
         <>
           <TopBar />
           <CueBar />
-          <div className="pointer-events-none absolute bottom-36 left-3 top-24 z-20 hidden w-52 md:block lg:w-56">
+          <div className={`pointer-events-none absolute bottom-36 left-3 ${inspectTop} z-20 hidden w-52 md:block lg:w-56`}>
             <div className="pointer-events-auto">
               <Legend />
             </div>
           </div>
-          <div className="pointer-events-none absolute bottom-36 right-3 top-24 z-20 hidden w-72 md:block lg:w-80">
+          <div className={`pointer-events-none absolute bottom-36 right-3 ${inspectTop} z-20 hidden w-72 md:block lg:w-80`}>
             <Inspector className="pointer-events-auto h-full" />
           </div>
           {mobilePanel === "inspect" && selectedId ? (

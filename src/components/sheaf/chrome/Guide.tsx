@@ -16,6 +16,10 @@ const MOVES = [
     body: "Press Close, tap the dimmed lattice, click the same node again, or press Esc. You never need to leave the preview.",
   },
   {
+    title: "Enter a room",
+    body: "A hexagonal ring around a stalk means it has an interior sheaf. Double-click it, press Enter, or use Enter room. Esc leaves the room. Density is navigated by changing scale, not by drawing every file.",
+  },
+  {
     title: "Read the picture",
     body: "Hue is hierarchy (teal foundations → terracotta integrity). Size is stalk dimension. Line colour is residual: teal consistent, terracotta noisy.",
   },
@@ -33,6 +37,7 @@ const CONTROL_KEYS = [
   "exact",
   "pool",
   "labels",
+  "room",
   "reset",
 ] as const;
 

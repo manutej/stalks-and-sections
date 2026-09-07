@@ -33,8 +33,8 @@ export function Intro() {
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-fg-muted">
           A hierarchical knowledge lattice. Nodes are vector spaces; edges are restriction
-          maps. Click a named stalk to inspect it. Close, Esc, or an empty layer plane
-          returns you to the lattice — you never leave the preview.
+          maps. Click a named stalk to inspect it. Double-click a double-ring stalk to enter
+          its interior — spaces inside spaces. Close, Esc, or an empty layer plane returns.
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
           <button

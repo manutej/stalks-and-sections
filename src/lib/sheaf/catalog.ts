@@ -19,32 +19,36 @@ for (const [path, raw] of Object.entries(jsonModules)) {
   }
 }
 
-export const DATASETS: DatasetMeta[] = [
-  {
-    id: "literature",
-    label: "Lattice",
-    hint: "lattice",
-    builtin: true,
-  },
-  {
-    id: "cobb",
-    label: "Cobb",
-    hint: "cobb",
-    builtin: true,
-  },
-  ...[...jsonGraphs.values()].map((g) => ({
+const PINNED: DatasetMeta[] = [
+  { id: "literature", label: "Lattice", hint: "lattice", builtin: true },
+  { id: "cobb", label: "Cobb", hint: "cobb", builtin: true },
+];
+
+const jsonMeta: DatasetMeta[] = [...jsonGraphs.values()]
+  .map((g) => ({
     id: g.id,
     label: g.title,
     hint: "dataset" as const,
     builtin: false,
-  })),
-];
+  }))
+  .sort((a, b) => {
+    if (a.id === "hermes-agent") return -1;
+    if (b.id === "hermes-agent") return 1;
+    return a.label.localeCompare(b.label);
+  });
+
+export const DATASETS: DatasetMeta[] = [...jsonMeta, ...PINNED];
 
 export function loadGraph(id: string): SheafGraph {
   if (id === "cobb") return cobbGraph();
   if (id === "literature") return literatureGraph();
   const g = jsonGraphs.get(id);
   if (g) return g;
+  const fallback =
+    jsonGraphs.get("hermes-agent") ??
+    jsonGraphs.get("langchainjs-rich") ??
+    jsonGraphs.get("langchainjs");
+  if (fallback) return fallback;
   return literatureGraph();
 }
 

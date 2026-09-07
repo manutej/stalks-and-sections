@@ -67,6 +67,26 @@ export function validateSheaf(raw) {
       errors.push(`edges[${i}]: Fsrc and Ftgt must share row count (edgeDim)`);
     }
   });
+  let roomCount = 0;
+  if (raw.rooms != null) {
+    if (typeof raw.rooms !== "object" || Array.isArray(raw.rooms)) {
+      errors.push("rooms: must be an object keyed by node id");
+    } else {
+      for (const [key, room] of Object.entries(raw.rooms)) {
+        roomCount += 1;
+        if (!room || typeof room !== "object" || Array.isArray(room)) {
+          errors.push(`rooms.${key}: must be a sheaf object`);
+          continue;
+        }
+        if (!Array.isArray(room.nodes) || room.nodes.length < 1) {
+          errors.push(`rooms.${key}: nodes required`);
+        }
+        if (room.edges != null && !Array.isArray(room.edges)) {
+          errors.push(`rooms.${key}: edges must be an array`);
+        }
+      }
+    }
+  }
   const sampled = (raw.nodes ?? []).filter((n) => n.section && nrm2(n.section) > 0).length;
   return {
     ok: errors.length === 0,
@@ -77,6 +97,7 @@ export function validateSheaf(raw) {
       edges: raw.edges?.length ?? 0,
       levels: raw.levels?.length ?? 0,
       withSection: sampled,
+      rooms: roomCount,
     },
   };
 }
@@ -89,7 +110,8 @@ export function formatReport(file, report) {
   const lines = [];
   if (report.ok) {
     const s = report.stats;
-    lines.push(`${file}: ok — ${s.nodes} nodes, ${s.edges} edges, ${s.levels} levels, ${s.withSection} with sections`);
+    const rooms = s.rooms ? `, ${s.rooms} rooms` : "";
+    lines.push(`${file}: ok — ${s.nodes} nodes, ${s.edges} edges, ${s.levels} levels, ${s.withSection} with sections${rooms}`);
   } else {
     lines.push(`${file}: FAILED`);
     for (const e of report.errors) lines.push(`  error  ${e}`);

@@ -6,11 +6,12 @@ Stalks & Sections is a **client-side sheaf engine** with a WebGL lattice on top.
 
 ```
 loadGraph(dataset)          src/lib/sheaf/catalog.ts
-    │
+    │                       default: hermes-agent JSON
     ├─ literatureGraph()     src/lib/sheaf/lattice.ts
     ├─ cobbGraph()           src/lib/sheaf/cobb.ts
     └─ graphFromJson(...)    src/lib/sheaf/from-json.ts
             │                  docs/examples/*.json
+            │                  rooms / pooledFrom preserved
             ▼
     buildGraph(nodes, edges) src/lib/sheaf/build.ts
             │  stalks, restriction maps F_s, F_t, residuals
@@ -19,9 +20,9 @@ loadGraph(dataset)          src/lib/sheaf/catalog.ts
             │
             ▼
     zustand store            src/store/sheaf.ts
-            │
-            ├─ Scene.tsx     3D lattice, labels, planes
-            ├─ Inspector     stalk plot + neighbour residuals
+            │                  roomStack, ?g= hydrate
+            ├─ Scene.tsx     3D lattice, labels, planes, enterable hex ring
+            ├─ Inspector     stalk plot + neighbour residuals + Enter room
             └─ Dock          Diffuse / Coarsen / filters
 ```
 
@@ -35,6 +36,9 @@ loadGraph(dataset)          src/lib/sheaf/catalog.ts
 | `energy.ts` | Coboundary, Dirichlet energy, per-edge residual |
 | `diffuse.ts` | Degree-normalised Euler step on \(L_F\); known stalks frozen |
 | `closed-form.ts` | TransE / identity-case harmonic extension (Cobb graph) |
+| `catalog.ts` | Dataset switcher; JSON glob; hermes-agent first |
+| `from-json.ts` | Portable JSON → graph; missing section = zeros; maps from `restrictKind` |
+| `room.ts` | Enter-room: authored interiors, else unfold `pooledFrom`, else 1-hop induce |
 | `pool.ts` | HiSP-style coarsening to supernodes |
 | `build.ts` | Turn `{NodeSpec, EdgeSpec}` into numeric stalks + maps |
 | `layout.ts` | Seeded rings per level + xz force; `y = level * LAYER_Z` |
@@ -72,7 +76,7 @@ Labels are screen-space HTML chips, pushed radially from each node. They draw fo
 
 **New operator** — implement in `src/lib/sheaf/`, call from a store method, bind a dock button, add a `HINTS` entry.
 
-**New dataset** — JSON in `docs/examples/` via [`GENERATE.md`](GENERATE.md). Builtin TS graphs stay `literature` / `cobb`.
+**New dataset** — JSON in `docs/examples/` via [`GENERATE.md`](GENERATE.md). Builtin TS graphs stay `literature` / `cobb`. Hermes is JSON, emitted by `scripts/sheaf/emit-hermes.py` — see [`FILEMAP.md`](FILEMAP.md).
 
 **New visual encoding** — palette first (`palette.ts`), then Scene. Size and value stay quantitative; hue stays ordered. No rainbow.
 

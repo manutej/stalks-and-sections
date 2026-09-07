@@ -62,6 +62,9 @@ export function Legend() {
       <p className="mt-3 font-mono text-[10px] text-fg-subtle">
         {nodes.length} stalks · {edges.length} restrictions
       </p>
+      <p className="mt-1 text-[10px] leading-snug text-fg-subtle">
+        Round ring = pinned. Hex ring = enterable room.
+      </p>
     </div>
   );
 }

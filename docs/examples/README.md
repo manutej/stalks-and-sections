@@ -4,6 +4,7 @@ Portable JSON graphs for the explorer. Schema: [`sheaf.schema.json`](sheaf.schem
 
 | File | Origin | Residual means |
 | --- | --- | --- |
+| `hermes-agent.json` | `npm run sheaf:hermes` from [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) — **not** an AST of 3387 files | Harness gluing failure against the pinned AIAgent + registry + SessionDB contract |
 | `discourse-triangle.json` | hand-authored | Public agreement vs private disagreement |
 | `toy-kg.json` | `npm run sheaf:examples` from `templates/kg/triples.json` | TransE triple violation |
 | `wiki-integrity.json` | `npm run sheaf:examples` from `docs/sources` | Typed wiki-relation mismatch |

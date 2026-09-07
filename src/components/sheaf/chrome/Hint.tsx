@@ -5,7 +5,7 @@ import { CircleHelp } from "lucide-react";
 export const HINTS = {
   dataset: {
     title: "Knowledge graph",
-    body: "Switch the sheaf. Lattice and Cobb are built in. Anything in docs/examples/*.json appears here after you generate it (see docs/GENERATE.md).",
+    body: "Switch the sheaf. Hermes is the live digest. Lattice and Cobb are built in. Anything in docs/examples/*.json appears here.",
   },
   lattice: {
     title: "Lattice",
@@ -25,7 +25,7 @@ export const HINTS = {
   },
   reset: {
     title: "Reset",
-    body: "Restore this dataset to its starting sections, layout, and filters. Selection and energy history clear.",
+    body: "Restore this dataset to its starting sections, layout, and filters. Selection, rooms, and energy history clear.",
   },
   search: {
     title: "Search",
@@ -37,7 +37,7 @@ export const HINTS = {
   },
   depth: {
     title: "Layers",
-    body: "How many hierarchy planes to show. L0 foundations sit at the bottom; L3 integrity and visualisation sit at the top. Drag left to peel the stack.",
+    body: "How many hierarchy planes to show. L0 waist sits at the bottom. Drag left to peel the stack. This is the visible working set, not a hard cap.",
   },
   scale: {
     title: "Node size",
@@ -69,11 +69,19 @@ export const HINTS = {
   },
   labels: {
     title: "Names",
-    body: "Paper-chip names for the topmost visible layer. Peel Layers to read the plane below. Hover or select any stalk to name it. When a node is open, other names hide.",
+    body: "Paper-chip names for the topmost visible layer plus L0 pins. Peel Layers to read the plane below. Hover names any stalk. Names off hides the chips.",
   },
   close: {
     title: "Leave a stalk",
     body: "Close returns to the lattice. You can also press Esc, click the same node again, or click an empty layer plane.",
+  },
+  review: {
+    title: "Review ledger",
+    body: "The 2D companion to the lattice: pinned waist, terracotta gluing failures, and enterable rooms. This is the working set. It is not a file tree.",
+  },
+  room: {
+    title: "Enter room",
+    body: "A stalk with a double ring is a door. Double-click it, or press Enter room, to unfold its interior sheaf — spaces inside spaces. Esc leaves the room. This is how 3387 files stay navigable without an AST dump.",
   },
 } as const;
 

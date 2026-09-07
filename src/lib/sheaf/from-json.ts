@@ -2,6 +2,8 @@ import { kindForRelation, makePair } from "./maps";
 import { recomputeResiduals } from "./energy";
 import { zeros } from "./linear";
 import type {
+  FamilyDef,
+  LevelDef,
   RestrictionKind,
   SheafEdge,
   SheafEval,
@@ -38,37 +40,25 @@ function slug(s: string): string {
   );
 }
 
-/**
- * Load a portable SheafGraph. Missing maps are built from restrictKind.
- * Missing sections become zeros — never Gaussians.
- */
-export function graphFromJson(raw: unknown): SheafGraph {
-  if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
-    throw new Error("Sheaf JSON root must be an object");
+function parseLevels(raw: unknown): LevelDef[] {
+  if (!Array.isArray(raw)) {
+    return [{ id: 0, code: "L0", label: "Graph", kicker: "", blurb: "" }];
   }
-  const o = raw as Record<string, unknown>;
-  if (typeof o.id !== "string" || !o.id) throw new Error("Sheaf JSON needs id");
-  if (typeof o.title !== "string" || !o.title) throw new Error("Sheaf JSON needs title");
-  if (!Array.isArray(o.nodes) || o.nodes.length < 1) throw new Error("Sheaf JSON needs nodes");
-  if (!Array.isArray(o.edges) && !Array.isArray(o.triples)) {
-    throw new Error("Sheaf JSON needs edges or triples");
-  }
+  return raw.map((lv, i) => {
+    const L = (lv ?? {}) as Record<string, unknown>;
+    const id = typeof L.id === "number" ? L.id : i;
+    return {
+      id,
+      code: typeof L.code === "string" ? L.code : `L${id}`,
+      label: typeof L.label === "string" ? L.label : `Level ${id}`,
+      kicker: typeof L.kicker === "string" ? L.kicker : "",
+      blurb: typeof L.blurb === "string" ? L.blurb : "",
+    };
+  });
+}
 
-  const levels = Array.isArray(o.levels)
-    ? o.levels.map((lv, i) => {
-        const L = (lv ?? {}) as Record<string, unknown>;
-        const id = typeof L.id === "number" ? L.id : i;
-        return {
-          id,
-          code: typeof L.code === "string" ? L.code : `L${id}`,
-          label: typeof L.label === "string" ? L.label : `Level ${id}`,
-          kicker: typeof L.kicker === "string" ? L.kicker : "",
-          blurb: typeof L.blurb === "string" ? L.blurb : "",
-        };
-      })
-    : [{ id: 0, code: "L0", label: "Graph", kicker: "", blurb: "" }];
-
-  const nodes: SheafNode[] = o.nodes.map((n, i) => {
+function parseNodes(raw: unknown[]): SheafNode[] {
+  return raw.map((n, i) => {
     const N = (n ?? {}) as Record<string, unknown>;
     const id = slug(String(N.id ?? `node-${i}`));
     const dim = clampDim(N.dim);
@@ -76,6 +66,9 @@ export function graphFromJson(raw: unknown): SheafGraph {
       ? (N.section as unknown[]).map((x) => Number(x) || 0).slice(0, dim)
       : zeros(dim);
     while (section.length < dim) section.push(0);
+    const pooledFrom = Array.isArray(N.pooledFrom)
+      ? N.pooledFrom.map((x) => slug(String(x))).filter(Boolean)
+      : undefined;
     return {
       id,
       title: String(N.title ?? id),
@@ -88,13 +81,15 @@ export function graphFromJson(raw: unknown): SheafGraph {
       sources: Array.isArray(N.sources) ? N.sources.map(String) : [],
       arxiv: typeof N.arxiv === "string" ? N.arxiv : undefined,
       aliases: Array.isArray(N.aliases) ? N.aliases.map(String) : undefined,
+      pooledFrom: pooledFrom?.length ? pooledFrom : undefined,
     };
   });
+}
 
+function parseEdges(raw: unknown[], nodes: SheafNode[]): SheafEdge[] {
   const byId = new Map(nodes.map((n) => [n.id, n]));
-  const rawEdges = (Array.isArray(o.edges) ? o.edges : o.triples) as unknown[];
   const edges: SheafEdge[] = [];
-  for (const item of rawEdges) {
+  for (const item of raw) {
     const e = (item ?? {}) as Record<string, unknown>;
     const source = slug(String(e.source ?? e.subject ?? ""));
     const target = slug(String(e.target ?? e.object ?? ""));
@@ -132,6 +127,64 @@ export function graphFromJson(raw: unknown): SheafGraph {
       note: typeof e.note === "string" ? e.note : undefined,
     });
   }
+  return recomputeResiduals(nodes, edges);
+}
+
+function parseFamilies(raw: unknown): FamilyDef[] | undefined {
+  if (!Array.isArray(raw) || !raw.length) return undefined;
+  const out: FamilyDef[] = [];
+  for (const item of raw) {
+    if (typeof item === "string") {
+      out.push({ id: item, label: item });
+      continue;
+    }
+    const F = (item ?? {}) as Record<string, unknown>;
+    const id = String(F.id ?? "");
+    if (!id) continue;
+    out.push({ id, label: String(F.label ?? id) });
+  }
+  return out.length ? out : undefined;
+}
+
+function parseRooms(raw: unknown): Record<string, SheafGraph> | undefined {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return undefined;
+  const out: Record<string, SheafGraph> = {};
+  for (const [key, value] of Object.entries(raw as Record<string, unknown>)) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) continue;
+    try {
+      const g = graphFromJson({
+        ...(value as Record<string, unknown>),
+        id: (value as Record<string, unknown>).id ?? `room:${key}`,
+        title: (value as Record<string, unknown>).title ?? key,
+      });
+      out[slug(key)] = g;
+    } catch {
+      /* skip a broken interior rather than failing the outer lattice */
+    }
+  }
+  return Object.keys(out).length ? out : undefined;
+}
+
+/**
+ * Load a portable SheafGraph. Missing maps are built from restrictKind.
+ * Missing sections become zeros — never Gaussians.
+ * `pooledFrom` and `rooms` are first-class: they are how density is navigated.
+ */
+export function graphFromJson(raw: unknown): SheafGraph {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
+    throw new Error("Sheaf JSON root must be an object");
+  }
+  const o = raw as Record<string, unknown>;
+  if (typeof o.id !== "string" || !o.id) throw new Error("Sheaf JSON needs id");
+  if (typeof o.title !== "string" || !o.title) throw new Error("Sheaf JSON needs title");
+  if (!Array.isArray(o.nodes) || o.nodes.length < 1) throw new Error("Sheaf JSON needs nodes");
+  if (!Array.isArray(o.edges) && !Array.isArray(o.triples)) {
+    throw new Error("Sheaf JSON needs edges or triples");
+  }
+
+  const nodes = parseNodes(o.nodes as unknown[]);
+  const rawEdges = (Array.isArray(o.edges) ? o.edges : o.triples) as unknown[];
+  const rooms = parseRooms(o.rooms);
 
   return {
     id: o.id,
@@ -140,9 +193,11 @@ export function graphFromJson(raw: unknown): SheafGraph {
     blurb: typeof o.blurb === "string" ? o.blurb : "",
     residualMeaning:
       typeof o.residualMeaning === "string" ? o.residualMeaning : undefined,
-    levels,
+    levels: parseLevels(o.levels),
     nodes,
-    edges: recomputeResiduals(nodes, edges),
+    edges: parseEdges(rawEdges, nodes),
     eval: o.eval && typeof o.eval === "object" ? (o.eval as SheafEval) : undefined,
+    families: parseFamilies(o.families),
+    rooms,
   };
 }
