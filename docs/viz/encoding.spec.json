@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/manutej/stalks-and-sections/docs/viz/encoding.spec.json",
+  "title": "Stalks & Sections visual encoding spec",
+  "description": "Machine-readable grammar. Any JSON that validates against docs/examples/sheaf.schema.json is a legal input. The encoding does not change with the dataset.",
+  "inputSchema": "../examples/sheaf.schema.json",
+  "command": "node scripts/sheaf/emit-viz.mjs --in <sheaf.json> --out <dir>",
+  "tokens": {
+    "bg": "#081114",
+    "bgSoft": "#162026",
+    "fg": "#e8ece8",
+    "muted": "#8a9690",
+    "subtle": "#5c6864",
+    "levels": ["#4a9a92", "#6b8ea3", "#8a9a6e", "#b08978"],
+    "residual": { "lo": "#2f8f78", "mid": "#c4a574", "hi": "#c45c68" }
+  },
+  "encodings": [
+    { "channel": "size", "field": "node.dim", "scale": "quantitative", "rule": "radius ~ dim; not importance" },
+    { "channel": "hue", "field": "node.level", "scale": "ordered", "rule": "levels[level % 4]" },
+    { "channel": "edgeColour", "field": "edge.residual", "scale": "diverging", "rule": "lo glues, hi fails; if residual missing, kind proxy" },
+    { "channel": "dash", "field": "edge.restrictKind", "scale": "nominal", "rule": "identity solid; projection dashed; embed dotted; spectral longdash" },
+    { "channel": "diamond", "field": "edge.restrictKind", "scale": "nominal", "rule": "type-aware only" },
+    { "channel": "ring", "field": "node.known", "scale": "nominal", "rule": "true → pinned" },
+    { "channel": "hexRing", "field": "rooms[node.id] | node.pooledFrom", "scale": "nominal", "rule": "enterable interior" }
+  ],
+  "views": [
+    { "id": "census", "file": "census.svg", "from": ["id", "title", "nodes", "edges", "levels"] },
+    { "id": "waist", "file": "waist.svg", "from": ["nodes.known"] },
+    { "id": "claims", "file": "claims.svg", "from": ["edges.restrictKind=type-aware"] },
+    { "id": "matrix", "file": "matrix.svg", "from": ["nodes", "edges"] },
+    { "id": "multiples", "file": "multiples.svg", "from": ["levels", "nodes", "edges"] }
+  ],
+  "shared": [
+    { "id": "encoding-key", "file": "encoding-key.svg" },
+    { "id": "kind-marks", "file": "kind-marks.svg" }
+  ]
+}
