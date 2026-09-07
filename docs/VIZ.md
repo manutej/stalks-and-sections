@@ -2,52 +2,90 @@
 
 Designer front door. How to draw this sheaf without inventing a second language.
 
-The live explorer is a *discovery* view. Stills you can put in a brief live here. Both use the same encoding.
+The live explorer is a *discovery* view. The structure below is what every still and every camera must keep.
 
 | | |
 | --- | --- |
+| **Spec** | [`docs/viz/SPEC.md`](viz/SPEC.md) |
+| **Machine contract** | [`docs/viz/encoding.spec.json`](viz/encoding.spec.json) |
 | **Grammar** | [`src/lib/sheaf/viz/grammar.ts`](../src/lib/sheaf/viz/grammar.ts) |
-| **SVG builders** | [`src/lib/sheaf/viz/svg.ts`](../src/lib/sheaf/viz/svg.ts) |
-| **Export** | `node scripts/sheaf/emit-viz.mjs` → [`docs/viz/`](viz/) |
-| **Stills** | [encoding key](viz/encoding-key.svg) · [kind marks](viz/kind-marks.svg) · [waist](viz/waist.svg) · [terracotta claims](viz/terracotta-claims.svg) · [residual matrix](viz/residual-matrix.svg) |
-| **Live (after land)** | https://stalks-and-sections.vercel.app/?g=hermes-agent |
+| **Worked example** | [`docs/examples/discourse-triangle.json`](examples/discourse-triangle.json) · [lattice still](viz/discourse-triangle-lattice.svg) |
+| **Live example** | https://stalks-and-sections.vercel.app/?g=discourse-triangle |
 | **This branch** | [`feat/hermes-ship113`](https://github.com/manutej/stalks-and-sections/tree/feat/hermes-ship113) · [PR #17](https://github.com/manutej/stalks-and-sections/pull/17) |
-| **Playable JSON** | [`docs/examples/hermes-agent.json`](examples/hermes-agent.json) |
 
-Production `main` still serves the 31-node digest. Use this branch or the PR deploy for 113 stalks.
+Production `main` still serves the 31-node Hermes digest. Use this branch or the PR deploy for 113 stalks and for the triangle.
 
 ---
 
-## What to open first
+## Lattice structure (one picture, four projections)
 
-1. This page.
-2. The [encoding key](viz/encoding-key.svg) — keep it next to every still.
-3. Live explorer, top bar: **Strata · Matrix · ×4 · Spectral** (keys 1–4).
-4. Empty inspector: L0 waist, ten terracotta rows, ten rooms.
+```
+Planes (y = level × LAYER_Z)
+  L3 adapter / integrity     hue #b08978
+  L2 surface / said          hue #8a9a6e
+  L1 subsystem / channel     hue #6b8ea3
+  L0 pin / private           hue #4a9a92   ← waist sits here
 
-Do not start from the 3387-file tree. The working set is **113 stalks · 112 restrictions · 10 interiors**.
+On each plane
+  stalk  = node.  size = dim.  round ring = known.  hex ring = room.
+  edge   = restriction.  colour = residual.  dash = kind.  diamond = type-aware.
+
+Views (same marks)
+  Strata    3D stacked planes          key 1
+  Matrix    Bertin residual adjacency  key 2
+  ×4        one 2D slice per plane     key 3
+  Spectral  xz from 1-skeleton Fiedler key 4   y stays level
+```
+
+Do not start from a file tree. A lattice is stalks + restrictions + rooms, not an AST.
+
+---
+
+## Worked example — discourse triangle
+
+Four stalks, three projections. Private beliefs are \(\mathbb{R}^2\). What can be *said* is \(\mathbb{R}^1\). Restriction is the first coordinate.
+
+```
+                    [ Public channel ]     L1 said · dim 1 · free
+                     /       |       \
+              dashed     dashed     dashed     restrictKind = projection
+               /             |           \
+          Alice            Bob          Cara   L0 private · dim 2 · pinned
+         (0.9, 0.8)    (0.85, −0.7)    (0.1, 0.0)
+```
+
+| Stalk | Level | Dim | Known | Section | Reads as |
+| --- | --- | --- | --- | --- | --- |
+| Alice | L0 private | 2 | yes | `[0.9, 0.8]` | Says yes. Strong private qualifier. |
+| Bob | L0 private | 2 | yes | `[0.85, −0.7]` | Says almost the same. Private axis flipped. |
+| Cara | L0 private | 2 | yes | `[0.1, 0.0]` | Public dissent. Quiet private axis. |
+| Public channel | L1 said | 1 | no | `[0.0]` | Unknown utterance. Diffuse may move this. |
+
+Alice and Bob *agree in speech* and *disagree in belief*. That disagreement is invisible on the channel — residual on the hidden axis is candor, not graph distance. Still: [`docs/viz/discourse-triangle-lattice.svg`](viz/discourse-triangle-lattice.svg). JSON: [`docs/examples/discourse-triangle.json`](examples/discourse-triangle.json).
+
+Open live: [stalks-and-sections.vercel.app/?g=discourse-triangle](https://stalks-and-sections.vercel.app/?g=discourse-triangle).
+
+The 113-stalk Hermes digest uses the **same** marks. It is the working set, not this toy.
 
 ---
 
 ## Encoding (do not fork)
 
-One table. Every view is a projection of these marks.
-
-| Variable | Carries | Level | Rule |
-| --- | --- | --- | --- |
-| **y** | hierarchy | ordered | `level × LAYER_Z`. Planes stay strata. |
-| **xz** | layout | quantitative | Force = readable. Spectral = residual-weighted 1-skeleton Fiedler — **not** the 1356-d block $L_F$. |
-| **size** | stalk dim | quantitative | Radius. Not residual. Not kind. |
-| **hue** | hierarchy | ordered | `#4a9a92 → #6b8ea3 → #8a9a6e → #b08978`. No rainbow. |
-| **edge colour** | residual | ordered | `#2f8f78` glues → `#c4a574` sand → `#c45c68` fails. |
-| **dash** | restriction kind | nominal | Solid identity. Dashed projection. Dotted embed. |
-| **diamond** | type-aware claim | nominal | Midpoint mark on the ten terracotta edges only. |
-| **round ring** | pinned (`known`) | nominal | Diffuse may not move these. |
-| **hex ring** | enterable room | nominal | Double-click / Enter room. |
+| Variable | Carries | Rule |
+| --- | --- | --- |
+| **y** | hierarchy | `level × LAYER_Z`. Planes stay strata. |
+| **xz** | layout | Force = readable. Spectral = residual-weighted 1-skeleton Fiedler — **not** the block \(L_F\). |
+| **size** | stalk dim | Radius. Not residual. Not kind. |
+| **hue** | hierarchy | `#4a9a92 → #6b8ea3 → #8a9a6e → #b08978`. No rainbow. |
+| **edge colour** | residual | `#2f8f78` glues → `#c4a574` sand → `#c45c68` fails. |
+| **dash** | restriction kind | Solid identity. Dashed projection. Dotted embed. |
+| **diamond** | type-aware claim | Midpoint mark on terracotta edges only. |
+| **round ring** | pinned (`known`) | Diffuse may not move these. |
+| **hex ring** | enterable room | Double-click / Enter room. |
 
 If a picture uses hue for residual, or size for kind, it is a different product.
 
-Tokens: `VIZ_TOKENS` in `src/lib/sheaf/viz/grammar.ts` and `src/lib/sheaf/palette.ts`. Change them in one place.
+Tokens live in `src/lib/sheaf/viz/grammar.ts` and `src/lib/sheaf/palette.ts`. Change them in one place.
 
 ---
 
@@ -56,24 +94,18 @@ Tokens: `VIZ_TOKENS` in `src/lib/sheaf/viz/grammar.ts` and `src/lib/sheaf/palett
 | View | Question | File |
 | --- | --- | --- |
 | **Strata** | What is the hierarchy? | `src/components/sheaf/canvas/Scene.tsx` |
-| **Matrix** | Which restrictions fail, in order? | `src/components/sheaf/review/MatrixView.tsx` + [still](viz/residual-matrix.svg) |
-| **×4** | Compare the four planes. | `src/components/sheaf/review/MultiplesView.tsx` |
-| **Spectral** | Where does the 1-skeleton think things sit? | `spectralLayout` in `src/lib/sheaf/kernel.ts` |
+| **Matrix** | Which restrictions fail, in order? | `src/components/sheaf/review/MatrixView.tsx` |
+| **×4** | Compare the planes. | `src/components/sheaf/review/MultiplesView.tsx` |
+| **Spectral** | Where does the 1-skeleton sit? | `spectralLayout` in `src/lib/sheaf/kernel.ts` |
 
 Shared filters: layer peel, search, hide-noise, selection. Do not invent a second residual scale per view.
 
----
-
-## How to emit stills
+Exporter (any sheaf JSON → stills):
 
 ```bash
-node scripts/sheaf/emit-viz.mjs
-# writes docs/viz/*.svg and docs/viz/manifest.json
+node scripts/sheaf/emit-viz.mjs --in docs/examples/discourse-triangle.json --out docs/viz/discourse-triangle
+node scripts/sheaf/emit-viz.mjs --all
 ```
-
-Input defaults to `docs/examples/hermes-agent.json`.
-
-Drop a `lattice.json` from [sheaf-port](https://github.com/manutej/sheaf-port) into `docs/examples/` and re-run the exporter. The encoding does not change.
 
 ---
 
@@ -82,15 +114,5 @@ Drop a `lattice.json` from [sheaf-port](https://github.com/manutej/sheaf-port) i
 - One stalk per file of the Hermes repo. That is an AST dump, not this digest.
 - A rainbow hue for residual or kind.
 - A “Spectral” view that claims to be the full sheaf Laplacian.
-- dim H¹ = 0 because χ = 388. χ is cochain count. The heat-kernel H⁰ on this digest is **2** (lower bound). Hold-out **loses**: sheaf cosine 0.732 vs identity-graph 0.851. Quote [`docs/experiments/hermes-adv-v2.md`](experiments/hermes-adv-v2.md).
+- dim H¹ = 0 because χ = 388. χ is cochain count. Heat-kernel H⁰ on Hermes is **2** (lower bound). Hold-out **loses**: sheaf cosine 0.732 vs identity-graph 0.851. Quote [`docs/experiments/hermes-adv-v2.md`](experiments/hermes-adv-v2.md).
 - LCEL node ids on the Hermes dataset.
-
----
-
-## Rooms and claims a still should be able to name
-
-L0 waist (round rings): `run-agent` · `tools-registry` · `hermes-state` · `toolsets` · `model-tools` · `runtime-provider` · `system-prompt` · `tools-approval`.
-
-Ten terracotta claims: listed in [`docs/experiments/hermes-agent.md`](experiments/hermes-agent.md) and drawn in [terracotta-claims.svg](viz/terracotta-claims.svg).
-
-Enter `run_agent` to unfold the eight-pin interior. That room is unique after pinning. The outer lattice is a **family of sections**.
