@@ -26,7 +26,7 @@ const enter = page.getByTestId("enter-lattice");
 if (await enter.count()) {
   await enter.click();
 }
-await page.waitForTimeout(2500);
+await page.waitForTimeout(2800);
 await page.screenshot({ path: "/workspace/screenshots/hermes-lattice.png" });
 
 const body = await page.locator("body").innerText();
@@ -35,6 +35,26 @@ const hasReview =
   (await page.getByTestId("review-ledger").count()) > 0 ||
   body.includes("Terracotta") ||
   body.includes("L0 waist");
+const hasViews = (await page.getByTestId("view-switch").count()) > 0;
+
+await page.getByTestId("view-matrix").click();
+await page.waitForTimeout(600);
+const hasMatrix = (await page.getByTestId("matrix-view").count()) > 0;
+await page.screenshot({ path: "/workspace/screenshots/hermes-matrix.png" });
+
+await page.getByTestId("view-multiples").click();
+await page.waitForTimeout(600);
+const hasMultiples = (await page.getByTestId("multiples-view").count()) > 0;
+await page.screenshot({ path: "/workspace/screenshots/hermes-multiples.png" });
+
+await page.getByTestId("view-spectral").click();
+await page.waitForTimeout(1800);
+const hasSpectralHud = (await page.getByTestId("kernel-hud").count()) > 0;
+await page.screenshot({ path: "/workspace/screenshots/hermes-spectral.png" });
+
+await page.getByTestId("view-strata").click();
+await page.waitForTimeout(400);
+
 await page.getByPlaceholder("Search stalks").fill("run_agent");
 await page.waitForTimeout(400);
 await page.keyboard.press("Enter");
@@ -48,12 +68,19 @@ await page.screenshot({ path: "/workspace/screenshots/hermes-room.png" });
 
 const after = await page.locator("body").innerText();
 const inRoom = after.includes("Leave") || after.includes("Interior") || after.includes("Runtime waist");
+const hud = await page.getByTestId("kernel-hud").innerText().catch(() => "");
+const hasH0 = /H\s*⁰|H0|family|unique/i.test(`${hud}\n${after}`);
 
 console.log(
   JSON.stringify(
     {
       has113,
       hasReview,
+      hasViews,
+      hasMatrix,
+      hasMultiples,
+      hasSpectralHud,
+      hasH0,
       roomButton: roomVisible,
       inRoom,
       errors,
@@ -65,4 +92,15 @@ console.log(
 );
 
 await browser.close();
-if (errors.length || !has113 || !hasReview || !roomVisible || !inRoom) process.exit(1);
+if (
+  errors.length ||
+  !has113 ||
+  !hasReview ||
+  !hasViews ||
+  !hasMatrix ||
+  !hasMultiples ||
+  !roomVisible ||
+  !inRoom
+) {
+  process.exit(1);
+}

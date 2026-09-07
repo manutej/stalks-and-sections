@@ -9,5 +9,6 @@ export { dirichletEnergy, recomputeResiduals, nodeMeanResidual } from "./energy"
 export { layoutForce, nodeRadius, LAYER_Z, layerRadius } from "./layout";
 export { buildRoom, canEnterRoom, unfoldMembers } from "./room";
 export { reviewSheet } from "./review";
+export { kernelReport, holdoutReport, spectralLayout, seriateIds } from "./kernel";
 export * from "./types";
 export * from "./palette";

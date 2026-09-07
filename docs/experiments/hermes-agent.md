@@ -31,7 +31,7 @@ An AST is a syntax tree. A cellular sheaf on a code graph is a **consistency str
 | Residuals you can quote | no | terracotta = harness gluing failure | learned maps would change the numbers |
 | Pinned L0 waist | no | 8 `known` stalks | — |
 | Spaces-within-spaces | no | 10 unique interiors, 16 room keys | nested rooms beyond the authored set |
-| Hold-out harmonic eval | no | **not on Hermes yet** (exists on LCEL rich index) | port the rich-index hold-out |
+| Hold-out harmonic eval | no | **v2 ran it: sheaf 0.732 vs graph 0.851 — loses** | learned maps; see [`hermes-adv-v2.md`](hermes-adv-v2.md) |
 | Isolation from LCEL | n/a | dataset id `hermes-agent`, 0 LCEL ids | — |
 
 The sheaf is **on par with or better than an AST** when the consistency structure exists, not when the node count matches the file count. Today the maps are still **kind tags rebuilt by `makePair`**, not call-graph matrices. That gap is listed, not hidden.
@@ -97,7 +97,7 @@ Room interiors repeat a subset of these so the claim is visible after Enter room
 Further gaps not in the JSON (reviewer notes):
 
 - Restriction *matrices* are reconstructed from `restrictKind`, not estimated from symbols or traces.
-- No hold-out harmonic-extension score on this digest (the LCEL rich index has one; Hermes does not).
+- Hold-out harmonic-extension on this digest **loses** to identity-graph Laplacian (sheaf cosine 0.732 vs 0.851). Quoted in [`hermes-adv-v2.md`](hermes-adv-v2.md).
 - Nested rooms stop at the authored set; a generic 1-hop induce (cap 16) is the fallback.
 - Production GitHub `main` still serves the 31-node digest until this JSON lands.
 

@@ -2,6 +2,7 @@ import { BookOpen, ChevronRight, CircleHelp, Layers2, RotateCcw, Search, Undo2 }
 import { DATASETS } from "@/lib/sheaf";
 import { useSheaf } from "@/store/sheaf";
 import { Explained, Hint } from "./Hint";
+import { ViewSwitch } from "./ViewSwitch";
 
 export function TopBar() {
   const search = useSheaf((s) => s.search);
@@ -20,11 +21,23 @@ export function TopBar() {
   const roomPath = useSheaf((s) => s.roomPath);
   const leaveRoom = useSheaf((s) => s.leaveRoom);
   const leaveToRoot = useSheaf((s) => s.leaveToRoot);
+  const kernel = useSheaf((s) => s.kernel);
 
   const q = search.trim().toLowerCase();
   const hits = q
     ? nodes.filter((n) => n.title.toLowerCase().includes(q)).slice(0, 6)
     : [];
+
+  const h0Label = !kernel
+    ? null
+    : kernel.h0Capped
+      ? `H⁰ ≥ ${kernel.h0}`
+      : `H⁰ ${kernel.h0}`;
+  const uniqueLabel = kernel?.unique === true
+    ? "unique"
+    : kernel?.unique === false
+      ? "family"
+      : null;
 
   return (
     <header className="pointer-events-none absolute inset-x-0 top-0 z-30 p-3 md:p-4">
@@ -79,6 +92,8 @@ export function TopBar() {
           ) : null}
         </div>
 
+        <ViewSwitch />
+
         <div className="sheaf-panel ml-auto flex items-center gap-1 rounded-xl p-1">
           <label className="sr-only" htmlFor="dataset">
             Dataset
@@ -99,11 +114,20 @@ export function TopBar() {
           <Hint k="dataset" side="bottom" />
         </div>
 
-        <div className="sheaf-panel hidden items-center gap-1 rounded-xl px-3 py-2 sm:flex">
+        <div className="sheaf-panel hidden items-center gap-2 rounded-xl px-3 py-2 sm:flex" data-testid="kernel-hud">
           <span className="text-[10px] uppercase tracking-wider text-fg-subtle">Energy</span>
           <span className="tabular font-mono text-sm">{energy.toFixed(3)}</span>
+          {h0Label ? (
+            <>
+              <span className="text-fg-subtle">·</span>
+              <span className="font-mono text-sm">{h0Label}</span>
+              {uniqueLabel ? (
+                <span className="text-[10px] uppercase tracking-wider text-fg-subtle">{uniqueLabel}</span>
+              ) : null}
+            </>
+          ) : null}
           <span className="text-[10px] text-fg-subtle">{nodes.length} stalks</span>
-          <Hint k="energy" side="bottom" />
+          <Hint k="kernel" side="bottom" />
         </div>
 
         <Explained k="primer" side="bottom">

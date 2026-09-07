@@ -23,6 +23,8 @@ docs/
     wiki-integrity.json
   experiments/                 eval write-ups, not loadable
     hermes-agent.md            honesty clause / sheaf vs AST
+    hermes-adv-v2.md           2D / spectral / kernel / hold-out (loses)
+    hermes-adv-v2.json         numbers from npm run sheaf:eval
     hermes-land.md             land checklist
     langchainjs.md             LCEL experiment (do not mix)
   sources/                     literature notes (canonical)
@@ -31,15 +33,20 @@ src/lib/sheaf/                 algebra (client-only)
   from-json.ts                 zeros for missing sections; maps from restrictKind
   room.ts                      enter-room: authored ≥ pooledFrom ≥ 1-hop
   review.ts                    2D review sheet (claims + interiors)
+  kernel.ts                    H⁰ heuristic, hold-out, 1-skeleton spectral
   catalog.ts                   hermes-agent first among JSON datasets
   maps.ts                      identity / projection / embed / spectral / type-aware
 
-src/store/sheaf.ts             default dataset hermes-agent; ?g=; roomStack
+src/store/sheaf.ts             default dataset hermes-agent; ?g=; roomStack; views
 src/components/sheaf/          lattice + chrome (Review ledger / Enter room)
+  chrome/ViewSwitch.tsx        Strata · Matrix · ×4 · Spectral
+  review/MatrixView.tsx        Bertin residual matrix
+  review/MultiplesView.tsx     one 2D slice per plane
 
 scripts/sheaf/
   emit-hermes.py               Hermes emitter (Python, authored)
   pack-hermes.py               compact + zip the review pack
+  eval-hermes.mjs              adversarial numbers (isolated from LCEL)
   from-code.mjs                LangChain.js only
   rich-index.mjs               LangChain.js only
   validate.mjs                 JSON contract
@@ -60,7 +67,8 @@ attachments/                   original source dumps (gitignored; do not edit)
 ```bash
 npm run sheaf:hermes        # emit + validate
 npm run sheaf:hermes:pack   # compact review drop
-npm run sheaf:qa            # Playwright: lattice → enter room
+npm run sheaf:eval          # hold-out / kernel numbers
+npm run sheaf:qa            # Playwright: views + enter room
 ```
 
 Never regenerate Hermes with `from-code.mjs` or `rich-index.mjs`. Those are LangChain.js.
@@ -73,7 +81,9 @@ Never regenerate Hermes with `from-code.mjs` or `rich-index.mjs`. Those are Lang
 | `docs/examples/hermes-agent.json` | canonical | What `?g=hermes-agent` loads |
 | `src/lib/sheaf/room.ts` | canonical | Room runtime |
 | `src/lib/sheaf/review.ts` | canonical | 2D review sheet |
+| `src/lib/sheaf/kernel.ts` | canonical | H⁰ / hold-out / spectral 1-skeleton |
 | `docs/experiments/hermes-agent.md` | canonical | Eval a reviewer can quote |
+| `docs/experiments/hermes-adv-v2.md` | canonical | v2 attacks; hold-out loses |
 | `docs/REVIEW.md` | canonical | Front door |
 | `artifacts/hermes-ship113/**` | generated | Rebuild with pack. Zip omits PNG shots. |
 | `screenshots/hermes-*.png` | QA evidence | Playwright; not the digest |

@@ -8,6 +8,8 @@ import { Intro } from "./chrome/Intro";
 import { Legend } from "./chrome/Legend";
 import { PrimerModal } from "./chrome/Primer";
 import { TopBar } from "./chrome/TopBar";
+import { MatrixView } from "./review/MatrixView";
+import { MultiplesView } from "./review/MultiplesView";
 import { canEnterRoom } from "@/lib/sheaf/room";
 import { useSheaf } from "@/store/sheaf";
 
@@ -30,11 +32,18 @@ export function SheafApp() {
   const edges = useSheaf((s) => s.edges);
   const rooms = useSheaf((s) => s.rooms);
   const roomPath = useSheaf((s) => s.roomPath);
+  const view = useSheaf((s) => s.view);
+  const setView = useSheaf((s) => s.setView);
+  const ensureKernel = useSheaf((s) => s.ensureKernel);
 
   useEffect(() => {
     hydrate();
     if (dataset === "hermes-agent") dismissIntro();
   }, [hydrate, dataset, dismissIntro]);
+
+  useEffect(() => {
+    ensureKernel();
+  }, [ensureKernel, dataset, nodes, edges]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -54,6 +63,10 @@ export function SheafApp() {
       if (e.key === "d") diffuseNow();
       if (e.key === "p") poolNow();
       if (e.key === "r") reset();
+      if (e.key === "1") setView("strata");
+      if (e.key === "2") setView("matrix");
+      if (e.key === "3") setView("multiples");
+      if (e.key === "4") setView("spectral");
       if (e.key === "Enter" && selectedId) {
         const node = nodes.find((n) => n.id === selectedId);
         if (canEnterRoom(node, edges, rooms)) enterRoom(selectedId);
@@ -69,6 +82,7 @@ export function SheafApp() {
     poolNow,
     reset,
     setHelp,
+    setView,
     selectedId,
     nodes,
     edges,
@@ -77,6 +91,14 @@ export function SheafApp() {
   ]);
 
   const inspectTop = roomPath.length ? "top-32" : "top-24";
+  const lattice =
+    view === "matrix" ? (
+      <MatrixView />
+    ) : view === "multiples" ? (
+      <MultiplesView />
+    ) : (
+      <GraphCanvas />
+    );
 
   return (
     <main className="relative h-dvh w-full overflow-hidden bg-bg text-fg">
@@ -84,7 +106,7 @@ export function SheafApp() {
         className={`absolute inset-0 z-0 ${introOpen ? "pointer-events-none" : ""}`}
         aria-hidden={introOpen}
       >
-        <GraphCanvas />
+        {lattice}
       </div>
 
       {!introOpen ? (

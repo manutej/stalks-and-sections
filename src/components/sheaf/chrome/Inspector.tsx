@@ -28,6 +28,8 @@ export function Inspector({ className = "" }: { className?: string }) {
   const residualMeaning = useSheaf((s) => s.residualMeaning);
   const latticeTitle = useSheaf((s) => s.title);
   const latticeKicker = useSheaf((s) => s.kicker);
+  const kernel = useSheaf((s) => s.kernel);
+  const holdoutLive = useSheaf((s) => s.holdoutLive);
   const node = nodes.find((n) => n.id === selectedId) ?? null;
   const enterable = canEnterRoom(node, edges, rooms);
 
@@ -206,7 +208,14 @@ export function Inspector({ className = "" }: { className?: string }) {
                 onEnter={enterRoom}
               />
             )}
-            <ProofBlock proof={proof} energy={energy} dataset={dataset} sheafEval={sheafEval} />
+            <ProofBlock
+              proof={proof}
+              energy={energy}
+              dataset={dataset}
+              sheafEval={sheafEval}
+              kernel={kernel}
+              holdoutLive={holdoutLive}
+            />
           </>
         )}
       </div>
@@ -422,14 +431,29 @@ function ProofBlock({
   energy,
   dataset,
   sheafEval,
+  kernel,
+  holdoutLive,
 }: {
   proof: ReturnType<typeof useSheaf.getState>["proof"];
   energy: number;
   dataset: string;
   sheafEval: ReturnType<typeof useSheaf.getState>["eval"];
+  kernel: ReturnType<typeof useSheaf.getState>["kernel"];
+  holdoutLive: ReturnType<typeof useSheaf.getState>["holdoutLive"];
 }) {
-  const h = sheafEval?.holdout;
-  const c = sheafEval?.cohomo;
+  const h = holdoutLive ?? sheafEval?.holdout;
+  const c = kernel
+    ? {
+        h0: kernel.h0,
+        h1: kernel.h1,
+        chi: kernel.chi,
+        radius: kernel.radius,
+        h0Capped: kernel.h0Capped,
+        unique: kernel.unique,
+      }
+    : sheafEval?.cohomo
+      ? { ...sheafEval.cohomo, h0Capped: false, unique: null as boolean | null }
+      : null;
   const seg = sheafEval?.segments;
   const hermes = dataset === "hermes-agent";
   return (
@@ -467,12 +491,27 @@ function ProofBlock({
         </ul>
       ) : null}
       {c ? (
-        <dl className="mt-3 grid grid-cols-2 gap-2 text-[12px]">
-          <Stat label="dim H⁰" value={String(c.h0)} />
-          <Stat label="dim H¹" value={String(c.h1)} />
-          <Stat label="χ" value={String(c.chi)} />
-          <Stat label="radius" value={c.radius.toFixed(3)} />
-        </dl>
+        <>
+          <div className="mt-4 flex items-center gap-1">
+            <h3 className="text-[10px] uppercase tracking-wider text-fg-subtle">Kernel</h3>
+            <Hint k="kernel" />
+          </div>
+          <dl className="mt-2 grid grid-cols-2 gap-2 text-[12px]">
+            <Stat label={c.h0Capped ? "dim H⁰ ≥" : "dim H⁰"} value={String(c.h0)} />
+            <Stat label="dim H¹" value={c.h1 == null ? "—" : String(c.h1)} />
+            <Stat label="χ = v − e" value={String(c.chi)} />
+            <Stat label="radius" value={c.radius.toFixed(3)} />
+          </dl>
+          <p className="mt-2 text-[11px] leading-relaxed text-fg-muted">
+            {c.unique === true
+              ? "After pinning known stalks the heat-kernel test finds a unique harmonic extension."
+              : c.unique === false
+                ? "Family of sections — pinning does not kill ker L_F. Diffuse picks one."
+                : c.h0Capped
+                  ? "dim H⁰ is a lower bound: the heuristic saturated its sample cap."
+                  : "χ is cochain count (Σ dim F(v) − Σ dim F(e)), not a claim that H⁰ equals χ."}
+          </p>
+        </>
       ) : null}
       {h ? (
         <>
@@ -484,6 +523,11 @@ function ProofBlock({
             <Stat label="Graph L" value={h.graphCos.toFixed(3)} />
             <Stat label="Neighbours" value={h.neighborCos.toFixed(3)} />
           </dl>
+          <p className="mt-2 text-[11px] leading-relaxed text-fg-muted">
+            {"beatGraph" in h && h.beatGraph
+              ? "Kind-tagged restrictions beat identity-graph Laplacian on this hold-out."
+              : "Kind-tagged maps do not beat identity-graph Laplacian here. Residuals are still named claims; the matrices are reconstructed from restrictKind, not learned."}
+          </p>
         </>
       ) : null}
       {proof ? (

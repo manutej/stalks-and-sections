@@ -59,6 +59,55 @@ export function Legend() {
           <span>noisy</span>
         </div>
       </div>
+      <div className="mt-3 border-t border-line pt-3">
+        <div className="flex items-center justify-between gap-1">
+          <p className="text-[10px] uppercase tracking-wider text-fg-subtle">Restriction</p>
+          <Hint k="restrictKind" side="right" />
+        </div>
+        <ul className="mt-2 space-y-1.5 text-[10px] text-fg-muted">
+          <li className="flex items-center gap-2">
+            <svg width="28" height="8" aria-hidden>
+              <line x1="0" y1="4" x2="28" y2="4" stroke="currentColor" strokeWidth="1.4" />
+            </svg>
+            Identity
+          </li>
+          <li className="flex items-center gap-2">
+            <svg width="28" height="8" aria-hidden>
+              <line
+                x1="0"
+                y1="4"
+                x2="28"
+                y2="4"
+                stroke="currentColor"
+                strokeWidth="1.4"
+                strokeDasharray="4 3"
+              />
+            </svg>
+            Projection
+          </li>
+          <li className="flex items-center gap-2">
+            <svg width="28" height="8" aria-hidden>
+              <line
+                x1="0"
+                y1="4"
+                x2="28"
+                y2="4"
+                stroke="currentColor"
+                strokeWidth="1.4"
+                strokeDasharray="1.5 2.5"
+              />
+            </svg>
+            Embed
+          </li>
+          <li className="flex items-center gap-2">
+            <svg width="28" height="8" aria-hidden>
+              <line x1="0" y1="4" x2="28" y2="4" stroke="currentColor" strokeWidth="1.4" />
+              <polygon points="14,1 17,4 14,7 11,4" fill="currentColor" />
+            </svg>
+            Type-aware
+          </li>
+        </ul>
+      </div>
       <p className="mt-3 font-mono text-[10px] text-fg-subtle">
         {nodes.length} stalks · {edges.length} restrictions
       </p>

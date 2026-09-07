@@ -1,0 +1,47 @@
+{
+  "id": "hermes-agent",
+  "nodes": 113,
+  "edges": 112,
+  "terracotta": 10,
+  "kinds": {
+    "identity": 46,
+    "projection": 56,
+    "embed": 0,
+    "spectral": 0,
+    "type-aware": 10
+  },
+  "vDim": 1356,
+  "eDim": 968,
+  "chi": 388,
+  "energy": 58.157754147753785,
+  "radius": 0.0600803245328035,
+  "h0": 2,
+  "h0Capped": false,
+  "h0Samples": 12,
+  "h1": null,
+  "pinned": 8,
+  "holdout": {
+    "n": 8,
+    "sheafCos": 0.7320729379147362,
+    "graphCos": 0.8505576862897221,
+    "neighborCos": 0.8324160113293612,
+    "sheafMse": 0.03822166467834889,
+    "graphMse": 0.023633181027002195,
+    "beatMargin": -0.1184847483749859,
+    "ids": [
+      "gateway-run",
+      "agent-prompt-builder",
+      "gateway-platform-registry",
+      "agent-context-compressor",
+      "hermes-cli-main",
+      "agent-conversation-loop",
+      "agent-memory-manager",
+      "cron-scheduler"
+    ]
+  },
+  "beatGraph": false,
+  "isolation": {
+    "walker": "scripts/sheaf/emit-hermes.py",
+    "lcelLeak": 0
+  }
+}

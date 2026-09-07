@@ -9,6 +9,8 @@ export type RestrictionKind =
 
 export type DatasetId = string;
 
+export type LatticeView = "strata" | "matrix" | "multiples" | "spectral";
+
 export type LevelId = number;
 
 export interface LevelDef {
@@ -94,7 +96,7 @@ export interface SheafEval {
   };
   cohomo?: {
     h0: number;
-    h1: number;
+    h1: number | null;
     chi: number;
     energy: number;
     radius: number;

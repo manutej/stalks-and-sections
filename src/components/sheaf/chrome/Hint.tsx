@@ -35,6 +35,34 @@ export const HINTS = {
     title: "Dirichlet energy",
     body: "Sum of squared restriction residuals. Lower means the assignment is closer to a global section — a consistent fact across the lattice.",
   },
+  kernel: {
+    title: "dim H⁰",
+    body: "Heat-kernel rank heuristic for dim ker L_F — a lower bound, capped at 12 samples. After pinning known stalks, unique means one harmonic extension; family means Diffuse picks one of many. χ = vDim − eDim is the cochain count, not a claim that H⁰ equals χ.",
+  },
+  views: {
+    title: "Views",
+    body: "Strata is the 3D hierarchy. Matrix is the Bertin residual adjacency. ×4 is one 2D slice per plane. Spectral places stalks by the residual-weighted 1-skeleton Fiedler embedding — not the full block L_F. Keys 1–4.",
+  },
+  strata: {
+    title: "Strata",
+    body: "Default 3D lattice. Planes are hierarchy. Force layout keeps layers readable. Residuals colour the restrictions.",
+  },
+  matrix: {
+    title: "Restriction matrix",
+    body: "2D review. Rows and columns are stalks, seriated by residual-weighted Fiedler order, grouped by layer. Colour is residual. This is the screenshot a paper can quote.",
+  },
+  multiples: {
+    title: "Small multiples",
+    body: "One 2D drawing per visible plane, same xz as the force layout, linked selection. Compare layers without orbiting.",
+  },
+  spectral: {
+    title: "Spectral layout",
+    body: "xz from the two smallest non-constant eigenvectors of the residual-weighted graph Laplacian L = D − W, W_e = 1/(0.2 + residual). y stays hierarchy. Disagreement with Strata is the sheaf talking.",
+  },
+  restrictKind: {
+    title: "Restriction kind",
+    body: "Second visual variable. Solid = identity. Dashed = projection. Dotted = embed. Midpoint octahedron = type-aware (terracotta gluing failure). Colour is still residual.",
+  },
   depth: {
     title: "Layers",
     body: "How many hierarchy planes to show. L0 waist sits at the bottom. Drag left to peel the stack. This is the visible working set, not a hard cap.",

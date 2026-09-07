@@ -9,9 +9,11 @@ import {
   unfoldMembers,
 } from "@/lib/sheaf";
 import { dirichletEnergy } from "@/lib/sheaf/energy";
+import { holdoutReport, kernelReport, spectralLayout } from "@/lib/sheaf/kernel";
 import type {
   DatasetId,
   FamilyDef,
+  LatticeView,
   LevelDef,
   ProofReport,
   SheafEdge,
@@ -20,6 +22,7 @@ import type {
   SheafNode,
   Vec3,
 } from "@/lib/sheaf/types";
+import type { HoldoutReport, KernelReport } from "@/lib/sheaf/kernel";
 
 const INTRO_KEY = "stalks-intro-v1";
 
@@ -112,6 +115,10 @@ interface SheafStore {
   mobilePanel: "none" | "inspect" | "controls";
   roomStack: SpaceSnap[];
   roomPath: { id: string; title: string }[];
+  view: LatticeView;
+  kernel: KernelReport | null;
+  holdoutLive: HoldoutReport | null;
+  spectralPositions: Record<string, Vec3> | null;
   hydrate: () => void;
   setDataset: (id: DatasetId) => void;
   select: (id: string | null) => void;
@@ -130,6 +137,8 @@ interface SheafStore {
   enterRoom: (id: string) => void;
   leaveRoom: () => void;
   leaveToRoot: () => void;
+  setView: (v: LatticeView) => void;
+  ensureKernel: () => void;
   reset: () => void;
   setPrimer: (v: boolean) => void;
   setPrinciples: (v: boolean) => void;
@@ -207,6 +216,10 @@ export const useSheaf = create<SheafStore>((set, get) => ({
   mobilePanel: "none",
   roomStack: [],
   roomPath: [],
+  view: "strata",
+  kernel: null,
+  holdoutLive: null,
+  spectralPositions: null,
 
   hydrate: () => {
     const q = queryDataset();
@@ -238,6 +251,10 @@ export const useSheaf = create<SheafStore>((set, get) => ({
       mobilePanel: "none",
       roomStack: [],
       roomPath: [],
+      kernel: null,
+      holdoutLive: null,
+      spectralPositions: null,
+      view: "strata",
     });
   },
 
@@ -278,6 +295,9 @@ export const useSheaf = create<SheafStore>((set, get) => ({
       energyLog: result.energyLog,
       proof: result.report,
       pooled: false,
+      kernel: null,
+      holdoutLive: null,
+      spectralPositions: null,
     });
   },
 
@@ -314,6 +334,9 @@ export const useSheaf = create<SheafStore>((set, get) => ({
         unique: sol.unique,
         note: "Euler vs Theorem 3.1 closed form. max |x_iter − x★| reported as closedFormDiff.",
       },
+      kernel: null,
+      holdoutLive: null,
+      spectralPositions: null,
     });
   },
 
@@ -326,6 +349,9 @@ export const useSheaf = create<SheafStore>((set, get) => ({
         positions: basePositions,
         pooled: false,
         energy: dirichletEnergy(baseNodes, baseEdges),
+        kernel: null,
+        holdoutLive: null,
+        spectralPositions: null,
       });
       return;
     }
@@ -339,6 +365,9 @@ export const useSheaf = create<SheafStore>((set, get) => ({
       energy: dirichletEnergy(pooledG.nodes, pooledG.edges),
       selectedId: null,
       mobilePanel: "none",
+      kernel: null,
+      holdoutLive: null,
+      spectralPositions: null,
     });
   },
 
@@ -377,6 +406,9 @@ export const useSheaf = create<SheafStore>((set, get) => ({
       ...applyGraph(room, { selectedId: pin, flyToId: pin }),
       roomStack: [...s.roomStack, snap],
       roomPath: [...s.roomPath, { id, title: current.title }],
+      kernel: null,
+      holdoutLive: null,
+      spectralPositions: null,
     });
   },
 
@@ -407,6 +439,9 @@ export const useSheaf = create<SheafStore>((set, get) => ({
       mobilePanel: left?.id ? "inspect" : "none",
       roomStack: roomStack.slice(0, -1),
       roomPath: roomPath.slice(0, -1),
+      kernel: null,
+      holdoutLive: null,
+      spectralPositions: null,
     });
   },
 
@@ -436,6 +471,10 @@ export const useSheaf = create<SheafStore>((set, get) => ({
       mobilePanel: "none",
       roomStack: [],
       roomPath: [],
+      kernel: null,
+      holdoutLive: null,
+      spectralPositions: null,
+      view: "strata",
     });
   },
 
@@ -458,6 +497,49 @@ export const useSheaf = create<SheafStore>((set, get) => ({
       mobilePanel: "none",
       roomStack: [],
       roomPath: [],
+      kernel: null,
+      holdoutLive: null,
+      spectralPositions: null,
+      view: "strata",
+    });
+  },
+
+  setView: (v) => {
+    set({ view: v });
+    if (v === "spectral" && !get().spectralPositions) get().ensureKernel();
+  },
+
+  ensureKernel: () => {
+    const { nodes, edges, kernel } = get();
+    if (kernel && get().spectralPositions) return;
+    const report = kernelReport(nodes, edges);
+    const hold = holdoutReport(nodes, edges);
+    const spec = spectralLayout(nodes, edges);
+    const prev = get().eval;
+    set({
+      kernel: report,
+      holdoutLive: hold,
+      spectralPositions: spec,
+      eval: {
+        ...(prev ?? {}),
+        holdout: prev?.holdout ?? (hold
+          ? {
+              n: hold.n,
+              sheafCos: hold.sheafCos,
+              graphCos: hold.graphCos,
+              neighborCos: hold.neighborCos,
+              sheafMse: hold.sheafMse,
+              graphMse: hold.graphMse,
+            }
+          : prev?.holdout),
+        cohomo: {
+          h0: report.h0,
+          h1: report.h1,
+          chi: report.chi,
+          energy: report.energy,
+          radius: report.radius,
+        },
+      },
     });
   },
 

@@ -20,8 +20,12 @@ const MOVES = [
     body: "A hexagonal ring around a stalk means it has an interior sheaf. Double-click it, press Enter, or use Enter room. Esc leaves the room. Density is navigated by changing scale, not by drawing every file.",
   },
   {
+    title: "Switch views",
+    body: "Strata / Matrix / ×4 / Spectral in the top bar, or keys 1–4. Matrix and ×4 are the 2D review. Spectral moves stalks by residual-weighted Fiedler coordinates; hierarchy stays on y.",
+  },
+  {
     title: "Read the picture",
-    body: "Hue is hierarchy (teal foundations → terracotta integrity). Size is stalk dimension. Line colour is residual: teal consistent, terracotta noisy.",
+    body: "Hue is hierarchy (teal foundations → terracotta integrity). Size is stalk dimension. Line colour is residual: teal consistent, terracotta noisy. Dash encodes restriction kind; a midpoint diamond marks a type-aware gluing failure.",
   },
 ];
 
@@ -38,6 +42,12 @@ const CONTROL_KEYS = [
   "pool",
   "labels",
   "room",
+  "views",
+  "matrix",
+  "multiples",
+  "spectral",
+  "kernel",
+  "restrictKind",
   "reset",
 ] as const;
 

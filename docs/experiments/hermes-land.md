@@ -31,7 +31,9 @@ Do this only after a human confirms. Production `?g=hermes-agent` still serves t
 
 - `src/components/sheaf/SheafApp.tsx`
 - `src/components/sheaf/canvas/Scene.tsx`
-- `src/components/sheaf/chrome/{Inspector,TopBar,CueBar,Hint,Guide,Legend,Intro}.tsx`
+- `src/components/sheaf/chrome/{Inspector,TopBar,CueBar,Hint,Guide,Legend,Intro,ViewSwitch}.tsx`
+- `src/components/sheaf/review/{MatrixView,MultiplesView}.tsx`
+- `src/lib/sheaf/kernel.ts`
 
 **Review / QA**
 
@@ -43,7 +45,8 @@ Do this only after a human confirms. Production `?g=hermes-agent` still serves t
 - `docs/experiments/hermes-agent.md`
 - `docs/experiments/hermes-land.md`
 - `src/lib/sheaf/review.ts`
-- `package.json` scripts `sheaf:hermes` / `sheaf:hermes:pack` / `sheaf:qa`
+- `package.json` scripts `sheaf:hermes` / `sheaf:hermes:pack` / `sheaf:qa` / `sheaf:eval`
+- `docs/experiments/hermes-adv-v2.md`
 
 **Optional generated (rebuild after emit)**
 

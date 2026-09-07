@@ -6,17 +6,17 @@ Status of v1 (this repo): a literature-grounded cellular-sheaf lattice with vari
 
 **Shipped since this list was written:** generic sheaf JSON (`docs/examples/`, `from-json.ts`), catalog loader, LangChain.js LCEL + rich index, and the Hermes **113-stalk playable digest** with enterable rooms (`?g=hermes-agent`). See [`docs/FILEMAP.md`](docs/FILEMAP.md). GitHub `main` may still serve the older 31-node Hermes JSON until that digest lands ([issue #16](https://github.com/manutej/stalks-and-sections/issues/16)).
 
-Remaining utility gaps: 2D review views (Bertin matrix, small multiples), spectral layout, and numeric restriction maps (still kind tags).
+Remaining utility gaps: learned restriction matrices (hold-out currently **loses**), file-drop, Noether folds. 2D review views, spectral 1-skeleton layout, and kernel HUD shipped in v1.1 — see [`docs/experiments/hermes-adv-v2.md`](docs/experiments/hermes-adv-v2.md).
 
 ## Now — v1.1 visualization & UX
 
 The lattice is readable. These make it *reviewable* in 2D and under filters, which was the original brief.
 
-1. **Bertin reorderable matrix** of restriction residuals (seriation by energy). Companion to the 3D lattice, not a replacement.
-2. **Small-multiples 2D** — one drawing per hierarchy level, linked selection.
+1. **Bertin reorderable matrix** of restriction residuals (seriation by residual-weighted Fiedler). **Shipped** (`Matrix` view).
+2. **Small-multiples 2D** — one drawing per hierarchy level, linked selection. **Shipped** (`×4` view).
 3. **Collision-aware labels** — still paper chips, but with a 2D projection pass so names never stack.
 4. **Slice plane** — a movable clipping plane along Y (hierarchy) and an optional symmetry fold (kind / syntax / linear partitions).
-5. **Typed restriction marks** — identity / projection / embed / spectral / type-aware as a second visual variable (orientation or dash), residual remaining colour.
+5. **Typed restriction marks** — identity solid / projection dashed / embed dotted / type-aware diamond. Residual remaining colour. **Shipped** in 3D.
 
 ## Next — v1.2 data & operators
 

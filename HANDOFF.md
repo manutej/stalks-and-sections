@@ -63,6 +63,8 @@ Diffuse *does* walk sections toward \(\ker L_F\). On `literature`, those section
 
 **Fix:** add a **spectral layout** option that embeds nodes from \(L_F\) (harmonic coordinates / Fiedler + next). Keep force as “readable strata.” If the two layouts disagree, that disagreement *is* the sheaf.
 
+**v1.1:** Spectral view ships, but it is the residual-weighted **1-skeleton** \(L=D-W\), not the 1356-d block \(L_F\). See [`docs/experiments/hermes-adv-v2.md`](docs/experiments/hermes-adv-v2.md) B1.
+
 ### A2 — “I cannot load my data”
 
 **Verdict: true. This is the utility blocker.**
@@ -73,11 +75,11 @@ Diffuse *does* walk sections toward \(\ker L_F\). On `literature`, those section
 
 ### A3 — “2D review was promised and is missing”
 
-**Verdict: true.**
+**Verdict: true in v1. Closed in v1.1 for Matrix and ×4.**
 
-The brief: *reviewed in 2D and along various views of layers (slice and dice with different filters)*. v1 has one camera. Peeling Layers hides planes; it does not give you a pageable 2D drawing. There is no Bertin matrix, no small-multiples, no export.
+The brief: *reviewed in 2D and along various views of layers (slice and dice with different filters)*. v1 had one camera. **v1.1** adds Bertin residual matrix (Fiedler seriation) and small-multiples (one xz drawing per plane, linked selection). Slice-as-a-page and CSV export remain missing.
 
-A 3D lattice is a *discovery* view. Analysis happens in 2D (matrix, multiples, slice). Without those, a reviewer cannot take a screenshot that argues a claim.
+A 3D lattice is a *discovery* view. Analysis happens in 2D (matrix, multiples, slice).
 
 ### A4 — “Variable-dimension stalks are cosmetic”
 
@@ -96,6 +98,8 @@ Content is not: literature sections are RNG. Restriction *kind* is chosen from t
 Energy → 0 does not mean “the true assignment.” On an underdetermined sheaf the kernel is large; Diffuse picks one harmonic extension. The Cobb Exact path reports `unique`. The literature path never does.
 
 **Fix:** report \(\dim \ker L_F\) (or a rank heuristic) next to energy. If it is > 0 after pinning known stalks, say **family of sections**, not **the** section.
+
+**v1.1:** HUD reports heat-kernel \(\widehat{\dim H^0}\) (capped, labelled as a lower bound when saturated). χ is cochain count, not dim H⁰. Hermes hold-out **loses** (0.732 vs 0.851). B4 in the v2 eval.
 
 ### A6 — “Will die at a few hundred nodes”
 
@@ -125,7 +129,7 @@ The brief asked for planes by **functional grouping**, **key styles**, and **sym
 
 **Verdict: mostly good.**
 
-Size = dim (quantitative). Hue = ordered level. Residual = diverging value. Restriction *kind* has no visual variable yet (inspector only) — that is a Bertin miss (issue #8). Label chips on a dense L3 slice still collide (issue #3). Glow slider does not change math; it is correctly documented as a reading aid.
+Size = dim (quantitative). Hue = ordered level. Residual = diverging value. **v1.1:** restriction kind is a second visual variable (solid / dashed / dotted / midpoint diamond). Label chips on a dense L3 slice still collide (issue #3). Glow slider does not change math; it is correctly documented as a reading aid.
 
 ### A10 — “The operator names still hide the job”
 
@@ -170,9 +174,9 @@ One lattice, several **projections**. Selection, hover, and residual scale are s
 | --- | --- | --- | --- |
 | **Strata 3D** | **v1** | “What is the hierarchy?” | Current Scene. Keep as default. |
 | **Slice** | missing | “Show me only this plane, as a page.” | Camera ortho onto `y = level * LAYER_Z`; or hide other levels and lock polar angle. Issue #4. |
-| **Small multiples** | missing | “Compare the four planes.” | Four 2D canvases, same xz layout, linked selection. Issue #2. |
-| **Bertin matrix** | missing | “Which restrictions are noisy, in order?” | Rows/cols = stalks (or edges × edges); seriation by residual. Issue #1. |
-| **Spectral** | missing | “Where does the sheaf think things sit?” | 2D/3D coords from smallest non-zero eigenmaps of \(L_F\). New. |
+| **Small multiples** | **v1.1** | “Compare the four planes.” | `×4` view: four 2D canvases, same xz layout, linked selection. |
+| **Bertin matrix** | **v1.1** | “Which restrictions are noisy, in order?” | Residual adjacency, Fiedler seriation, grouped by layer. |
+| **Spectral** | **v1.1** | “Where does the sheaf think things sit?” | Residual-weighted 1-skeleton Fiedler; y stays hierarchy. Not block \(L_F\). |
 | **Fold (Noether)** | missing | “Group by kind / restriction / private↔public.” | Mirror or partition xz; do not destroy the sheaf. Issue #4 + roadmap v2. |
 | **Energy** | partial | “Did Diffuse actually help?” | Sparkline exists in the dock after Diffuse; needs a persistent panel + CSV. |
 | **Stalk inspector** | **v1** | “What is in this fibre?” | `StalkPlot` + neighbour residual bars. Next: drag to edit (§ P3). |

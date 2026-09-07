@@ -5,7 +5,7 @@ import * as THREE from "three";
 import { levelHex, hexToRgb01, residualColor } from "@/lib/sheaf/palette";
 import { LAYER_Z, nodeRadius, layerRadius } from "@/lib/sheaf/layout";
 import { canEnterRoom } from "@/lib/sheaf/room";
-import type { NodeKind, SheafNode, Vec3 } from "@/lib/sheaf/types";
+import type { NodeKind, RestrictionKind, SheafEdge, SheafNode, Vec3 } from "@/lib/sheaf/types";
 import { useSheaf } from "@/store/sheaf";
 import { useVisible } from "../useVisible";
 
@@ -13,11 +13,18 @@ const GOAL = new THREE.Vector3();
 const LOOK = new THREE.Vector3();
 const SCALE = new THREE.Vector3();
 
+function useLatticePositions(): Record<string, Vec3> {
+  const view = useSheaf((s) => s.view);
+  const force = useSheaf((s) => s.positions);
+  const spec = useSheaf((s) => s.spectralPositions);
+  return view === "spectral" && spec ? spec : force;
+}
+
 function CameraRig() {
   const { camera } = useThree();
   const controls = useRef<ComponentRef<typeof OrbitControls>>(null);
   const flyToId = useSheaf((s) => s.flyToId);
-  const positions = useSheaf((s) => s.positions);
+  const positions = useLatticePositions();
   const clearFly = useSheaf((s) => s.flyTo);
   const blend = useRef(0);
   const target = useRef(new THREE.Vector3(0, 10.2, 0));
@@ -254,43 +261,192 @@ function NodeMark({
   );
 }
 
+type DrawEdge = Pick<SheafEdge, "id" | "source" | "target" | "residual" | "restrictKind">;
+
+function lineGeom(
+  edges: DrawEdge[],
+  positions: Record<string, Vec3>,
+  tOf: (r: number) => number,
+  consistency: number,
+  dashed: boolean,
+) {
+  const positionsArr: number[] = [];
+  const colorsArr: number[] = [];
+  for (const e of edges) {
+    const a = positions[e.source];
+    const b = positions[e.target];
+    if (!a || !b) continue;
+    positionsArr.push(a.x, a.y, a.z, b.x, b.y, b.z);
+    const t = tOf(e.residual);
+    const hex = residualColor(t);
+    const [r, g, bl] = hexToRgb01(hex);
+    const boost = 0.35 + consistency * 0.65;
+    colorsArr.push(r * boost, g * boost, bl * boost, r * boost, g * boost, bl * boost);
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.Float32BufferAttribute(positionsArr, 3));
+  g.setAttribute("color", new THREE.Float32BufferAttribute(colorsArr, 3));
+  if (dashed) {
+    const dist = new Float32Array(positionsArr.length / 3);
+    for (let i = 0; i < dist.length; i += 2) {
+      const ax = positionsArr[i * 3] ?? 0;
+      const ay = positionsArr[i * 3 + 1] ?? 0;
+      const az = positionsArr[i * 3 + 2] ?? 0;
+      const bx = positionsArr[i * 3 + 3] ?? 0;
+      const by = positionsArr[i * 3 + 4] ?? 0;
+      const bz = positionsArr[i * 3 + 5] ?? 0;
+      dist[i] = 0;
+      dist[i + 1] = Math.hypot(bx - ax, by - ay, bz - az);
+    }
+    g.setAttribute("lineDistance", new THREE.Float32BufferAttribute(dist, 1));
+  }
+  return g;
+}
+
+function EdgeBatch({
+  edges,
+  positions,
+  tOf,
+  consistency,
+  dashed,
+  dashSize,
+  gapSize,
+  opacity,
+}: {
+  edges: DrawEdge[];
+  positions: Record<string, Vec3>;
+  tOf: (r: number) => number;
+  consistency: number;
+  dashed?: boolean;
+  dashSize?: number;
+  gapSize?: number;
+  opacity: number;
+}) {
+  const geom = useMemo(
+    () => lineGeom(edges, positions, tOf, consistency, Boolean(dashed)),
+    [edges, positions, tOf, consistency, dashed],
+  );
+  useEffect(() => () => geom.dispose(), [geom]);
+  if (!edges.length) return null;
+  return (
+    <lineSegments geometry={geom} raycast={() => {}}>
+      {dashed ? (
+        <lineDashedMaterial
+          vertexColors
+          transparent
+          opacity={opacity}
+          dashSize={dashSize ?? 0.32}
+          gapSize={gapSize ?? 0.2}
+        />
+      ) : (
+        <lineBasicMaterial vertexColors transparent opacity={opacity} />
+      )}
+    </lineSegments>
+  );
+}
+
+function TypeAwareMarks({
+  edges,
+  positions,
+  tOf,
+}: {
+  edges: DrawEdge[];
+  positions: Record<string, Vec3>;
+  tOf: (r: number) => number;
+}) {
+  return (
+    <>
+      {edges.map((e) => {
+        const a = positions[e.source];
+        const b = positions[e.target];
+        if (!a || !b) return null;
+        const hex = residualColor(tOf(e.residual));
+        return (
+          <mesh
+            key={e.id}
+            position={[(a.x + b.x) / 2, (a.y + b.y) / 2, (a.z + b.z) / 2]}
+            raycast={() => {}}
+          >
+            <octahedronGeometry args={[0.16, 0]} />
+            <meshBasicMaterial color={hex} />
+          </mesh>
+        );
+      })}
+    </>
+  );
+}
+
 function EdgeLines({
   edges,
   positions,
   tOf,
   consistency,
 }: {
-  edges: { id: string; source: string; target: string; residual: number }[];
+  edges: DrawEdge[];
   positions: Record<string, Vec3>;
   tOf: (r: number) => number;
   consistency: number;
 }) {
-  const geom = useMemo(() => {
-    const positionsArr: number[] = [];
-    const colorsArr: number[] = [];
+  const groups = useMemo(() => {
+    const g: Record<RestrictionKind | "other", DrawEdge[]> = {
+      identity: [],
+      projection: [],
+      embed: [],
+      spectral: [],
+      "type-aware": [],
+      other: [],
+    };
     for (const e of edges) {
-      const a = positions[e.source];
-      const b = positions[e.target];
-      if (!a || !b) continue;
-      positionsArr.push(a.x, a.y, a.z, b.x, b.y, b.z);
-      const t = tOf(e.residual);
-      const hex = residualColor(t);
-      const [r, g, bl] = hexToRgb01(hex);
-      const boost = 0.35 + consistency * 0.65;
-      colorsArr.push(r * boost, g * boost, bl * boost, r * boost, g * boost, bl * boost);
+      (g[e.restrictKind] ?? g.other).push(e);
     }
-    const g = new THREE.BufferGeometry();
-    g.setAttribute("position", new THREE.Float32BufferAttribute(positionsArr, 3));
-    g.setAttribute("color", new THREE.Float32BufferAttribute(colorsArr, 3));
     return g;
-  }, [edges, positions, tOf, consistency]);
-
-  useEffect(() => () => geom.dispose(), [geom]);
-
+  }, [edges]);
+  const base = 0.5 + consistency * 0.35;
   return (
-    <lineSegments geometry={geom} raycast={() => {}}>
-      <lineBasicMaterial vertexColors transparent opacity={0.55 + consistency * 0.35} />
-    </lineSegments>
+    <>
+      <EdgeBatch
+        edges={groups.identity}
+        positions={positions}
+        tOf={tOf}
+        consistency={consistency}
+        opacity={base}
+      />
+      <EdgeBatch
+        edges={groups.spectral}
+        positions={positions}
+        tOf={tOf}
+        consistency={consistency}
+        opacity={base + 0.08}
+      />
+      <EdgeBatch
+        edges={groups["type-aware"]}
+        positions={positions}
+        tOf={tOf}
+        consistency={consistency}
+        opacity={Math.min(1, base + 0.28)}
+      />
+      <EdgeBatch
+        edges={groups.projection}
+        positions={positions}
+        tOf={tOf}
+        consistency={consistency}
+        dashed
+        dashSize={0.34}
+        gapSize={0.2}
+        opacity={base}
+      />
+      <EdgeBatch
+        edges={groups.embed}
+        positions={positions}
+        tOf={tOf}
+        consistency={consistency}
+        dashed
+        dashSize={0.12}
+        gapSize={0.2}
+        opacity={base}
+      />
+      <TypeAwareMarks edges={groups["type-aware"]} positions={positions} tOf={tOf} />
+    </>
   );
 }
 
@@ -342,7 +498,7 @@ function LevelPlanes() {
 
 function Lattice() {
   const vis = useVisible();
-  const positions = useSheaf((s) => s.positions);
+  const positions = useLatticePositions();
   const stalkScale = useSheaf((s) => s.stalkScale);
   const consistency = useSheaf((s) => s.consistency);
   const showLabels = useSheaf((s) => s.showLabels);
