@@ -24,7 +24,7 @@
   <circle cx="360" cy="300" r="18" fill="#4a9a92"/>
   <circle cx="360" cy="300" r="24" fill="none" stroke="#4a9a92" stroke-width="1.6"/>
   <text x="360" y="338" fill="#e8ece8" font-family="IBM Plex Sans, sans-serif" font-size="13" text-anchor="middle">Bob</text>
-  <text x="360" y="354" fill="#5c6864" font-family="IBM Plex Mono, monospace" font-size="10" text-anchor="middle">[0.85, −7.7]</text>
+  <text x="360" y="354" fill="#5c6864" font-family="IBM Plex Mono, monospace" font-size="10" text-anchor="middle">[0.85, −0.7]</text>
 
   <circle cx="560" cy="300" r="18" fill="#4a9a92"/>
   <circle cx="560" cy="300" r="24" fill="none" stroke="#4a9a92" stroke-width="1.6"/>
