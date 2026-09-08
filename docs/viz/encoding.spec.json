@@ -24,6 +24,7 @@
     { "channel": "hexRing", "field": "rooms[node.id] | node.pooledFrom", "scale": "nominal", "rule": "enterable interior" }
   ],
   "views": [
+    { "id": "lattice", "file": "lattice.svg", "from": ["levels", "nodes", "edges"] },
     { "id": "census", "file": "census.svg", "from": ["id", "title", "nodes", "edges", "levels"] },
     { "id": "waist", "file": "waist.svg", "from": ["nodes.known"] },
     { "id": "claims", "file": "claims.svg", "from": ["edges.restrictKind=type-aware"] },
